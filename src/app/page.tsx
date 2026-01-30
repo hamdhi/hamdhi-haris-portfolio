@@ -121,11 +121,11 @@ export default function Home() {
           <div>
             <h2 className="text-5xl font-bold mb-6">Let's <span className="text-cyan-400">Initialize</span> <br /> a Connection.</h2>
             <p className="text-slate-400 mb-10 leading-relaxed text-lg italic">
-              Currently available for intern software engineering opportunities. Open to discussing Java, .NET, or mobile development projects.
+              Currently available for intern software engineering opportunities. Open to discussing Java projects.
             </p>
             <div className="space-y-4 mono text-sm text-slate-500">
               <p>{`> Location: Sri Lanka`}</p>
-              <p>{`> Email: dev.contact@example.com`}</p>
+              <p>{`> Email: hamdhiharis@gmail.com`}</p>
               <p>{`> Status: Ready to Scale`}</p>
             </div>
           </div>
@@ -136,7 +136,7 @@ export default function Home() {
 
       <footer className="relative z-10 py-10 text-center border-t border-white/5">
         <p className="mono text-[10px] text-white-600 tracking-widest uppercase">
-          Build 1.0.00 // Designed by hamdhi haris
+          Build 1.0.01 // Designed by hamdhi haris
         </p>
       </footer>
     </main>
