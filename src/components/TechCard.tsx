@@ -1,10 +1,17 @@
 'use client';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 
-export default function TechCard({ name, icon, tags }: { name: string; icon: string; tags: string }) {
+interface TechProps {
+  name: string;
+  icon: string;
+  tags: string;
+  proficiency: number; // int 0-100
+  isMain?: boolean;    // boolean
+}
+
+export default function TechCard({ name, icon, tags, proficiency, isMain }: TechProps) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-
   const mouseXSpring = useSpring(x);
   const mouseYSpring = useSpring(y);
 
@@ -13,12 +20,8 @@ export default function TechCard({ name, icon, tags }: { name: string; icon: str
 
   const handleMouseMove = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    x.set(mouseX / width - 0.5);
-    y.set(mouseY / height - 0.5);
+    x.set((e.clientX - rect.left) / rect.width - 0.5);
+    y.set((e.clientY - rect.top) / rect.height - 0.5);
   };
 
   return (
@@ -26,12 +29,29 @@ export default function TechCard({ name, icon, tags }: { name: string; icon: str
       onMouseMove={handleMouseMove}
       onMouseLeave={() => { x.set(0); y.set(0); }}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      className="relative h-64 w-full rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-md cursor-pointer hover:border-cyan-400 transition-colors"
+      className={`relative h-52 md:h-64 w-full rounded-2xl border ${isMain ? 'border-cyan-400/50 shadow-[0_0_20px_rgba(34,211,238,0.1)]' : 'border-white/10'} bg-white/5 p-6 backdrop-blur-md cursor-pointer transition-colors hover:border-cyan-400`}
     >
+      {/* Main Tech Badge */}
+      {isMain && (
+        <div className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-cyan-400 text-[11px] font-bold text-black uppercase tracking-tighter z-20">
+          Core
+        </div>
+      )}
+
       <div style={{ transform: "translateZ(75px)", transformStyle: "preserve-3d" }} className="flex flex-col items-center justify-center h-full">
-        <img src={icon} alt={name} className="w-16 h-16 mb-6" />
-        <h4 className="text-xl font-bold">{name}</h4>
-        <p className="text-[10px] mono text-slate-500 mt-2 uppercase tracking-widest">{tags}</p>
+        <img src={icon} alt={name} className="w-12 h-12 md:w-16 md:h-16 mb-4" />
+        <h4 className="text-lg md:text-xl font-bold">{name}</h4>
+        <p className="text-[9px] mono text-slate-500 mt-1 uppercase tracking-widest text-center">{tags}</p>
+        
+        {/* Proficiency Bar */}
+        <div className="w-full mt-6 bg-white/10 h-1 rounded-full overflow-hidden">
+          <motion.div 
+            initial={{ width: 0 }}
+            animate={{ width: `${proficiency}%` }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className={`h-full ${isMain ? 'bg-cyan-400 shadow-[0_0_10px_#22d3ee]' : 'bg-slate-400'}`}
+          />
+        </div>
       </div>
     </motion.div>
   );
