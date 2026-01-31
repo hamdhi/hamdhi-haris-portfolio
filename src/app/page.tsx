@@ -32,6 +32,8 @@ export default function Home() {
 
       {/* Footer Section */}
       <Footer name="Hamdhi Haris" version="1.0.01"/>
+
+      
     </main>
   );
 }
