@@ -11,10 +11,10 @@ export default function Footer({ name, version }: FooterProps) {
   return (
     <footer className="relative z-10 py-10 text-center border-t border-white/5">
       <div className="flex flex-col gap-2">
-        <p className="mono text-[10px] text-slate-500 tracking-widest uppercase">
+        <p className="mono text-[10px] text-white-500 tracking-widest uppercase">
           Build {version} // Designed & Engineered by {name}
         </p>
-        <p className="mono text-[8px] text-slate-600 uppercase tracking-tighter">
+        <p className="mono text-[8px] text-white-600 uppercase tracking-tighter">
           © {currentYear} All Rights Reserved
         </p>
       </div>
