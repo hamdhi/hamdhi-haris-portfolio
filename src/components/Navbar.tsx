@@ -50,7 +50,7 @@ export default function Navbar() {
         <Link href="/#home" className="flex items-center gap-2 font-bold text-xl tracking-tighter cursor-pointer">
           <Terminal className="text-cyan-400" size={20} />
           <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-            HamdhiNygma
+            HamdhiHaris
           </span>
         </Link>
 

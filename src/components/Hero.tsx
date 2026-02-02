@@ -47,36 +47,41 @@ export default function Hero({ cvLink }: HeroProps) {
   return (
     <section id='home' className="relative z-10 min-h-screen flex items-center">
       <div className="max-w-7xl mx-auto px-6 py-20 w-full">
-        {/* Main Grid: items-center ensures the image and text columns are vertically aligned */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
           
           {/* Left Column: Text */}
           <div className="order-2 md:order-1 relative z-20 text-center md:text-left flex flex-col justify-center">
-            <p className="mono text-cyan-400 mb-4 tracking-widest text-sm md:text-base">
+            
+            {/* Name First */}
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+              Hello, I'm <span className="text-cyan-400">Hamdhi Haris</span>
+            </h2>
+
+            {/* Degree Second */}
+            <p className="mono text-cyan-400 mb-6 tracking-widest text-sm md:text-base">
               // BSC (Hons) in Software Engineering(Ug)
             </p>
             
             {/* Title & Animated Text Wrapper */}
-<div className="mb-4">
-  {/* FIX: Added flex container with matching alignment */}
-  <div className="flex justify-center md:justify-start">
-    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-      Engineering
-    </h1>
-  </div>
-  
-  <div className="min-h-[60px] sm:min-h-[70px] md:min-h-[80px] lg:min-h-[100px] flex justify-center md:justify-start">
-    <span className="
-      bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent 
-      text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold
-      text-center md:text-left
-      leading-tight
-    ">
-      {text}
-      <span className="ml-1 animate-pulse">|</span>
-    </span>
-  </div>
-</div>
+            <div className="mb-4">
+              <div className="flex justify-center md:justify-start">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+                  Engineering
+                </h1>
+              </div>
+              
+              <div className="min-h-[60px] sm:min-h-[70px] md:min-h-[80px] lg:min-h-[100px] flex justify-center md:justify-start">
+                <span className="
+                  bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent 
+                  text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold
+                  text-center md:text-left
+                  leading-tight
+                ">
+                  {text}
+                  <span className="ml-1 animate-pulse">|</span>
+                </span>
+              </div>
+            </div>
 
             <p className="text-slate-400 text-base md:text-lg max-w-lg mb-8 md:mb-12 mx-auto md:mx-0">
               Software Engineer specializing in Java and Spring Boot.
@@ -102,11 +107,10 @@ export default function Hero({ cvLink }: HeroProps) {
             </div>
           </div>
 
-          {/* Right Column: Image */}
+          {/* Right Column: Image (Untouched original styling) */}
           <div className="order-1 md:order-2 flex items-center justify-center relative z-10">
             <div className="relative p-1 bg-gradient-to-br from-cyan-400/20 to-purple-600/20 rounded-sm">
               
-              {/* Animated Corner Brackets */}
               <div className="absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-cyan-400 animate-pulse z-30" />
               <div className="absolute -top-2 -right-2 w-8 h-8 border-t-2 border-r-2 border-purple-500 animate-pulse z-30" />
               <div className="absolute -bottom-2 -left-2 w-8 h-8 border-b-2 border-l-2 border-purple-500 animate-pulse z-30" />
