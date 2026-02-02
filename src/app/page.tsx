@@ -1,13 +1,25 @@
+"use client"; // <--- Add this line first!
 import Navbar from '@/components/Navbar';
 import SpiderBg from '@/components/SpiderBg';
-import { getCvUrl } from '@/lib/supabase';
+import { getCvUrl, supabase } from '@/lib/supabase';
 import Hero from '@/components/Hero';
 import Contact from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import TechStack from '@/components/TechStack';
 import Projects from '@/components/Projects';
+import { useEffect } from 'react';
 
 export default function Home() {
+  useEffect(() => {
+    // This calls the SQL function you just created
+    const trackView = async () => {
+      await supabase.rpc('increment_views');
+    };
+    
+    trackView();
+  }, []);
+
+  /////
   const cvLink = getCvUrl();
 
   return (

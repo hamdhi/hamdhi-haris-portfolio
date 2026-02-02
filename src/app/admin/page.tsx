@@ -1,9 +1,10 @@
-'use client';
+"use client"; // <--- Add this at the very top (Line 1)
 import { useState, useEffect } from 'react';
 import { Upload, LayoutDashboard, LogOut, CheckCircle2, Trash2, AlertTriangle, Github, Globe } from 'lucide-react';
 import { createBrowserClient } from '@supabase/ssr';
 import { useRouter } from 'next/navigation';
 import MessageLogs from '@/components/MessageLogs';
+import StatsOverview from '@/components/StatsOverview';
 
 export default function AdminDashboard() {
     const [loading, setLoading] = useState(false);
@@ -67,6 +68,10 @@ export default function AdminDashboard() {
                     <div className="flex items-center gap-3"><LayoutDashboard className="text-cyan-400" /> <h1 className="text-2xl font-bold uppercase">Admin_Panel</h1></div>
                     <button onClick={() => supabase.auth.signOut().then(() => router.push('/'))} className="text-xs font-mono text-slate-400 hover:text-red-400 transition-colors flex items-center gap-2"><LogOut size={16} /> LOGOUT</button>
                 </header>
+
+                <section>
+                    <StatsOverview></StatsOverview>
+                </section>
 
                 <section className="mb-16">
                     <form onSubmit={handleSubmit} className="bg-[#0f172a] border border-cyan-500/20 rounded-2xl p-8 space-y-4 shadow-2xl">
