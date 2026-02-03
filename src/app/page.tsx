@@ -8,6 +8,9 @@ import Footer from '@/components/Footer';
 import TechStack from '@/components/TechStack';
 import Projects from '@/components/Projects';
 import { useEffect } from 'react';
+import ExperienceLeadership from '@/components/Experience';
+import AboutMe from '@/components/AboutMe';
+import ScrollToTop from '@/components/ScrollToTop';
 
 export default function Home() {
   useEffect(() => {
@@ -30,8 +33,11 @@ export default function Home() {
       {/* Navigation Bar */}
       <Navbar />
 
-      {/* Hero Section */}
+     <section id="home">
       <Hero cvLink={cvLink} />
+    </section>
+      
+      <AboutMe />
 
       {/* Tech Arsenal */}
       <TechStack />
@@ -39,12 +45,15 @@ export default function Home() {
       {/* Projects */}
       < Projects />
 
+      <ExperienceLeadership />
+
       {/* Contacts Section */}
       <Contact email="hamdhiharis@gmail.com" location="Sri Lanka" />
 
       {/* Footer Section */}
       <Footer name="Hamdhi Haris" version="1.0.01"/>
 
+      <ScrollToTop />
       
     </main>
   );
