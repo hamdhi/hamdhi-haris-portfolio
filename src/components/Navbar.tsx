@@ -21,7 +21,7 @@ export default function Navbar() {
   ], []);
 
   // Smoother manual scroll with dynamic offset calculation
-  const handleScroll = useCallback((e, href) => {
+  const handleScroll = useCallback((e: React.MouseEvent, href:string) => {
     if (href.startsWith('/#') && pathname === '/') {
       e.preventDefault();
       const id = href.replace('/#', '');
