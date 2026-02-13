@@ -25,10 +25,44 @@ export async function middleware(request: NextRequest) {
   )
 
   const { data: { user } } = await supabase.auth.getUser()
+  const path = request.nextUrl.pathname
 
-  // PROTECT ADMIN ROUTES
-  if (request.nextUrl.pathname.startsWith('/admin')) {
-    if (!user || user.app_metadata.role !== 'admin') {
+  // 1. BYPASS FOR ADMINS AND SYSTEM ASSETS
+  // We don't want to check maintenance for the admin panel or images/css
+  const isExcluded = 
+    path.startsWith('/api') || 
+    path.startsWith('/_next') || 
+    path.startsWith('/static') || 
+    path.startsWith('/dev-login') || 
+    path.startsWith('/admin') ||
+    path.includes('.') // for favicon, images, etc.
+
+  if (!isExcluded) {
+    // 2. CHECK MAINTENANCE STATUS FROM SUPABASE
+    const { data: config } = await supabase
+      .from('app_config')
+      .select('is_active')
+      .eq('key', 'maintenance_mode')
+      .single()
+
+    const isMaintenanceOn = config?.is_active ?? false
+
+    if (isMaintenanceOn) {
+      // Redirect public users to /maintenance if they aren't already there
+      if (path !== '/maintenance') {
+        return NextResponse.redirect(new URL('/maintenance', request.url))
+      }
+    } else {
+      // If maintenance is OFF, don't let people manually visit the maintenance page
+      if (path === '/maintenance') {
+        return NextResponse.redirect(new URL('/', request.url))
+      }
+    }
+  }
+
+  // 3. PROTECT ADMIN ROUTES (Your existing auth logic)
+  if (path.startsWith('/admin')) {
+    if (!user) {
       return NextResponse.redirect(new URL('/dev-login', request.url))
     }
   }
@@ -36,4 +70,16 @@ export async function middleware(request: NextRequest) {
   return response
 }
 
-export const config = { matcher: ['/admin/:path*'] }
+// Ensure the matcher catches all pages except specific static folders
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+  ],
+}
