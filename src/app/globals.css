@@ -5,6 +5,15 @@
   --foreground: #171717;
 }
 
+html {
+  scroll-behavior: smooth;
+  /* If you use a library like Lenis later, you'd remove this */
+}
+
+section {
+  scroll-margin-top: 80px; /* This ensures even standard anchor links land perfectly */
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

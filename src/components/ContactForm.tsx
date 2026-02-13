@@ -25,7 +25,7 @@ export default function ContactForm() {
       (e.target as HTMLFormElement).reset();
     }
   }
-
+  
   return (
     <div className="relative p-1 bg-gradient-to-br from-cyan-400/20 to-purple-600/20 rounded-2xl">
       <form onSubmit={handleSubmit} className="bg-[#020617] p-8 rounded-2xl space-y-6">
