@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import MessageLogs from '@/components/MessageLogs';
 import StatsOverview from '@/components/StatsOverview';
 import ExperienceAdmin from '@/components/ExperienceAdmin';
+import MaintenanceToggle from '@/components/MaintenanceToggle';
 
 export default function AdminDashboard() {
     const router = useRouter();
@@ -28,11 +29,15 @@ export default function AdminDashboard() {
                         <LayoutDashboard className="text-cyan-400" /> 
                         <h1 className="text-2xl font-bold uppercase tracking-tighter">Admin_Panel</h1>
                     </div>
+                     <div>
+                            <MaintenanceToggle/>
+                    </div>
                     <button 
                         onClick={handleLogout} 
                         className="text-xs font-mono text-slate-400 hover:text-red-400 flex items-center gap-2 transition-colors"
                     >
                         <LogOut size={16} /> LOGOUT
+                       
                     </button>
                 </header>
 
