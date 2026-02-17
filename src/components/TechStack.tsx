@@ -4,8 +4,8 @@ import TechCard from './TechCard';
 export default function TechStack() {
   return (
     <section id="stack" className="relative z-10 max-w-7xl mx-auto px-6 py-32">
-      <h2 className="text-4xl font-bold mb-16 text-center">
-        Tech <span className="text-cyan-400">Arsenal</span>
+      <h2 className="text-4xl font-bold mb-16 text-center text-white">
+        Tech <span className="text-[#2F9A58]">Arsenal</span>
       </h2>
       
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-8">

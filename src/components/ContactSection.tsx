@@ -13,7 +13,7 @@ export default function Contact({ email, location }: ContactProps) {
         {/* Left Side: Info */}
         <div>
           <h2 className="text-5xl font-bold mb-6">
-            Let's <span className="text-cyan-400">Initialize</span> <br /> a Connection.
+            Let's <span className="text-[#2F9A58]">Initialize</span> <br /> a Connection.
           </h2>
           <p className="text-slate-400 mb-10 leading-relaxed text-lg italic">
             Currently available for intern software engineering opportunities. 
@@ -26,15 +26,15 @@ export default function Contact({ email, location }: ContactProps) {
             <p>{`> Email: ${email}`}</p>
             <p className="flex items-center gap-2">
               {`> Status: `} 
-              <span className="text-cyan-400 animate-pulse">Ready to Scale</span>
+              <span className="text-[#2F9A58] animate-pulse">Ready to Scale</span>
             </p>
           </div>
         </div>
 
         {/* Right Side: Interactive Form */}
         <div className="relative">
-          {/* Subtle glow behind the form */}
-          <div className="absolute -inset-4 bg-cyan-400/5 blur-3xl rounded-full pointer-events-none" />
+          {/* Subtle green glow behind the form */}
+          <div className="absolute -inset-4 bg-[#2F9A58]/5 blur-3xl rounded-full pointer-events-none" />
           <ContactForm />
         </div>
       </div>

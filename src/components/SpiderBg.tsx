@@ -24,8 +24,15 @@ export default function SpiderBg() {
           modes: { grab: { distance: 200, links: { opacity: 0.5 } } },
         },
         particles: {
-          color: { value: ["#00f2ff", "#c026d3"] },
-          links: { color: "#00f2ff", distance: 150, enable: true, opacity: 0.2, width: 1 },
+          // Updated to your brand green and a darker forest green variant
+          color: { value: ["#2F9A58", "#1e6339"] }, 
+          links: { 
+            color: "#2F9A58", 
+            distance: 150, 
+            enable: true, 
+            opacity: 0.2, 
+            width: 1 
+          },
           move: { enable: true, speed: 1.5 },
           number: { density: { enable: true }, value: 80 },
           opacity: { value: 0.3 },
