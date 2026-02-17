@@ -14,7 +14,7 @@ import ScrollToTop from '@/components/ScrollToTop';
 
 export default function Home() {
   useEffect(() => {
-    // This calls the SQL function you just created
+    // This calls the SQL function to track profile views
     const trackView = async () => {
       await supabase.rpc('increment_views');
     };
@@ -26,16 +26,17 @@ export default function Home() {
   const cvLink = getCvUrl();
 
   return (
-    <main className="relative min-h-screen bg-[#020617] text-white selection:bg-cyan-500/30">
+    /* Updated background to a deep greenish-black and selection to match #2F9A58 */
+    <main className="relative min-h-screen bg-[#021107] text-white selection:bg-[#2F9A58]/30"> 
       {/* Spider Background */}
       <SpiderBg />
 
       {/* Navigation Bar */}
       <Navbar />
 
-     <section id="home">
-      <Hero cvLink={cvLink} />
-    </section>
+      <section id="home">
+        <Hero cvLink={cvLink} />
+      </section>
       
       <AboutMe />
 
@@ -43,7 +44,7 @@ export default function Home() {
       <TechStack />
      
       {/* Projects */}
-      < Projects />
+      <Projects />
 
       <ExperienceLeadership />
 

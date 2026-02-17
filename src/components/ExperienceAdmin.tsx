@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Trash2, Edit2, Plus, Save, X, Loader2, Briefcase, Trophy, Code, UploadCloud } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { supabase } from "@/lib/supabase"; // Ensure this uses createBrowserClient from @supabase/ssr
+import { supabase } from "@/lib/supabase"; 
 
 // --- TYPES ---
 interface BaseItem {
@@ -51,11 +51,11 @@ export default function ExperienceAdmin() {
   // --- FORM STATES ---
   const [formData, setFormData] = useState<any>(initialExpState);
   const [tagInput, setTagInput] = useState("");
-  const [imageInput, setImageInput] = useState(""); // Stores comma-separated URLs strings
+  const [imageInput, setImageInput] = useState(""); 
 
   const apiEndpoint = `/api/admin/${activeTab}`; 
 
-  // 1. AUTHENTICATION CHECK (Cookie-based)
+  // 1. AUTHENTICATION CHECK
   useEffect(() => {
     const checkSession = async () => {
       try {
@@ -76,7 +76,6 @@ export default function ExperienceAdmin() {
 
     checkSession();
     
-    // Listen for auth changes (sign out, etc.)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
         if (!session) router.replace("/dev-login");
     });
@@ -95,7 +94,6 @@ export default function ExperienceAdmin() {
   const fetchItems = async () => {
     setLoading(true);
     try {
-      // Add timestamp to prevent browser caching of JSON data
       const res = await fetch(`${apiEndpoint}?t=${Date.now()}`);
       if (res.ok) {
         const data = await res.json();
@@ -108,12 +106,10 @@ export default function ExperienceAdmin() {
     }
   };
 
-  // 3. HANDLE TEXT INPUTS
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 4. IMAGE UPLOAD LOGIC (Supports Multiple Files)
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       if (!e.target.files || e.target.files.length === 0) return;
@@ -122,10 +118,8 @@ export default function ExperienceAdmin() {
       const files = Array.from(e.target.files); 
       const newUrls: string[] = [];
 
-      // Upload all files in parallel
       const uploadPromises = files.map(async (file) => {
         const fileExt = file.name.split('.').pop();
-        // Create unique name: timestamp-randomString.ext
         const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
         const filePath = `${activeTab}/${fileName}`; 
 
@@ -142,20 +136,16 @@ export default function ExperienceAdmin() {
         return data.publicUrl;
       });
 
-      // Wait for all to finish
       const uploadedUrls = await Promise.all(uploadPromises);
       newUrls.push(...uploadedUrls);
 
-      // Update Form State
       if (activeTab === 'projects') {
-        // Append new URLs to the existing list
         const currentImages = imageInput ? imageInput.split(',').map(s => s.trim()).filter(Boolean) : [];
         const combinedImages = [...currentImages, ...newUrls];
         
         setImageInput(combinedImages.join(', '));
         setFormData({ ...formData, imageUrls: combinedImages });
       } else {
-        // For Experience/Leadership, just take the first one
         const firstUrl = newUrls[0];
         setFormData({ ...formData, image: firstUrl });
       }
@@ -165,18 +155,16 @@ export default function ExperienceAdmin() {
       alert(`Upload failed: ${error.message}`);
     } finally {
       setUploading(false);
-      e.target.value = ''; // Reset input to allow selecting same files again
+      e.target.value = ''; 
     }
   };
 
-  // 5. SUBMIT FORM
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     let payload = { ...formData };
 
-    // Process Array Fields
     if (activeTab === 'projects') {
       payload.technologies = tagInput.split(',').map(t => t.trim()).filter(t => t);
       payload.imageUrls = imageInput.split(',').map(t => t.trim()).filter(t => t);
@@ -205,13 +193,11 @@ export default function ExperienceAdmin() {
     }
   };
 
-  // 6. DELETE ITEM & IMAGES
   const handleDelete = async (item: any) => {
     if (!confirm("Delete this item? This cannot be undone.")) return;
     setLoading(true);
 
     try {
-      // Helper to parse path from URL
       const extractPath = (url: string) => {
         try {
           const marker = '/portfolio-images/';
@@ -220,7 +206,6 @@ export default function ExperienceAdmin() {
         } catch { return null; }
       };
 
-      // Find images to delete
       const imagesToDelete: string[] = [];
       if (activeTab === 'projects') {
         if (item.imageUrls && Array.isArray(item.imageUrls)) {
@@ -236,12 +221,10 @@ export default function ExperienceAdmin() {
         }
       }
 
-      // Remove images from bucket
       if (imagesToDelete.length > 0) {
         await supabase.storage.from('portfolio-images').remove(imagesToDelete);
       }
 
-      // Delete record from DB
       const res = await fetch(apiEndpoint, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -259,7 +242,6 @@ export default function ExperienceAdmin() {
     }
   };
 
-  // 7. EDIT HELPER
   const startEdit = (item: any) => {
     setIsEditing(item.id);
     setFormData(item);
@@ -280,11 +262,9 @@ export default function ExperienceAdmin() {
     setImageInput("");
   };
 
-  // --- RENDER UI ---
-
   if (authChecking || !isAuthorized) {
     return (
-        <div className="flex flex-col items-center justify-center py-20 gap-4 text-cyan-400">
+        <div className="flex flex-col items-center justify-center py-20 gap-4 text-[#2F9A58]">
             <Loader2 className="animate-spin" size={48} />
             <p className="text-white font-mono text-sm uppercase tracking-widest animate-pulse">
                 Verifying Security Credentials...
@@ -294,23 +274,23 @@ export default function ExperienceAdmin() {
   }
 
   return (
-    <div className="w-full space-y-8 bg-slate-950/50 rounded-xl p-6 border border-white/5">
+    <div className="w-full space-y-8 bg-green-950/50 rounded-xl p-6 border border-white/5">
       
       {/* TABS */}
       <div className="flex flex-col md:flex-row items-center justify-between border-b border-white/10 pb-6 gap-4">
         <h2 className="text-xl font-bold text-white flex items-center gap-2">
             Content Manager
-            {loading && <Loader2 className="animate-spin text-cyan-400" size={20} />}
+            {loading && <Loader2 className="animate-spin text-[#2F9A58]" size={20} />}
         </h2>
         
-        <div className="flex bg-slate-900 p-1 rounded-lg border border-white/10">
+        <div className="flex bg-green-950/50 p-1 rounded-lg border border-white/10">
             {['experience', 'leadership', 'projects'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab as any)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium capitalize transition-all ${
                     activeTab === tab 
-                    ? 'bg-cyan-500 text-black shadow-lg shadow-cyan-500/20' 
+                    ? 'bg-[#2F9A58] text-white shadow-lg shadow-[#2F9A58]/20' 
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -322,18 +302,16 @@ export default function ExperienceAdmin() {
       </div>
 
       {/* FORM SECTION */}
-      <motion.div layout className="bg-slate-900 p-6 rounded-xl border border-white/10 shadow-xl">
-        <h3 className="text-lg font-semibold text-cyan-400 mb-4 flex items-center gap-2">
+      <motion.div layout className="bg-green-950/50 p-6 rounded-xl border border-white/10 shadow-xl">
+        <h3 className="text-lg font-semibold text-[#2F9A58] mb-4 flex items-center gap-2">
           {isEditing ? <Edit2 size={18} /> : <Plus size={18} />}
           {isEditing ? `Edit ${activeTab}` : `Add New ${activeTab}`}
         </h3>
 
         <form onSubmit={handleSubmit} className="grid gap-4">
           
-          {/* DYNAMIC FIELDS */}
           {activeTab === 'projects' ? (
              <>
-                {/* PROJECT FIELDS */}
                 <div className="grid md:grid-cols-2 gap-4">
                   <input name="projectName" placeholder="Project Name" value={formData.projectName} onChange={handleChange} required className="input-style" />
                   <input name="learned" placeholder="Key Learnings" value={formData.learned} onChange={handleChange} className="input-style" />
@@ -354,8 +332,6 @@ export default function ExperienceAdmin() {
                     <div className="flex gap-2 mb-2">
                         <label className={`cursor-pointer flex items-center gap-2 bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded text-xs text-white transition-colors ${uploading ? 'opacity-50' : ''}`}>
                             <UploadCloud size={14} /> {uploading ? "Uploading..." : "Upload Images"}
-                            
-                            {/* MULTIPLE ATTRIBUTE ADDED HERE */}
                             <input 
                                 type="file" 
                                 accept="image/*" 
@@ -376,7 +352,6 @@ export default function ExperienceAdmin() {
              </>
           ) : (
              <>
-                {/* EXPERIENCE / LEADERSHIP FIELDS */}
                 <div className="grid md:grid-cols-2 gap-4">
                   <input name="title" placeholder="Title" value={formData.title} onChange={handleChange} required className="input-style" />
                   <input name="org" placeholder="Organization" value={formData.org} onChange={handleChange} required className="input-style" />
@@ -443,8 +418,8 @@ export default function ExperienceAdmin() {
                 </div>
 
                 <div className="flex gap-2 shrink-0 ml-4">
-                  <button onClick={() => startEdit(item)} className="p-2 text-cyan-400 hover:bg-cyan-400/10 rounded transition-colors"><Edit2 size={18} /></button>
-                  <button onClick={() => handleDelete(item)} className="p-2 text-red-400 hover:bg-red-400/10 rounded transition-colors"><Trash2 size={18} /></button>
+                  <button onClick={() => startEdit(item)} className="p-2 text-[#2F9A58] hover:bg-[#2F9A58]/10 rounded transition-colors"><Edit2 size={18} /></button>
+                  <button onClick={() => handleDelete(item)} className="p-2 text-[#2F9A58]/80 hover:bg-[#2F9A58]/10 rounded transition-colors"><Trash2 size={18} /></button>
                 </div>
               </motion.div>
             ))}
@@ -459,8 +434,8 @@ export default function ExperienceAdmin() {
       </div>
       
       <style jsx>{`
-        .input-style { @apply w-full bg-slate-950 border border-white/10 rounded p-3 text-sm focus:border-cyan-400 outline-none transition-colors text-white placeholder:text-slate-600; }
-        .btn-primary { @apply flex items-center gap-2 bg-cyan-600 hover:bg-cyan-500 text-white font-bold px-6 py-2.5 rounded transition-all disabled:opacity-50 disabled:cursor-not-allowed; }
+        .input-style { @apply w-full bg-slate-950 border border-white/10 rounded p-3 text-sm focus:border-[#2F9A58] outline-none transition-colors text-white placeholder:text-slate-600; }
+        .btn-primary { @apply flex items-center gap-2 bg-[#2F9A58] hover:bg-[#247c46] text-white font-bold px-6 py-2.5 rounded transition-all disabled:opacity-50 disabled:cursor-not-allowed; }
         .btn-secondary { @apply flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-6 py-2.5 rounded transition-colors; }
       `}</style>
     </div>
