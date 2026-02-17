@@ -44,14 +44,14 @@ export default function Projects() {
     <section id="projects" className="relative z-10 max-w-7xl mx-auto px-6 py-32">
       {/* Section Header */}
       <div className="flex items-center gap-4 mb-20">
-        <FolderGit2 className="text-cyan-400" />
+        <FolderGit2 className="text-[#2F9A58]" />
         <h2 className="text-4xl font-bold uppercase tracking-tighter text-white">Project_Vault</h2>
       </div>
 
       {/* Loading State */}
       {loading ? (
         <div className="flex justify-center items-center py-20">
-          <Loader2 className="animate-spin text-cyan-400" size={40} />
+          <Loader2 className="animate-spin text-[#2F9A58]" size={40} />
         </div>
       ) : (
         /* Projects Grid */
@@ -61,15 +61,6 @@ export default function Projects() {
               <ProjectCard 
                 key={project.id} // Use database ID as key
                 {...project} 
-                /* {...project} automatically passes:
-                   - projectName
-                   - description
-                   - learned
-                   - technologies
-                   - imageUrls
-                   - githubUrl
-                   - liveUrl
-                */
               />
             ))
           ) : (

@@ -52,17 +52,14 @@ export default function Hero({ cvLink }: HeroProps) {
           {/* Left Column: Text */}
           <div className="order-2 md:order-1 relative z-20 text-center md:text-left flex flex-col justify-center">
             
-            {/* Name First */}
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-              Hello, I'm <span className="text-cyan-400">Hamdhi Haris</span>
+              Hello, I'm <span className="text-[#2F9A58]">Hamdhi Haris</span>
             </h2>
 
-            {/* Degree Second */}
-            <p className="mono text-cyan-400 mb-6 tracking-widest text-sm md:text-base">
+            <p className="mono text-[#2F9A58] mb-6 tracking-widest text-sm md:text-base">
               // BSC (Hons) in Software Engineering(Ug)
             </p>
             
-            {/* Title & Animated Text Wrapper */}
             <div className="mb-4">
               <div className="flex justify-center md:justify-start">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
@@ -72,13 +69,13 @@ export default function Hero({ cvLink }: HeroProps) {
               
               <div className="min-h-[60px] sm:min-h-[70px] md:min-h-[80px] lg:min-h-[100px] flex justify-center md:justify-start">
                 <span className="
-                  bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent 
+                  bg-gradient-to-r from-[#2F9A58] to-[#1e6339] bg-clip-text text-transparent 
                   text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold
                   text-center md:text-left
                   leading-tight
                 ">
                   {text}
-                  <span className="ml-1 animate-pulse">|</span>
+                  <span className="ml-1 animate-pulse text-[#2F9A58]">|</span>
                 </span>
               </div>
             </div>
@@ -88,36 +85,36 @@ export default function Hero({ cvLink }: HeroProps) {
               Focused on writing clean, maintainable code and engineering reliable digital systems.
             </p>
 
-            {/* BUTTON GROUP */}
             <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 items-center">
               <a 
                 href={cvLink} 
                 download 
-                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-400 to-purple-600 px-6 py-4 font-bold text-black rounded-sm hover:scale-105 transition shadow-[0_0_20px_rgba(6,182,212,0.3)] whitespace-nowrap"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-[#2F9A58] to-[#1e6339] px-6 py-4 font-bold text-white rounded-sm hover:scale-105 transition shadow-[0_0_20px_rgba(47,154,88,0.3)] whitespace-nowrap"
               >
                 <Download size={18} /> DOWNLOAD_CV
               </a>
 
               <a 
                 href="#contact" 
-                className="w-full sm:w-auto flex items-center justify-center gap-2 border border-cyan-400/50 hover:bg-cyan-400/10 px-6 py-4 font-bold text-cyan-400 rounded-sm hover:scale-105 transition whitespace-nowrap"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 border border-[#2F9A58]/50 hover:bg-[#2F9A58]/10 px-6 py-4 font-bold text-[#2F9A58] rounded-sm hover:scale-105 transition whitespace-nowrap"
               >
                 <Contact size={18} /> CONTACT_ME
               </a>
             </div>
           </div>
 
-          {/* Right Column: Image (Untouched original styling) */}
+          {/* Right Column: Image */}
           <div className="order-1 md:order-2 flex items-center justify-center relative z-10">
-            <div className="relative p-1 bg-gradient-to-br from-cyan-400/20 to-purple-600/20 rounded-sm">
+            <div className="relative p-1 bg-gradient-to-br from-[#2F9A58]/20 to-[#2F9A58]/5 rounded-sm">
               
-              <div className="absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-cyan-400 animate-pulse z-30" />
-              <div className="absolute -top-2 -right-2 w-8 h-8 border-t-2 border-r-2 border-purple-500 animate-pulse z-30" />
-              <div className="absolute -bottom-2 -left-2 w-8 h-8 border-b-2 border-l-2 border-purple-500 animate-pulse z-30" />
-              <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-2 border-r-2 border-cyan-400 animate-pulse z-30" />
+              <div className="absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-[#2F9A58] animate-pulse z-30" />
+              <div className="absolute -top-2 -right-2 w-8 h-8 border-t-2 border-r-2 border-[#2F9A58] animate-pulse z-30" />
+              <div className="absolute -bottom-2 -left-2 w-8 h-8 border-b-2 border-l-2 border-[#2F9A58] animate-pulse z-30" />
+              <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-2 border-r-2 border-[#2F9A58] animate-pulse z-30" />
 
               <div className="relative w-64 h-64 md:w-80 lg:w-96 md:h-80 lg:h-96 overflow-hidden bg-slate-900 shadow-2xl">
-                <div className="absolute top-0 w-full h-0.5 bg-cyan-400 shadow-[0_0_15px_#00f2ff] animate-[scan_4s_linear_infinite] z-20" />
+                {/* Updated Scan line shadow color to match green */}
+                <div className="absolute top-0 w-full h-0.5 bg-[#2F9A58] shadow-[0_0_15px_#2F9A58] animate-[scan_4s_linear_infinite] z-20" />
 
                 <img
                   src="/portfolio-img.jpeg"
@@ -127,10 +124,10 @@ export default function Hero({ cvLink }: HeroProps) {
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none z-10" />
 
-                <div className="absolute bottom-4 left-4 mono text-[10px] bg-black/80 p-2 backdrop-blur-md border border-cyan-400/50 z-20">
+                <div className="absolute bottom-4 left-4 mono text-[10px] bg-black/80 p-2 backdrop-blur-md border border-[#2F9A58]/50 z-20">
                   <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-ping" />
-                    <p className="text-cyan-400 font-bold uppercase tracking-widest">Target_Locked: Dev</p>
+                    <span className="w-1.5 h-1.5 bg-[#2F9A58] rounded-full animate-ping" />
+                    <p className="text-[#2F9A58] font-bold uppercase tracking-widest">Target_Locked: Dev</p>
                   </div>
                 </div>
               </div>

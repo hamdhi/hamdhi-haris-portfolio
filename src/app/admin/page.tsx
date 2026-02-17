@@ -20,24 +20,25 @@ export default function AdminDashboard() {
     };
 
     return (
-        <main className="min-h-screen bg-[#020617] text-white p-8 font-sans">
+        /* Updated background to deep greenish-black theme */
+        <main className="min-h-screen bg-[#020a05] text-white p-8 font-sans">
             <div className="max-w-5xl mx-auto space-y-12">
                 
                 {/* 1. Header & Logout */}
                 <header className="flex justify-between items-center border-b border-white/10 pb-6">
                     <div className="flex items-center gap-3">
-                        <LayoutDashboard className="text-cyan-400" /> 
+                        {/* Swapped cyan for #2F9A58 */}
+                        <LayoutDashboard className="text-[#2F9A58]" /> 
                         <h1 className="text-2xl font-bold uppercase tracking-tighter">Admin_Panel</h1>
                     </div>
-                     <div>
-                            <MaintenanceToggle/>
+                    <div>
+                        <MaintenanceToggle/>
                     </div>
                     <button 
                         onClick={handleLogout} 
-                        className="text-xs font-mono text-slate-400 hover:text-red-400 flex items-center gap-2 transition-colors"
+                        className="text-xs font-mono text-slate-400 hover:text-[#2F9A58] flex items-center gap-2 transition-colors"
                     >
                         <LogOut size={16} /> LOGOUT
-                       
                     </button>
                 </header>
 
@@ -45,7 +46,6 @@ export default function AdminDashboard() {
                 <StatsOverview />
 
                 {/* 3. Unified Manager (Projects + Experience + Leadership) */}
-                {/* This component now handles EVERYTHING you deleted from this file */}
                 <ExperienceAdmin />
 
                 {/* 4. Messages */}

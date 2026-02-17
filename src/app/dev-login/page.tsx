@@ -17,21 +17,23 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#020617] flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-[#0f172a] border border-cyan-500/20 p-8 rounded-2xl shadow-2xl">
-        <h1 className="text-2xl font-bold text-white mb-6 text-center">Dev <span className="text-cyan-400">Access</span></h1>
+    <main className="min-h-screen bg-[#020a05] flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-[#0f172a] border border-[#2F9A58]/20 p-8 rounded-2xl shadow-2xl">
+        <h1 className="text-2xl font-bold text-white mb-6 text-center">
+          Dev <span className="text-[#2F9A58]">Access</span>
+        </h1>
         <form onSubmit={handleLogin} className="space-y-4">
           <input 
             type="email" placeholder="Email" 
-            className="w-full bg-[#1e293b] border border-slate-700 p-3 rounded-lg text-white focus:outline-none focus:border-cyan-500"
+            className="w-full bg-[#1e293b] border border-slate-700 p-3 rounded-lg text-white focus:outline-none focus:border-[#2F9A58] transition-colors"
             onChange={(e) => setEmail(e.target.value)}
           />
           <input 
             type="password" placeholder="Password" 
-            className="w-full bg-[#1e293b] border border-slate-700 p-3 rounded-lg text-white focus:outline-none focus:border-cyan-500"
+            className="w-full bg-[#1e293b] border border-slate-700 p-3 rounded-lg text-white focus:outline-none focus:border-[#2F9A58] transition-colors"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-3 rounded-lg transition-all">
+          <button className="w-full bg-[#2F9A58] hover:bg-[#38b769] text-white font-bold py-3 rounded-lg shadow-lg shadow-[#2F9A58]/20 transition-all active:scale-[0.98]">
             Enter Dashboard
           </button>
         </form>

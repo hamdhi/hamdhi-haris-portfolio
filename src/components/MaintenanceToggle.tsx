@@ -44,11 +44,12 @@ export default function MaintenanceToggle() {
     setUpdating(false);
   };
 
-  if (loading) return <Loader2 className="animate-spin text-cyan-400" size={20} />;
+  // Changed Loader to brand color #2F9A58
+  if (loading) return <Loader2 className="animate-spin text-[#2F9A58]" size={20} />;
 
   return (
     <div className="flex items-center gap-4 p-4 rounded-xl border border-white/10 bg-slate-900/50">
-      <div className={`p-2 rounded-lg ${isActive ? "bg-red-500/20 text-red-500" : "bg-green-500/20 text-green-500"}`}>
+      <div className={`p-2 rounded-lg ${isActive ? "bg-[#2F9A58]/20 text-[#2F9A58]" : "bg-slate-800 text-slate-500"}`}>
         {isActive ? <ShieldAlert size={20} /> : <ShieldCheck size={20} />}
       </div>
 
@@ -65,7 +66,7 @@ export default function MaintenanceToggle() {
         onClick={handleToggle}
         disabled={updating}
         className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
-          isActive ? "bg-red-600" : "bg-slate-700"
+          isActive ? "bg-[#2F9A58]" : "bg-slate-700"
         }`}
       >
         <span
@@ -75,7 +76,7 @@ export default function MaintenanceToggle() {
         />
         {updating && (
           <div className="absolute -right-6">
-            <Loader2 className="animate-spin text-white" size={12} />
+            <Loader2 className="animate-spin text-[#2F9A58]" size={12} />
           </div>
         )}
       </button>

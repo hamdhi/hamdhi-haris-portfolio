@@ -56,16 +56,17 @@ export default function StatsOverview() {
     return () => { supabase.removeChannel(channel); };
   }, []);
 
+  // Swapped colors from red variations to emerald/green variations
   const cards = [
-    { label: 'Project_Vault', val: stats.projects, icon: FolderGit2, color: 'text-cyan-400', bg: 'bg-cyan-500/10' },
-    { label: 'Client_Comms', val: stats.messages, icon: MessageSquare, color: 'text-purple-400', bg: 'bg-purple-500/10' },
-    { label: 'System_Views', val: stats.views, icon: Eye, color: 'text-emerald-400', bg: 'bg-emerald-500/10' }
+    { label: 'Project_Vault', val: stats.projects, icon: FolderGit2, color: 'text-[#2F9A58]', bg: 'bg-[#2F9A58]/10' },
+    { label: 'Client_Comms', val: stats.messages, icon: MessageSquare, color: 'text-emerald-400', bg: 'bg-emerald-400/10' },
+    { label: 'System_Views', val: stats.views, icon: Eye, color: 'text-[#2F9A58]', bg: 'bg-[#2F9A58]/10' }
   ];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
       {cards.map((card, idx) => (
-        <div key={idx} className="bg-[#0f172a] border border-white/5 p-5 rounded-2xl group hover:border-white/10 transition-all">
+        <div key={idx} className="bg-[#0f172a] border border-white/5 p-5 rounded-2xl group hover:border-[#2F9A58]/20 transition-all">
           <div className="flex justify-between items-start">
             <div>
               <p className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-1">{card.label}</p>
@@ -84,7 +85,7 @@ export default function StatsOverview() {
           <div className="mt-4 flex items-center gap-2">
             <div className="h-1 flex-1 bg-white/5 rounded-full overflow-hidden">
               <div 
-                className={`h-full ${card.color.replace('text', 'bg')} opacity-40 transition-all duration-1000`} 
+                className={`h-full ${card.color.startsWith('text-[#') ? 'bg-[#2F9A58]' : 'bg-emerald-400'} opacity-40 transition-all duration-1000`} 
                 style={{ width: loading ? '0%' : '100%' }}
               />
             </div>

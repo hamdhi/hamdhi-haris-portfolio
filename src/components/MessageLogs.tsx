@@ -80,7 +80,7 @@ export default function MessageLogs() {
 
   if (loading) {
     return (
-      <div className="mt-20 flex items-center gap-3 text-cyan-400 font-mono text-xs animate-pulse">
+      <div className="mt-20 flex items-center gap-3 text-[#2F9A58] font-mono text-xs animate-pulse">
         <Zap size={14} className="animate-bounce" />
         ESTABLISHING_LIVE_UPLINK...
       </div>
@@ -92,16 +92,16 @@ export default function MessageLogs() {
       {/* Section Header with Live Indicator */}
       <div className="flex items-center justify-between border-b border-white/10 pb-4">
         <div className="flex items-center gap-3">
-          <MessageSquare className="text-cyan-400" size={20} />
+          <MessageSquare className="text-[#2F9A58]" size={20} />
           <h2 className="text-sm font-mono text-slate-400 uppercase tracking-[0.3em]">Communication_Logs</h2>
         </div>
         
-        <div className="flex items-center gap-2 px-3 py-1 bg-cyan-500/5 rounded-full border border-cyan-500/20">
+        <div className="flex items-center gap-2 px-3 py-1 bg-[#2F9A58]/5 rounded-full border border-[#2F9A58]/20">
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2F9A58] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2F9A58]"></span>
           </span>
-          <span className="text-[10px] font-mono text-cyan-500 font-bold uppercase tracking-tighter">Live_Feed</span>
+          <span className="text-[10px] font-mono text-[#2F9A58] font-bold uppercase tracking-tighter">Live_Feed</span>
         </div>
       </div>
 
@@ -111,13 +111,13 @@ export default function MessageLogs() {
           messages.map((msg) => (
             <div 
               key={msg.id} 
-              className="group relative bg-[#0f172a] border border-white/5 p-5 rounded-2xl hover:border-cyan-500/30 transition-all animate-in fade-in slide-in-from-top-4 duration-500"
+              className="group relative bg-[#0f172a] border border-white/5 p-5 rounded-2xl hover:border-[#2F9A58]/30 transition-all animate-in fade-in slide-in-from-top-4 duration-500"
             >
               {/* Delete Button - Appears on Hover */}
               <button 
                 onClick={() => handleDelete(msg.id)}
                 disabled={deletingId === msg.id}
-                className="absolute top-4 right-4 p-2 text-slate-600 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-all opacity-0 group-hover:opacity-100 disabled:opacity-50"
+                className="absolute top-4 right-4 p-2 text-slate-600 hover:text-[#2F9A58] hover:bg-[#2F9A58]/10 rounded-lg transition-all opacity-0 group-hover:opacity-100 disabled:opacity-50"
               >
                 {deletingId === msg.id ? (
                   <Loader2 size={16} className="animate-spin" />
@@ -128,7 +128,7 @@ export default function MessageLogs() {
 
               <div className="flex flex-col md:flex-row justify-between gap-4 mb-4 pr-10">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20 text-cyan-400">
+                  <div className="w-10 h-10 rounded-full bg-[#2F9A58]/10 flex items-center justify-center border border-[#2F9A58]/20 text-[#2F9A58]">
                     <User size={18} />
                   </div>
                   <div>
@@ -149,7 +149,7 @@ export default function MessageLogs() {
               </div>
 
               <div className="relative p-4 bg-slate-950/50 rounded-xl border border-white/5 text-sm text-slate-300 leading-relaxed italic">
-                <span className="text-cyan-500/20 font-serif text-3xl absolute -top-1 -left-1 select-none">"</span>
+                <span className="text-[#2F9A58]/20 font-serif text-3xl absolute -top-1 -left-1 select-none">"</span>
                 {msg.message}
               </div>
             </div>
