@@ -111,7 +111,7 @@ export default function MessageLogs() {
           messages.map((msg) => (
             <div 
               key={msg.id} 
-              className="group relative bg-[#0f172a] border border-white/5 p-5 rounded-2xl hover:border-[#2F9A58]/30 transition-all animate-in fade-in slide-in-from-top-4 duration-500"
+              className="group relative bg-[#0F2A19] border border-white/5 p-5 rounded-2xl hover:border-[#2F9A58]/30 transition-all animate-in fade-in slide-in-from-top-4 duration-500"
             >
               {/* Delete Button - Appears on Hover */}
               <button 
@@ -139,7 +139,7 @@ export default function MessageLogs() {
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-2 text-slate-600 font-mono text-[9px] bg-black/20 px-3 py-1 rounded-full self-start border border-white/5">
+                <div className="flex items-center gap-2 text-white-600 font-mono text-[9px] bg-black/20 px-3 py-1 rounded-full self-start border border-white/5">
                   <Clock size={10} />
                   {new Date(msg.created_at).toLocaleString([], {
                     dateStyle: 'medium',
@@ -148,7 +148,7 @@ export default function MessageLogs() {
                 </div>
               </div>
 
-              <div className="relative p-4 bg-slate-950/50 rounded-xl border border-white/5 text-sm text-slate-300 leading-relaxed italic">
+              <div className="relative p-4 bg-green-500/10 rounded-xl border border-white/1 text-sm text-white-300 leading-relaxed italic">
                 <span className="text-[#2F9A58]/20 font-serif text-3xl absolute -top-1 -left-1 select-none">"</span>
                 {msg.message}
               </div>

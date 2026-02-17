@@ -66,7 +66,7 @@ export default function StatsOverview() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
       {cards.map((card, idx) => (
-        <div key={idx} className="bg-[#0f172a] border border-white/5 p-5 rounded-2xl group hover:border-[#2F9A58]/20 transition-all">
+        <div key={idx} className="bg-[#0F2A20] border border-white/5 p-5 rounded-2xl group hover:border-[#2F9A58]/20 transition-all">
           <div className="flex justify-between items-start">
             <div>
               <p className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-1">{card.label}</p>

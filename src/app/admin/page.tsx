@@ -21,7 +21,7 @@ export default function AdminDashboard() {
 
     return (
         /* Updated background to deep greenish-black theme */
-        <main className="min-h-screen bg-[#020a05] text-white p-8 font-sans">
+        <main className="min-h-screen bg-[#062010] text-white p-8 font-sans">
             <div className="max-w-5xl mx-auto space-y-12">
                 
                 {/* 1. Header & Logout */}

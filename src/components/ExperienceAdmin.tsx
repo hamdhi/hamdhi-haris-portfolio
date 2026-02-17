@@ -274,7 +274,7 @@ export default function ExperienceAdmin() {
   }
 
   return (
-    <div className="w-full space-y-8 bg-slate-950/50 rounded-xl p-6 border border-white/5">
+    <div className="w-full space-y-8 bg-green-950/50 rounded-xl p-6 border border-white/5">
       
       {/* TABS */}
       <div className="flex flex-col md:flex-row items-center justify-between border-b border-white/10 pb-6 gap-4">
@@ -283,7 +283,7 @@ export default function ExperienceAdmin() {
             {loading && <Loader2 className="animate-spin text-[#2F9A58]" size={20} />}
         </h2>
         
-        <div className="flex bg-slate-900 p-1 rounded-lg border border-white/10">
+        <div className="flex bg-green-950/50 p-1 rounded-lg border border-white/10">
             {['experience', 'leadership', 'projects'].map((tab) => (
               <button
                 key={tab}
@@ -302,7 +302,7 @@ export default function ExperienceAdmin() {
       </div>
 
       {/* FORM SECTION */}
-      <motion.div layout className="bg-slate-900 p-6 rounded-xl border border-white/10 shadow-xl">
+      <motion.div layout className="bg-green-950/50 p-6 rounded-xl border border-white/10 shadow-xl">
         <h3 className="text-lg font-semibold text-[#2F9A58] mb-4 flex items-center gap-2">
           {isEditing ? <Edit2 size={18} /> : <Plus size={18} />}
           {isEditing ? `Edit ${activeTab}` : `Add New ${activeTab}`}
