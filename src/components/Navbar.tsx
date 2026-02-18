@@ -85,7 +85,7 @@ export default function Navbar() {
           className="flex items-center gap-2 font-bold text-xl tracking-tighter cursor-pointer"
         >
           <Terminal className="text-[#2F9A58]" size={20} />
-          <span className="bg-gradient-to-r from-[#2F9A58] to-[#1e6339] bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-[#2F9A58] to-[#2F9A58] bg-clip-text text-transparent">
             HamdhiHaris
           </span>
         </Link>
