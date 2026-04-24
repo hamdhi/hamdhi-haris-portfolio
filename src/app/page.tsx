@@ -16,7 +16,12 @@ export default function Home() {
   useEffect(() => {
     // This calls the SQL function to track profile views
     const trackView = async () => {
-      await supabase.rpc('increment_views');
+      try {
+        await supabase.rpc('increment_views');
+      } catch (error) {
+        // Fail silently if Supabase is paused or unreachable
+        console.error('Failed to increment views:', error);
+      }
     };
     
     trackView();

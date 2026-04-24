@@ -24,7 +24,13 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  try {
+  // Timeout promise to catch paused Supabase instances (3 seconds)
+  const timeoutPromise = new Promise((_, reject) => {
+    setTimeout(() => reject(new Error('Supabase Connection Timeout')), 3000)
+  })
+
+  // Wrap the actual logic in an async function so we can race it
+  const middlewareLogic = async () => {
     const { data: { user } } = await supabase.auth.getUser()
     const path = request.nextUrl.pathname
 
@@ -67,14 +73,19 @@ export async function middleware(request: NextRequest) {
     }
 
     return response
+  }
+
+  try {
+    // Race the Supabase network calls against the 3-second timeout
+    return await Promise.race([middlewareLogic(), timeoutPromise]) as NextResponse
   } catch (error) {
-    console.error('Middleware error:', error)
+    console.error('Middleware error or timeout:', error)
     return NextResponse.redirect(new URL('/error', request.url))
   }
 }
 
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|error).*)',
   ],
 }
