@@ -8,6 +8,6 @@ export const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey);
 
 // Helper to get the CV download link
 export const getCvUrl = () => {
-  const { data } = supabase.storage.from('assets').getPublicUrl('john doe resume PDF.pdf');
+  const { data } = supabase.storage.from('assets').getPublicUrl('Hamdhi Resume.pdf');
   return data.publicUrl;
 };

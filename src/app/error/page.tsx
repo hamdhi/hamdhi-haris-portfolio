@@ -29,12 +29,10 @@ export default function ErrorPage() {
             </p>
           </div>
 
-          <Link
-            href="/"
-            className="inline-block border border-[#2F9A58] bg-[#2F9A58]/10 hover:bg-[#2F9A58] text-[#2F9A58] hover:text-[#020a05] font-bold mono text-sm py-3 px-8 transition-all duration-300 ease-in-out uppercase tracking-widest"
-          >
-            [ return_home ]
-          </Link>
+          {/* Refresh The page */}
+            <Link href="/" className="inline-block px-6 py-3 bg-[#2F9A58] hover:bg-[#2F9A58]/90 transition rounded text-sm font-medium">
+              Refresh Page
+            </Link>
         </div>
       </section>
 
