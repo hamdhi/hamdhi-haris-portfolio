@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Terminal, Activity } from "lucide-react";
+import { Github, Linkedin, Terminal, Activity, Mail, Phone } from "lucide-react";
 
 export default function Manifestation() {
   const HEADER_TEXT = "In Progress";
@@ -99,7 +99,7 @@ export default function Manifestation() {
         </p>
 
         {/* Signal Bars */}
-        <div className="flex items-end justify-center gap-1.5 h-6 mb-10 sm:mb-16">
+        <div className="flex items-end justify-center gap-1.5 h-6 mb-8 sm:mb-10">
           {[...Array(12)].map((_, i) => (
             <motion.div
               key={i}
@@ -113,6 +113,19 @@ export default function Manifestation() {
               className="w-1 bg-[#2F9A58] rounded-full opacity-60"
             />
           ))}
+        </div>
+
+        {/* Contact Section */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 mb-10 sm:mb-16 font-mono text-xs sm:text-sm text-slate-400 bg-[#05120a]/80 p-4 sm:px-8 rounded-lg border border-[#2F9A58]/20 backdrop-blur-md shadow-[0_0_15px_rgba(47,154,88,0.1)]">
+          <a href="mailto:hamdhiharis@gmail.com" className="flex items-center gap-3 hover:text-white group transition-colors">
+            <Mail size={16} className="text-[#2F9A58] group-hover:scale-110 transition-transform" />
+            hamdhiharis@gmail.com
+          </a>
+          <span className="hidden sm:inline text-[#2F9A58]/40">|</span>
+          <a href="tel:0702031483" className="flex items-center gap-3 hover:text-white group transition-colors">
+            <Phone size={16} className="text-[#2F9A58] group-hover:scale-110 transition-transform" />
+            0702031483
+          </a>
         </div>
 
         {/* Links */}
