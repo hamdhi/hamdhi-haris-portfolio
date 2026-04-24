@@ -25,9 +25,9 @@ export default function SpiderBg() {
         },
         particles: {
           // Updated to your brand green and a darker forest green variant
-          color: { value: ["#2F9A58", "#1e6339"] }, 
+          color: { value: ["#AAEEC4", "#AAEEC4"] }, 
           links: { 
-            color: "#2F9A58", 
+            color: "#AAEEC4", 
             distance: 150, 
             enable: true, 
             opacity: 0.2, 

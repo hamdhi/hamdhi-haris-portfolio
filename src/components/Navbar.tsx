@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Terminal } from 'lucide-react';
 import { usePathname } from 'next/navigation';
@@ -9,8 +9,8 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const isManualScrolling = useRef(false); // Ref to prevent observer jump during manual scroll
 
-  // Memoize links to prevent unnecessary re-renders
   const navLinks = useMemo(() => [
     { name: 'Identity', href: '/#home' },
     { name: 'Tech', href: '/#stack' },
@@ -20,15 +20,17 @@ export default function Navbar() {
     { name: 'Gallery', href: '/gallery' },
   ], []);
 
-  // Smoother manual scroll with dynamic offset calculation
-  const handleScroll = useCallback((e: React.MouseEvent, href:string) => {
+  const handleScroll = useCallback((e: React.MouseEvent, href: string) => {
     if (href.startsWith('/#') && pathname === '/') {
       e.preventDefault();
       const id = href.replace('/#', '');
       const element = document.getElementById(id);
       
       if (element) {
-        const offset = 80; // Navbar height
+        isManualScrolling.current = true; // Lock the observer
+        setActiveSection(id); // Set active immediately on click
+        
+        const offset = 80;
         const elementPosition = element.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - offset;
 
@@ -36,25 +38,33 @@ export default function Navbar() {
           top: offsetPosition,
           behavior: 'smooth',
         });
+
+        // Release lock after scroll completes
+        setTimeout(() => {
+          isManualScrolling.current = false;
+        }, 1000);
       }
       setIsOpen(false);
     }
   }, [pathname]);
 
-  // Lazy Intersection Observer - only runs on home page
   useEffect(() => {
     if (pathname !== '/') return;
 
     const observerOptions = {
       root: null,
-      rootMargin: '-20% 0px -60% 0px', // Focused detection area
+      // Increased the detection area slightly to -20% / -70% 
+      // so short sections like 'Experience' are easier to catch.
+      rootMargin: '-20% 0px -70% 0px',
       threshold: 0,
     };
 
     const observer = new IntersectionObserver((entries) => {
+      if (isManualScrolling.current) return; // Ignore if we are currently clicking a link
+
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
+          setActiveSection(entry.target.id.toLowerCase());
         }
       });
     }, observerOptions);
@@ -66,29 +76,25 @@ export default function Navbar() {
   }, [pathname]);
 
   return (
-    // Background updated to a greenish-dark glass look (#020a05)
     <nav className="fixed w-full z-50 border-b border-white/10 bg-[#020a05]/80 backdrop-blur-xl">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         
-        {/* Brand/Logo */}
         <Link 
           href="/#home" 
           onClick={(e) => handleScroll(e, '/#home')}
           className="flex items-center gap-2 font-bold text-xl tracking-tighter cursor-pointer"
         >
           <Terminal className="text-[#2F9A58]" size={20} />
-          <span className="bg-gradient-to-r from-[#2F9A58] to-[#1e6339] bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-[#2F9A58] to-[#2F9A58] bg-clip-text text-transparent">
             HamdhiHaris
           </span>
         </Link>
 
-        {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-4 text-[10px] font-bold uppercase tracking-[0.3em]">
           {navLinks.map((link) => {
             const isGallery = link.href === '/gallery';
-            const isActive = isGallery
-              ? pathname === '/gallery'
-              : (pathname === '/' && activeSection === link.href.replace('/#', ''));
+            const linkId = link.href.includes('#') ? link.href.split('#')[1].toLowerCase() : '';
+            const isActive = isGallery ? pathname === '/gallery' : (pathname === '/' && activeSection === linkId);
 
             return (
               <Link 
@@ -98,7 +104,9 @@ export default function Navbar() {
                 className="relative px-4 py-2 group"
                 prefetch={false} 
               >
-                <span className={`relative z-10 transition-colors duration-200 ${isActive ? 'text-white' : 'text-slate-500 group-hover:text-[#2F9A58]'}`}>
+                <span className={`relative z-10 transition-colors duration-200 ${
+                  isActive ? 'text-white' : 'text-slate-500 group-hover:text-[#2F9A58]'
+                }`}>
                   {link.name}
                 </span>
 
@@ -117,13 +125,11 @@ export default function Navbar() {
           })}
         </div>
 
-        {/* Mobile Toggle */}
         <button className="md:hidden text-[#2F9A58]" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -134,7 +140,9 @@ export default function Navbar() {
           >
             <div className="flex flex-col items-stretch py-8 font-mono text-sm">
               {navLinks.map((link) => {
-                const isActive = pathname === '/' && activeSection === link.href.replace('/#', '');
+                const linkId = link.href.includes('#') ? link.href.split('#')[1].toLowerCase() : '';
+                const isActive = link.href === '/gallery' ? pathname === '/gallery' : (pathname === '/' && activeSection === linkId);
+                
                 return (
                   <Link
                     key={link.name}
