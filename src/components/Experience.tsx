@@ -127,7 +127,7 @@ export default function ExperienceLeadership() {
       </div>
 
       {/* LEADERSHIP SECTION */}
-      <div>
+      <div id="experience">
         <div className="flex items-center gap-4 mb-10">
           <Trophy size={20} className="text-[#2F9A58]/80" />
           <h2 className="text-3xl font-bold uppercase tracking-tighter text-white">Leadership_Log</h2>

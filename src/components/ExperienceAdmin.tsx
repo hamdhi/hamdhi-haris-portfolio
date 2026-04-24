@@ -20,16 +20,6 @@ interface ExpItem extends BaseItem {
   tags: string[];
 }
 
-interface ProjectItem extends BaseItem {
-  projectName: string;
-  description: string;
-  learned: string;
-  technologies: string[];
-  imageUrls: string[];
-  githubUrl: string;
-  liveUrl: string;
-}
-
 // --- INITIAL STATES ---
 const initialExpState = { title: "", org: "", date: "", desc: "", image: "", tags: [] };
 const initialProjectState = { projectName: "", description: "", learned: "", technologies: [], imageUrls: [], githubUrl: "", liveUrl: "" };
@@ -163,6 +153,10 @@ export default function ExperienceAdmin() {
     e.preventDefault();
     setLoading(true);
 
+    // SECURED: Get token for server-side verification
+    const { data: { session } } = await supabase.auth.getSession();
+    const token = session?.access_token;
+
     let payload = { ...formData };
 
     if (activeTab === 'projects') {
@@ -177,7 +171,10 @@ export default function ExperienceAdmin() {
       const method = isEditing ? "PUT" : "POST";
       const res = await fetch(apiEndpoint, {
         method,
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}` // <--- Token sent here
+        },
         body: JSON.stringify(payload),
       });
       
@@ -196,6 +193,10 @@ export default function ExperienceAdmin() {
   const handleDelete = async (item: any) => {
     if (!confirm("Delete this item? This cannot be undone.")) return;
     setLoading(true);
+
+    // SECURED: Get token for server-side verification
+    const { data: { session } } = await supabase.auth.getSession();
+    const token = session?.access_token;
 
     try {
       const extractPath = (url: string) => {
@@ -227,7 +228,10 @@ export default function ExperienceAdmin() {
 
       const res = await fetch(apiEndpoint, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}` // <--- Token sent here
+        },
         body: JSON.stringify({ id: item.id }),
       });
 

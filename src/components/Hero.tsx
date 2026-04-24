@@ -69,7 +69,7 @@ export default function Hero({ cvLink }: HeroProps) {
               
               <div className="min-h-[60px] sm:min-h-[70px] md:min-h-[80px] lg:min-h-[100px] flex justify-center md:justify-start">
                 <span className="
-                  bg-gradient-to-r from-[#2F9A58] to-[#1e6339] bg-clip-text text-transparent 
+                  bg-gradient-to-r from-[#2F9A58] to-[#2F9A58] bg-clip-text text-transparent 
                   text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold
                   text-center md:text-left
                   leading-tight

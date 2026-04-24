@@ -21,7 +21,7 @@ export default function AdminDashboard() {
 
     return (
         /* Updated background to deep greenish-black theme */
-        <main className="min-h-screen bg-[#062010] text-white p-8 font-sans">
+        <main className="min-h-screen bg-[#020C06] text-white p-8 font-sans">
             <div className="max-w-5xl mx-auto space-y-12">
                 
                 {/* 1. Header & Logout */}
@@ -36,7 +36,7 @@ export default function AdminDashboard() {
                     </div>
                     <button 
                         onClick={handleLogout} 
-                        className="text-xs font-mono text-slate-400 hover:text-[#2F9A58] flex items-center gap-2 transition-colors"
+                        className="text-xs font-mono text-slate-400 hover:text-[#0D2B18] flex items-center gap-2 transition-colors"
                     >
                         <LogOut size={16} /> LOGOUT
                     </button>
