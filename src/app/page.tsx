@@ -10,6 +10,7 @@ import Projects from '@/components/Projects';
 import { useEffect } from 'react';
 import ExperienceLeadership from '@/components/Experience';
 import AboutMe from '@/components/AboutMe';
+import SystemTelemetry from '@/components/SystemTelemetry';
 import ScrollToTop from '@/components/ScrollToTop';
 
 export default function Home() {
@@ -52,6 +53,9 @@ export default function Home() {
       <Projects />
 
       <ExperienceLeadership />
+
+      {/* System Telemetry (GitHub Stats) */}
+      <SystemTelemetry GITHUB_USERNAME="hamdhi" />
 
       {/* Contacts Section */}
       <Contact email="hamdhiharis@gmail.com" location="Sri Lanka" />
