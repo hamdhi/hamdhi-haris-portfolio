@@ -33,7 +33,7 @@ export default function Home() {
 
   return (
     /* Updated background to a deep greenish-black and selection to match #2F9A58 */
-    <main className="relative min-h-screen bg-[#021107] text-white selection:bg-[#2F9A58]/30"> 
+    <main className="relative min-h-screen bg-[#041802] text-white selection:bg-[#2F9A58]/30"> 
       {/* Spider Background */}
       <SpiderBg />
 

@@ -40,6 +40,8 @@ export default function ExperienceAdmin() {
   
   // --- FORM STATES ---
   const [formData, setFormData] = useState<any>(initialExpState);
+  const [originalItem, setOriginalItem] = useState<any>(null);
+  const [uploadFolder, setUploadFolder] = useState<string>("");
   const [tagInput, setTagInput] = useState("");
   const [imageInput, setImageInput] = useState(""); 
 
@@ -111,7 +113,8 @@ export default function ExperienceAdmin() {
       const uploadPromises = files.map(async (file) => {
         const fileExt = file.name.split('.').pop();
         const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
-        const filePath = `${activeTab}/${fileName}`; 
+        const folder = uploadFolder || `proj_${Date.now()}`;
+        const filePath = `${activeTab}/${folder}/${fileName}`; 
 
         const { error: uploadError } = await supabase.storage
           .from('portfolio-images')
@@ -130,8 +133,8 @@ export default function ExperienceAdmin() {
       newUrls.push(...uploadedUrls);
 
       if (activeTab === 'projects') {
-        const currentImages = imageInput ? imageInput.split(',').map(s => s.trim()).filter(Boolean) : [];
-        const combinedImages = [...currentImages, ...newUrls];
+        // Overwrite existing images instead of appending them
+        const combinedImages = [...newUrls];
         
         setImageInput(combinedImages.join(', '));
         setFormData({ ...formData, imageUrls: combinedImages });
@@ -180,6 +183,30 @@ export default function ExperienceAdmin() {
       
       if (!res.ok) throw new Error("Failed to save");
 
+      // --- SMART CLEANUP: SYNC FOLDER CONTENTS WITH SAVED URLS ---
+      // Guaranteed to delete orphaned images that pile up!
+      try {
+        if (uploadFolder && uploadFolder.startsWith('proj_')) {
+          const folderPath = `${activeTab}/${uploadFolder}`;
+          const { data: existingFiles } = await supabase.storage.from('portfolio-images').list(folderPath);
+
+          if (existingFiles && existingFiles.length > 0) {
+            // Get clean filenames that we actually want to keep
+            const finalUrls = activeTab === 'projects' ? (payload.imageUrls || []) : (payload.image ? [payload.image] : []);
+            const keptFilenames = finalUrls.map((url: string) => url.split('?')[0].split('/').pop());
+
+            // Any file in the folder that isn't in our keep list gets purged
+            const filesToDelete = existingFiles
+              .filter(file => !keptFilenames.includes(file.name) && file.name !== '.emptyFolderPlaceholder')
+              .map(file => `${folderPath}/${file.name}`);
+
+            if (filesToDelete.length > 0) await supabase.storage.from('portfolio-images').remove(filesToDelete);
+          }
+        }
+      } catch (err) {
+        console.error("Storage sync error:", err);
+      }
+
       resetForm();
       fetchItems();
     } catch (error) {
@@ -199,33 +226,6 @@ export default function ExperienceAdmin() {
     const token = session?.access_token;
 
     try {
-      const extractPath = (url: string) => {
-        try {
-          const marker = '/portfolio-images/';
-          const parts = url.split(marker);
-          return parts.length > 1 ? parts[1] : null;
-        } catch { return null; }
-      };
-
-      const imagesToDelete: string[] = [];
-      if (activeTab === 'projects') {
-        if (item.imageUrls && Array.isArray(item.imageUrls)) {
-          item.imageUrls.forEach((url: string) => {
-             const path = extractPath(url);
-             if (path) imagesToDelete.push(path);
-          });
-        }
-      } else {
-        if (item.image) {
-          const path = extractPath(item.image);
-          if (path) imagesToDelete.push(path);
-        }
-      }
-
-      if (imagesToDelete.length > 0) {
-        await supabase.storage.from('portfolio-images').remove(imagesToDelete);
-      }
-
       const res = await fetch(apiEndpoint, {
         method: "DELETE",
         headers: { 
@@ -236,6 +236,40 @@ export default function ExperienceAdmin() {
       });
 
       if (!res.ok) throw new Error("Failed to delete from DB");
+
+      // --- COMPLETE FOLDER DELETION ---
+      let folderName = null;
+      const img = activeTab === 'projects' ? item.imageUrls?.[0] : item.image;
+      if (img) {
+         const match = img.match(new RegExp(`/${activeTab}/(proj_[^/]+)`));
+         if (match) folderName = match[1];
+      }
+
+      if (folderName && folderName.startsWith('proj_')) {
+        // If organized in a folder, delete absolutely everything inside it
+        const folderPath = `${activeTab}/${folderName}`;
+        const { data: files } = await supabase.storage.from('portfolio-images').list(folderPath);
+        if (files && files.length > 0) {
+           const pathsToDelete = files.map(f => `${folderPath}/${f.name}`);
+           await supabase.storage.from('portfolio-images').remove(pathsToDelete);
+        }
+      } else {
+        // Fallback for older items without folders
+        const extractPath = (url: string) => {
+          try {
+            const parts = url.split('/portfolio-images/');
+            return parts.length > 1 ? parts[1] : null;
+          } catch { return null; }
+        };
+        const imagesToDelete: string[] = [];
+        if (activeTab === 'projects') {
+          if (Array.isArray(item.imageUrls)) item.imageUrls.forEach((url: string) => { const p = extractPath(url); if(p) imagesToDelete.push(p); });
+        } else if (item.image) {
+          const path = extractPath(item.image);
+          if (path) imagesToDelete.push(path);
+        }
+        if (imagesToDelete.length > 0) await supabase.storage.from('portfolio-images').remove(imagesToDelete);
+      }
 
       fetchItems();
     } catch (error) {
@@ -248,8 +282,18 @@ export default function ExperienceAdmin() {
 
   const startEdit = (item: any) => {
     setIsEditing(item.id);
+    setOriginalItem(item);
     setFormData(item);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Try to extract existing folder name, fallback to a new one
+    let folder = `proj_${Date.now()}`;
+    const img = activeTab === 'projects' ? item.imageUrls?.[0] : item.image;
+    if (img) {
+       const match = img.match(new RegExp(`/${activeTab}/(proj_[^/]+)`));
+       if (match) folder = match[1];
+    }
+    setUploadFolder(folder);
 
     if (activeTab === 'projects') {
       setTagInput(item.technologies?.join(", ") || "");
@@ -261,9 +305,11 @@ export default function ExperienceAdmin() {
 
   const resetForm = () => {
     setIsEditing(null);
+    setOriginalItem(null);
     setFormData(activeTab === 'projects' ? initialProjectState : initialExpState);
     setTagInput("");
     setImageInput("");
+    setUploadFolder(`proj_${Date.now()}`);
   };
 
   if (authChecking || !isAuthorized) {

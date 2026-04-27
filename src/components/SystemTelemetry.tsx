@@ -7,7 +7,7 @@ export default function SystemTelemetry(props: { GITHUB_USERNAME: string }) {
   const GITHUB_USERNAME = props.GITHUB_USERNAME;
 
   return (
-    <section id="telemetry" className="relative z-10 max-w-7xl mx-auto px-6 py-32">
+    <section id="telemetry" className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-20 lg:py-32">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -16,12 +16,12 @@ export default function SystemTelemetry(props: { GITHUB_USERNAME: string }) {
         className="mb-12"
       >
         <div className="flex items-center gap-3 mb-2">
-          <Activity className="text-[#2F9A58]" size={24} />
-          <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tighter text-white">
+          <Activity className="text-[#2F9A58] shrink-0" size={24} />
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold uppercase tracking-tighter text-white break-words">
             System_<span className="text-[#2F9A58]">Telemetry</span>
           </h2>
         </div>
-        <p className="text-slate-400 font-mono text-sm lowercase">
+        <p className="text-slate-400 font-mono text-xs sm:text-sm lowercase break-words">
           {`> analyzing github node activities for user: ${GITHUB_USERNAME}`}
         </p>
       </motion.div>
@@ -78,17 +78,17 @@ export default function SystemTelemetry(props: { GITHUB_USERNAME: string }) {
             <h3 className="font-mono text-sm text-slate-300 uppercase tracking-widest">Language_Radar</h3>
           </div>
 
-          <div className="w-full flex justify-center items-center h-[180px] overflow-hidden relative z-10">
+          <div className="w-full flex justify-center items-center min-h-[160px] md:h-[180px] relative z-10">
             <img 
               src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${GITHUB_USERNAME}&layout=compact&theme=transparent&hide_border=true&title_color=2F9A58&text_color=94a3b8&icon_color=2F9A58`}
               alt="Top Languages"
-              className="w-full h-auto object-contain scale-[1.15]"
+              className="w-full max-w-[320px] h-auto object-contain scale-100 md:scale-[1.15]"
             />
           </div>
 
           <div className="mt-4 pt-4 border-t border-[#2F9A58]/10 relative z-10">
-            <p className="font-mono text-[10px] text-slate-500 flex items-center gap-2">
-              <Terminal size={10} className="text-[#2F9A58]" />
+            <p className="font-mono text-[9px] sm:text-[10px] text-slate-500 flex items-center gap-2">
+              <Terminal size={10} className="text-[#2F9A58] shrink-0" />
               <span>status: tracking metrics</span>
               <span className="animate-pulse text-[#2F9A58]">_</span>
             </p>
