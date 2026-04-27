@@ -117,14 +117,14 @@ export default function ProjectCard({
           <div className="mb-6 p-4 bg-white/5 backdrop-blur-sm border-l-2 border-[#2F9A58] rounded-r-lg">
             <div className="flex items-center gap-2 mb-2">
               <Lightbulb size={14} className="text-[#2F9A58]" />
-              <span className="font-mono text-[10px] text-[#2F9A58] uppercase tracking-widest">Lessons_Learned</span>
+              <span className="font-mono text-[10px] text-[#80EBA9] uppercase tracking-widest">Lessons_Learned</span>
             </div>
             <p className="text-xs text-slate-300 leading-relaxed font-medium">{learned}</p>
           </div>
 
           <div className="mt-auto flex flex-wrap gap-2">
             {technologies.map((tech) => (
-              <span key={tech} className="font-mono text-[9px] text-slate-500 bg-black/40 backdrop-blur-md px-2 py-1 rounded border border-white/5 uppercase">
+              <span key={tech} className="font-mono text-[13px] text-slate-90 bg-black/40 backdrop-blur-md px-2 py-1 rounded border border-white/5 uppercase">
                 #{tech}
               </span>
             ))}
