@@ -57,7 +57,7 @@ export default function AboutMe() {
                   <div className="p-2 rounded-lg bg-[#2F9A58]/10 border border-[#2F9A58]/20">
                     {stat.icon}
                   </div>
-                  <span className="text-[10px] uppercase font-mono tracking-widest opacity-70">{stat.label}</span>
+                  <span className="text-[10px] text-[#93F8BA] uppercase font-mono tracking-widest opacity-100">{stat.label}</span>
                 </div>
                 <div className="text-white font-semibold tracking-tight">{stat.value}</div>
               </div>

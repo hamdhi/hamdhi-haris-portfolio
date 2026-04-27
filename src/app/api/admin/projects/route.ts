@@ -68,6 +68,7 @@ export async function PUT(req: Request) {
       .select();
 
     if (error) throw error;
+
     return NextResponse.json(data[0]);
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -90,6 +91,7 @@ export async function DELETE(req: Request) {
       .eq('id', id);
 
     if (error) throw error;
+
     return NextResponse.json({ success: true });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
