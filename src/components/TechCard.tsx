@@ -41,7 +41,7 @@ export default function TechCard({ name, icon, tags, proficiency, isMain }: Tech
       <div style={{ transform: "translateZ(75px)", transformStyle: "preserve-3d" }} className="flex flex-col items-center justify-center h-full">
         <img src={icon} alt={name} className="w-12 h-12 md:w-16 md:h-16 mb-4" />
         <h4 className="text-lg md:text-xl font-bold text-white">{name}</h4>
-        <p className="text-[9px] mono text-slate-500 mt-1 uppercase tracking-widest text-center">{tags}</p>
+        <p className="text-[9px] mono text-slate-90 mt-1 uppercase tracking-widest text-center">{tags}</p>
         
         {/* Proficiency Bar */}
         <div className="w-full mt-6 bg-white/10 h-1 rounded-full overflow-hidden">
