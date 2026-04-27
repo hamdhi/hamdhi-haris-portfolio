@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Github, ExternalLink, Lightbulb, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface ProjectProps {
@@ -23,6 +24,11 @@ export default function ProjectCard({
 }: ProjectProps) {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -127,7 +133,7 @@ export default function ProjectCard({
       </div>
 
       {/* --- GALLERY MODAL --- */}
-      {isPreviewOpen && imageUrls.length > 0 && (
+      {isPreviewOpen && imageUrls.length > 0 && mounted && createPortal(
         <div 
           className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/98 p-4 animate-in fade-in duration-300"
           onClick={() => setIsPreviewOpen(false)}
@@ -161,7 +167,8 @@ export default function ProjectCard({
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
