@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { FolderGit2, MessageSquare, Eye, TrendingUp, Zap } from 'lucide-react';
+import { FolderGit2, MessageSquare, Eye, TrendingUp, Zap, BarChart2, ExternalLink } from 'lucide-react';
 import { createBrowserClient } from '@supabase/ssr';
 
 export default function StatsOverview() {
@@ -72,35 +72,50 @@ export default function StatsOverview() {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
-      {cards.map((card, idx) => (
-        <div key={idx} className="bg-[#0F2A20] border border-white/5 p-5 rounded-2xl group hover:border-[#2F9A58]/20 transition-all">
-          <div className="flex justify-between items-start">
-            <div>
-              <p className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-1">{card.label}</p>
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-white tracking-tighter">
-                  {loading ? '---' : card.val}
-                </span>
-                <TrendingUp size={12} className="text-slate-600" />
+    <div className="mb-12">
+      {/* Header & Vercel Quick Link */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-4 px-1 gap-4">
+        <h3 className="text-sm font-mono text-slate-400 uppercase tracking-[0.3em]">System_Metrics</h3>
+        <a 
+          href="https://vercel.com/dashboard" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="flex items-center justify-center w-full sm:w-auto gap-2 text-xs font-bold font-mono text-[#2F9A58] bg-[#2F9A58]/10 hover:bg-[#2F9A58]/20 border border-[#2F9A58]/20 px-4 py-2.5 rounded-lg transition-all shadow-sm"
+        >
+          <BarChart2 size={16} /> ADVANCED_ANALYTICS <ExternalLink size={14} />
+        </a>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {cards.map((card, idx) => (
+          <div key={idx} className="bg-[#0F2A20] border border-white/5 p-5 rounded-2xl group hover:border-[#2F9A58]/20 transition-all">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-1">{card.label}</p>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-bold text-white tracking-tighter">
+                    {loading ? '---' : card.val}
+                  </span>
+                  <TrendingUp size={12} className="text-slate-600" />
+                </div>
+              </div>
+              <div className={`p-3 rounded-xl ${card.bg} ${card.color}`}>
+                <card.icon size={20} />
               </div>
             </div>
-            <div className={`p-3 rounded-xl ${card.bg} ${card.color}`}>
-              <card.icon size={20} />
+            
+            <div className="mt-4 flex items-center gap-2">
+              <div className="h-1 flex-1 bg-white/5 rounded-full overflow-hidden">
+                <div 
+                  className={`h-full ${card.color.startsWith('text-[#') ? 'bg-[#2F9A58]' : 'bg-emerald-400'} opacity-40 transition-all duration-1000`} 
+                  style={{ width: loading ? '0%' : '100%' }}
+                />
+              </div>
+              <Zap size={10} className="text-slate-700" />
             </div>
           </div>
-          
-          <div className="mt-4 flex items-center gap-2">
-            <div className="h-1 flex-1 bg-white/5 rounded-full overflow-hidden">
-              <div 
-                className={`h-full ${card.color.startsWith('text-[#') ? 'bg-[#2F9A58]' : 'bg-emerald-400'} opacity-40 transition-all duration-1000`} 
-                style={{ width: loading ? '0%' : '100%' }}
-              />
-            </div>
-            <Zap size={10} className="text-slate-700" />
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
