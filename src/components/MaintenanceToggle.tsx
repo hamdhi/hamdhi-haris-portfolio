@@ -48,13 +48,13 @@ export default function MaintenanceToggle() {
   if (loading) return <Loader2 className="animate-spin text-[#2F9A58]" size={20} />;
 
   return (
-    <div className="flex items-center gap-4 p-4 rounded-xl border border-white/10 bg-slate-900/50">
+    <div className="flex items-center justify-between gap-4 p-3 md:p-4 rounded-xl border border-white/10 bg-slate-900/50 w-full sm:w-auto shadow-inner">
       <div className={`p-2 rounded-lg ${isActive ? "bg-[#2F9A58]/20 text-[#2F9A58]" : "bg-slate-800 text-slate-500"}`}>
-        {isActive ? <ShieldAlert size={20} /> : <ShieldCheck size={20} />}
+        {isActive ? <ShieldAlert size={18} /> : <ShieldCheck size={18} />}
       </div>
 
-      <div className="flex-1">
-        <h3 className="text-sm font-bold text-white uppercase tracking-tight">
+      <div className="flex-1 pr-4">
+        <h3 className="text-xs md:text-sm font-bold text-white uppercase tracking-tight truncate">
           Maintenance_Mode
         </h3>
         <p className="text-[10px] text-slate-500 font-mono">

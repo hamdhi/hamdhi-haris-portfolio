@@ -14,6 +14,7 @@ interface Project {
   imageUrls: string[];
   githubUrl: string;
   liveUrl: string;
+  sort_order?: number;
 }
 
 export default function Projects() {
@@ -28,7 +29,8 @@ export default function Projects() {
         const data = await res.json();
         
         if (Array.isArray(data)) {
-          setProjects(data);
+          const sortedProjects = data.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+          setProjects(sortedProjects);
         }
       } catch (error) {
         console.error("Failed to fetch projects:", error);
