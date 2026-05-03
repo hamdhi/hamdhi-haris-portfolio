@@ -356,24 +356,24 @@ export default function ExperienceAdmin() {
   }
 
   return (
-    <div className="w-full space-y-8 bg-green-950/50 rounded-xl p-6 border border-white/5">
+    <div className="w-full space-y-8 bg-[#041A0B] rounded-2xl p-4 md:p-8 border border-white/10 shadow-xl">
       
       {/* TABS */}
-      <div className="flex flex-col md:flex-row items-center justify-between border-b border-white/10 pb-6 gap-4">
-        <h2 className="text-xl font-bold text-white flex items-center gap-2">
+      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between border-b border-white/10 pb-6 gap-5">
+        <h2 className="text-2xl font-bold text-white flex items-center gap-2 tracking-tight">
             Content Manager
             {loading && <Loader2 className="animate-spin text-[#2F9A58]" size={20} />}
         </h2>
         
-        <div className="flex bg-green-950/50 p-1 rounded-lg border border-white/10">
+        <div className="flex flex-wrap w-full lg:w-auto bg-[#020A05] p-1.5 rounded-xl border border-white/10 gap-1 shadow-inner">
             {['experience', 'leadership', 'projects'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab as any)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium capitalize transition-all ${
+                className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold capitalize transition-all ${
                     activeTab === tab 
                     ? 'bg-[#2F9A58] text-white shadow-lg shadow-[#2F9A58]/20' 
-                    : 'text-slate-400 hover:text-white'
+                    : 'text-slate-400 hover:text-white hover:bg-white/5'
                 }`}
               >
                  {tab === 'projects' ? <Code size={16}/> : tab === 'experience' ? <Briefcase size={16}/> : <Trophy size={16}/>} 
@@ -384,7 +384,7 @@ export default function ExperienceAdmin() {
       </div>
 
       {/* FORM SECTION */}
-      <motion.div layout className="bg-green-950/50 p-6 rounded-xl border border-white/10 shadow-xl">
+      <motion.div layout className="bg-[#05150A] p-5 md:p-8 rounded-2xl border border-[#2F9A58]/20 shadow-2xl">
         <h3 className="text-lg font-semibold text-[#2F9A58] mb-4 flex items-center gap-2">
           {isEditing ? <Edit2 size={18} /> : <Plus size={18} />}
           {isEditing ? `Edit ${activeTab}` : `Add New ${activeTab}`}
@@ -405,15 +405,15 @@ export default function ExperienceAdmin() {
                 <textarea name="description" placeholder="Project Description" value={formData.description} onChange={handleChange} rows={3} className="input-style" />
                 
                 <div>
-                   <label className="text-xs text-slate-500 font-bold mb-1 block">Technologies (comma separated)</label>
+                   <label className="text-xs text-slate-400 font-bold mb-1.5 block uppercase tracking-wider">Technologies (comma separated)</label>
                    <input value={tagInput} onChange={(e) => setTagInput(e.target.value)} placeholder="React, Node, SQL" className="input-style" />
                 </div>
 
                 <div>
-                    <label className="text-xs text-slate-500 font-bold mb-1 block">Project Images (Multi-select supported)</label>
-                    <div className="flex gap-2 mb-2">
-                        <label className={`cursor-pointer flex items-center gap-2 bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded text-xs text-white transition-colors ${uploading ? 'opacity-50' : ''}`}>
-                            <UploadCloud size={14} /> {uploading ? "Uploading..." : "Upload Images"}
+                    <label className="text-xs text-slate-400 font-bold mb-1.5 block uppercase tracking-wider">Project Images (Multi-select supported)</label>
+                    <div className="flex mb-3">
+                        <label className={`cursor-pointer flex justify-center items-center gap-2 bg-[#020A05] border border-slate-600 hover:border-[#2F9A58] hover:bg-slate-800 px-5 py-3 rounded-lg text-xs font-bold text-white transition-all w-full sm:w-auto shadow-sm ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                            <UploadCloud size={16} /> {uploading ? "Uploading..." : "Upload Images"}
                             <input 
                                 type="file" 
                                 accept="image/*" 
@@ -428,7 +428,7 @@ export default function ExperienceAdmin() {
                         value={imageInput} 
                         onChange={(e) => setImageInput(e.target.value)} 
                         placeholder="Image URLs (comma separated)" 
-                        className="input-style text-xs font-mono" 
+                        className="input-style text-xs font-mono opacity-70" 
                     />
                 </div>
              </>
@@ -442,9 +442,9 @@ export default function ExperienceAdmin() {
                   <input name="date" placeholder="Date (2023 - Present)" value={formData.date} onChange={handleChange} className="input-style" />
                   
                   <div>
-                    <div className="flex items-center gap-2 mb-1">
-                        <label className={`cursor-pointer flex items-center gap-2 bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded text-[10px] text-white transition-colors ${uploading ? 'opacity-50' : ''}`}>
-                            <UploadCloud size={12} /> {uploading ? "Uploading..." : "Upload"}
+                    <div className="flex mb-2 mt-1 md:mt-0">
+                        <label className={`cursor-pointer flex justify-center items-center gap-2 bg-[#020A05] border border-slate-600 hover:border-[#2F9A58] hover:bg-slate-800 px-4 py-2.5 rounded-lg text-xs font-bold text-white transition-all w-full sm:w-auto shadow-sm ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                            <UploadCloud size={16} /> {uploading ? "Uploading..." : "Upload Image"}
                             <input type="file" accept="image/*" onChange={handleImageUpload} disabled={uploading} className="hidden" />
                         </label>
                     </div>
@@ -456,7 +456,7 @@ export default function ExperienceAdmin() {
              </>
           )}
 
-          <div className="flex gap-3 pt-2">
+          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-white/5 mt-2">
             <button type="submit" disabled={loading || uploading} className="btn-primary">
               <Save size={18} /> {isEditing ? "Update" : "Save"}
             </button>
@@ -471,24 +471,24 @@ export default function ExperienceAdmin() {
 
       {/* LIST SECTION */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between border-b border-white/10 pb-2">
-          <h3 className="text-xl font-bold text-white capitalize">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-white/10 pb-4 gap-4">
+          <h3 className="text-2xl font-bold text-white capitalize tracking-tight">
               {activeTab} List
           </h3>
           {orderChanged && (
             <button 
               onClick={handleSaveOrder}
               disabled={loading}
-              className="flex items-center gap-2 bg-[#2F9A58] hover:bg-[#247c46] text-white px-3 py-1.5 rounded text-xs font-bold transition-colors disabled:opacity-50"
+              className="flex items-center justify-center w-full sm:w-auto gap-2 bg-[#2F9A58] hover:bg-[#247c46] text-white px-4 py-2.5 rounded-lg text-sm font-bold transition-all shadow-md hover:shadow-lg disabled:opacity-50 hover:-translate-y-0.5"
             >
-              {loading ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
+              {loading ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
               Save Order
             </button>
           )}
         </div>
         
-        <div className="grid gap-4">
-          <Reorder.Group axis="y" values={items} onReorder={handleReorder} className="grid gap-4">
+        <div className="max-h-[60vh] overflow-y-auto overflow-x-hidden pr-2 list-container">
+          <Reorder.Group axis="y" values={items} onReorder={handleReorder} className="flex flex-col gap-4">
             <AnimatePresence>
               {items.map((item) => (
                 <Reorder.Item
@@ -497,27 +497,27 @@ export default function ExperienceAdmin() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="flex justify-between bg-slate-900/30 border border-white/5 p-4 rounded-lg items-center group cursor-grab active:cursor-grabbing"
+                  className="flex flex-col sm:flex-row justify-between bg-[#05150A] hover:bg-[#0A2210] border border-white/10 p-4 md:p-5 rounded-2xl sm:items-center group cursor-grab active:cursor-grabbing gap-4 sm:gap-6 shadow-sm hover:shadow-md transition-all overflow-hidden"
                 >
-                  <div className="flex items-center gap-4 overflow-hidden pointer-events-none">
-                     <div className="text-slate-500 hover:text-white pointer-events-auto">
+                  <div className="flex items-center gap-3 md:gap-5 flex-1 min-w-0 pointer-events-none">
+                     <div className="text-slate-500 hover:text-[#2F9A58] transition-colors pointer-events-auto shrink-0">
                         <GripVertical size={20} />
                      </div>
-                     <div className="h-12 w-12 shrink-0 bg-slate-800 rounded overflow-hidden border border-white/10 relative">
+                     <div className="h-12 w-12 md:h-16 md:w-16 shrink-0 bg-slate-900 rounded-xl overflow-hidden border border-white/10 relative shadow-inner">
                          {activeTab === 'projects' 
                             ? (item.imageUrls?.[0] ? <img src={item.imageUrls[0]} alt="prev" className="h-full w-full object-cover" /> : <div className="h-full w-full bg-slate-800" />)
                             : (item.image ? <img src={item.image} alt="prev" className="h-full w-full object-cover" /> : <div className="h-full w-full bg-slate-800" />)
                          }
                      </div>
-                     <div className="min-w-0">
-                        <h4 className="font-bold text-white truncate">{item.title || item.projectName}</h4>
-                        <p className="text-xs text-slate-400 truncate max-w-md">{item.desc || item.description}</p>
+                     <div className="min-w-0 flex-1">
+                        <h4 className="font-bold text-white truncate text-base md:text-lg mb-0.5">{item.title || item.projectName}</h4>
+                        <p className="text-xs md:text-sm text-slate-400 truncate">{item.desc || item.description}</p>
                      </div>
                   </div>
 
-                  <div className="flex gap-2 shrink-0 ml-4 pointer-events-auto">
-                    <button onPointerDown={(e) => e.stopPropagation()} onClick={() => startEdit(item)} className="p-2 text-[#2F9A58] hover:bg-[#2F9A58]/10 rounded transition-colors"><Edit2 size={18} /></button>
-                    <button onPointerDown={(e) => e.stopPropagation()} onClick={() => handleDelete(item)} className="p-2 text-[#2F9A58]/80 hover:bg-[#2F9A58]/10 rounded transition-colors"><Trash2 size={18} /></button>
+                  <div className="flex gap-2 shrink-0 justify-end pointer-events-auto pt-3 sm:pt-0 border-t border-white/5 sm:border-none mt-2 sm:mt-0 w-full sm:w-auto">
+                    <button onPointerDown={(e) => e.stopPropagation()} onClick={() => startEdit(item)} className="flex-1 sm:flex-none flex justify-center items-center p-2.5 text-[#2F9A58] bg-[#2F9A58]/5 hover:bg-[#2F9A58]/20 rounded-lg transition-colors border border-[#2F9A58]/10 hover:border-[#2F9A58]/30"><Edit2 size={18} /></button>
+                    <button onPointerDown={(e) => e.stopPropagation()} onClick={() => handleDelete(item)} className="flex-1 sm:flex-none flex justify-center items-center p-2.5 text-red-400 bg-red-400/5 hover:bg-red-500/20 hover:text-red-300 rounded-lg transition-colors border border-red-500/10 hover:border-red-500/30"><Trash2 size={18} /></button>
                   </div>
                 </Reorder.Item>
               ))}
@@ -533,9 +533,13 @@ export default function ExperienceAdmin() {
       </div>
       
       <style jsx>{`
-        .input-style { @apply w-full bg-slate-950 border border-white/10 rounded p-3 text-sm focus:border-[#2F9A58] outline-none transition-colors text-white placeholder:text-slate-600; }
-        .btn-primary { @apply flex items-center gap-2 bg-[#2F9A58] hover:bg-[#247c46] text-white font-bold px-6 py-2.5 rounded transition-all disabled:opacity-50 disabled:cursor-not-allowed; }
-        .btn-secondary { @apply flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-6 py-2.5 rounded transition-colors; }
+        .input-style { @apply w-full bg-[#031007] border-2 border-slate-700/60 rounded-xl p-3.5 text-sm focus:border-[#2F9A58] focus:ring-4 focus:ring-[#2F9A58]/20 outline-none transition-all text-white placeholder:text-slate-500 shadow-inner hover:border-slate-500/80; }
+        .btn-primary { @apply flex items-center justify-center flex-1 sm:flex-none gap-2 bg-[#2F9A58] hover:bg-[#247c46] text-white font-bold px-8 py-3.5 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl hover:-translate-y-0.5; }
+        .btn-secondary { @apply flex items-center justify-center flex-1 sm:flex-none gap-2 bg-[#020A05] border border-slate-600 hover:border-slate-400 hover:bg-slate-800 text-white px-8 py-3.5 rounded-xl transition-all; }
+        .list-container::-webkit-scrollbar { width: 6px; }
+        .list-container::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 8px; }
+        .list-container::-webkit-scrollbar-thumb { background: rgba(47, 154, 88, 0.3); border-radius: 8px; }
+        .list-container::-webkit-scrollbar-thumb:hover { background: rgba(47, 154, 88, 0.5); }
       `}</style>
     </div>
   );
