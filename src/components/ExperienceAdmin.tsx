@@ -395,18 +395,18 @@ export default function ExperienceAdmin() {
           {activeTab === 'projects' ? (
              <>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <input name="projectName" placeholder="Project Name" value={formData.projectName} onChange={handleChange} required className="input-style" />
-                  <input name="learned" placeholder="Key Learnings" value={formData.learned} onChange={handleChange} className="input-style" />
+                  <input name="projectName" placeholder="Project Name" value={formData.projectName} onChange={handleChange} required className="input-style border border-slate-600" />
+                  <input name="learned" placeholder="Key Learnings" value={formData.learned} onChange={handleChange} className="input-style border border-slate-600" />
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
-                   <input name="githubUrl" placeholder="GitHub URL" value={formData.githubUrl} onChange={handleChange} className="input-style" />
-                   <input name="liveUrl" placeholder="Live Demo URL" value={formData.liveUrl} onChange={handleChange} className="input-style" />
+                   <input name="githubUrl" placeholder="GitHub URL" value={formData.githubUrl} onChange={handleChange} className="input-style border border-slate-600" />
+                   <input name="liveUrl" placeholder="Live Demo URL" value={formData.liveUrl} onChange={handleChange} className="input-style border border-slate-600" />
                 </div>
-                <textarea name="description" placeholder="Project Description" value={formData.description} onChange={handleChange} rows={3} className="input-style" />
+                <textarea name="description" placeholder="Project Description" value={formData.description} onChange={handleChange} rows={3} className="input-style border border-slate-600" />
                 
                 <div>
                    <label className="text-xs text-slate-400 font-bold mb-1.5 block uppercase tracking-wider">Technologies (comma separated)</label>
-                   <input value={tagInput} onChange={(e) => setTagInput(e.target.value)} placeholder="React, Node, SQL" className="input-style" />
+                   <input value={tagInput} onChange={(e) => setTagInput(e.target.value)} placeholder="React, Node, SQL" className="input-style border border-slate-600" />
                 </div>
 
                 <div>
@@ -435,11 +435,11 @@ export default function ExperienceAdmin() {
           ) : (
              <>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <input name="title" placeholder="Title" value={formData.title} onChange={handleChange} required className="input-style" />
-                  <input name="org" placeholder="Organization" value={formData.org} onChange={handleChange} required className="input-style" />
+                  <input name="title" placeholder="Title" value={formData.title} onChange={handleChange} required className="input-style border border-slate-600" />
+                  <input name="org" placeholder="Organization" value={formData.org} onChange={handleChange} required className="input-style border border-slate-600" />
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <input name="date" placeholder="Date (2023 - Present)" value={formData.date} onChange={handleChange} className="input-style" />
+                  <input name="date" placeholder="Date (2023 - Present)" value={formData.date} onChange={handleChange} className="input-style border border-slate-600" />
                   
                   <div>
                     <div className="flex mb-2 mt-1 md:mt-0">
@@ -448,11 +448,11 @@ export default function ExperienceAdmin() {
                             <input type="file" accept="image/*" onChange={handleImageUpload} disabled={uploading} className="hidden" />
                         </label>
                     </div>
-                    <input name="image" placeholder="Image URL" value={formData.image} onChange={handleChange} className="input-style" />
+                    <input name="image" placeholder="Image URL" value={formData.image} onChange={handleChange} className="input-style border border-slate-600" />
                   </div>
                 </div>
-                <textarea name="desc" placeholder="Description" value={formData.desc} onChange={handleChange} rows={3} className="input-style" />
-                <input value={tagInput} onChange={(e) => setTagInput(e.target.value)} placeholder="Tags (comma separated)" className="input-style" />
+                <textarea name="desc" placeholder="Description" value={formData.desc} onChange={handleChange} rows={3} className="input-style border border-slate-600" />
+                <input value={tagInput} onChange={(e) => setTagInput(e.target.value)} placeholder="Tags (comma separated)" className="input-style border border-slate-600" />
              </>
           )}
 
