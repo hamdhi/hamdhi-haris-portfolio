@@ -13,6 +13,7 @@ type Item = {
   desc: string;
   image: string;
   tags: string[];
+  sort_order?: number;
 };
 
 export default function ExperienceLeadership() {
@@ -34,8 +35,8 @@ export default function ExperienceLeadership() {
         const leadData = await leadRes.json();
 
         // Check if data is an array (safeguard against errors)
-        if (Array.isArray(expData)) setExperienceData(expData);
-        if (Array.isArray(leadData)) setLeadershipData(leadData);
+        if (Array.isArray(expData)) setExperienceData(expData.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)));
+        if (Array.isArray(leadData)) setLeadershipData(leadData.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)));
         
       } catch (error) {
         console.error("Failed to fetch data:", error);

@@ -21,25 +21,24 @@ export default function AdminDashboard() {
 
     return (
         /* Updated background to deep greenish-black theme */
-        <main className="min-h-screen bg-[#020C06] text-white p-8 font-sans">
+        <main className="min-h-screen bg-[#020C06] text-white p-4 md:p-8 font-sans">
             <div className="max-w-5xl mx-auto space-y-12">
                 
                 {/* 1. Header & Logout */}
-                <header className="flex justify-between items-center border-b border-white/10 pb-6">
-                    <div className="flex items-center gap-3">
-                        {/* Swapped cyan for #2F9A58 */}
-                        <LayoutDashboard className="text-[#2F9A58]" /> 
-                        <h1 className="text-2xl font-bold uppercase tracking-tighter">Admin_Panel</h1>
+                <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-b border-white/10 pb-6">
+                    <div className="flex items-center gap-3 w-full md:w-auto">
+                        <LayoutDashboard className="text-[#2F9A58]" size={28} /> 
+                        <h1 className="text-2xl md:text-3xl font-bold uppercase tracking-tighter">Admin_Panel</h1>
                     </div>
-                    <div>
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center w-full md:w-auto gap-4 md:gap-6">
                         <MaintenanceToggle/>
+                        <button 
+                            onClick={handleLogout} 
+                            className="justify-center text-xs font-bold font-mono text-slate-300 hover:text-white flex items-center gap-2 transition-all bg-white/5 border border-white/10 hover:bg-red-500/20 hover:border-red-500/50 px-5 py-3 rounded-lg shadow-sm"
+                        >
+                            <LogOut size={16} /> LOGOUT
+                        </button>
                     </div>
-                    <button 
-                        onClick={handleLogout} 
-                        className="text-xs font-mono text-slate-400 hover:text-[#0D2B18] flex items-center gap-2 transition-colors"
-                    >
-                        <LogOut size={16} /> LOGOUT
-                    </button>
                 </header>
 
                 {/* 2. Stats Overview */}

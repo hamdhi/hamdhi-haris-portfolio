@@ -15,9 +15,17 @@ export default function StatsOverview() {
   useEffect(() => {
     async function fetchAllStats() {
       try {
-        // 1. Fetch Local Projects Count
-        const projRes = await fetch('/api/admin/get-projects');
-        const projData = await projRes.json();
+        // 1. Fetch Local Projects Count safely
+        let projectsCount = 0;
+        try {
+          const projRes = await fetch('/api/admin/projects');
+          if (projRes.ok) {
+            const projData = await projRes.json();
+            projectsCount = Array.isArray(projData) ? projData.length : 0;
+          }
+        } catch (e) {
+          console.error("Failed to fetch projects count", e);
+        }
 
         // 2. Fetch Supabase Messages Count
         const { count: msgCount } = await supabase
@@ -29,10 +37,10 @@ export default function StatsOverview() {
           .from('profile_stats')
           .select('count')
           .eq('metric_name', 'profile_views')
-          .single();
+          .maybeSingle(); // Changed to maybeSingle to prevent errors if row doesn't exist
 
         setStats({
-          projects: Array.isArray(projData) ? projData.length : 0,
+          projects: projectsCount,
           messages: msgCount || 0,
           views: viewData?.count || 0
         });
