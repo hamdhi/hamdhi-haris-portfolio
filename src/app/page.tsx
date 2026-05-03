@@ -18,6 +18,12 @@ export default function Home() {
     // This calls the SQL function to track profile views
     const trackView = async () => {
       try {
+        // Check if an admin session is currently active
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          return; // Skip incrementing views if admin is logged in
+        }
+
         await supabase.rpc('increment_views');
       } catch (error) {
         // Fail silently if Supabase is paused or unreachable
