@@ -69,7 +69,7 @@ export default function ProjectCard({
             alt={projectName} 
             className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105" 
           />
-          <div className="absolute inset-0 bg-slate-950/85 transition-opacity duration-500 group-hover:bg-slate-950/90" />
+          <div className="absolute inset-0 bg-black opacity-80 transition-opacity duration-500 hover:opacity-90" />
           
           {/* Multi-image indicator */}
           {imageUrls.length > 1 && (
