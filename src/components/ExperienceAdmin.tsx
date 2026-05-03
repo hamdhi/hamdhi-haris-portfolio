@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Trash2, Edit2, Plus, Save, X, Loader2, Briefcase, Trophy, Code, UploadCloud } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Trash2, Edit2, Plus, Save, X, Loader2, Briefcase, Trophy, Code, UploadCloud, GripVertical } from "lucide-react";
+import { motion, AnimatePresence, Reorder } from "framer-motion";
 import { supabase } from "@/lib/supabase"; 
 
 // --- TYPES ---
@@ -18,6 +18,7 @@ interface ExpItem extends BaseItem {
   desc: string;
   image: string;
   tags: string[];
+  sort_order?: number;
 }
 
 // --- INITIAL STATES ---
@@ -44,6 +45,7 @@ export default function ExperienceAdmin() {
   const [uploadFolder, setUploadFolder] = useState<string>("");
   const [tagInput, setTagInput] = useState("");
   const [imageInput, setImageInput] = useState(""); 
+  const [orderChanged, setOrderChanged] = useState(false);
 
   const apiEndpoint = `/api/admin/${activeTab}`; 
 
@@ -89,7 +91,8 @@ export default function ExperienceAdmin() {
       const res = await fetch(`${apiEndpoint}?t=${Date.now()}`);
       if (res.ok) {
         const data = await res.json();
-        setItems(Array.isArray(data) ? data : []);
+        // Sort items by sort_order
+        setItems(Array.isArray(data) ? data.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)) : []);
       }
     } catch (error) {
       console.error("Failed to fetch items", error);
@@ -212,6 +215,35 @@ export default function ExperienceAdmin() {
     } catch (error) {
       console.error("Error saving:", error);
       alert("Failed to save item.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleReorder = (newOrder: any[]) => {
+    setItems(newOrder);
+    setOrderChanged(true);
+  };
+
+  const handleSaveOrder = async () => {
+    setLoading(true);
+    const { data: { session } } = await supabase.auth.getSession();
+    const token = session?.access_token;
+    
+    try {
+      await Promise.all(items.map((item, index) => {
+        const payload = { ...item, sort_order: index };
+        return fetch(apiEndpoint, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+          body: JSON.stringify(payload),
+        });
+      }));
+      setOrderChanged(false);
+      fetchItems();
+    } catch (error) {
+      console.error("Error saving order:", error);
+      alert("Failed to save order.");
     } finally {
       setLoading(false);
     }
@@ -439,41 +471,58 @@ export default function ExperienceAdmin() {
 
       {/* LIST SECTION */}
       <div className="space-y-4">
-        <h3 className="text-xl font-bold text-white border-b border-white/10 pb-2 capitalize">
-            {activeTab} List
-        </h3>
+        <div className="flex items-center justify-between border-b border-white/10 pb-2">
+          <h3 className="text-xl font-bold text-white capitalize">
+              {activeTab} List
+          </h3>
+          {orderChanged && (
+            <button 
+              onClick={handleSaveOrder}
+              disabled={loading}
+              className="flex items-center gap-2 bg-[#2F9A58] hover:bg-[#247c46] text-white px-3 py-1.5 rounded text-xs font-bold transition-colors disabled:opacity-50"
+            >
+              {loading ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
+              Save Order
+            </button>
+          )}
+        </div>
         
         <div className="grid gap-4">
-          <AnimatePresence>
-            {items.map((item) => (
-              <motion.div
-                key={item.id}
-                layout
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex justify-between bg-slate-900/30 border border-white/5 p-4 rounded-lg items-center group"
-              >
-                <div className="flex items-center gap-4 overflow-hidden">
-                   <div className="h-12 w-12 shrink-0 bg-slate-800 rounded overflow-hidden border border-white/10 relative">
-                       {activeTab === 'projects' 
-                          ? (item.imageUrls?.[0] ? <img src={item.imageUrls[0]} alt="prev" className="h-full w-full object-cover" /> : <div className="h-full w-full bg-slate-800" />)
-                          : (item.image ? <img src={item.image} alt="prev" className="h-full w-full object-cover" /> : <div className="h-full w-full bg-slate-800" />)
-                       }
-                   </div>
-                   <div className="min-w-0">
-                      <h4 className="font-bold text-white truncate">{item.title || item.projectName}</h4>
-                      <p className="text-xs text-slate-400 truncate max-w-md">{item.desc || item.description}</p>
-                   </div>
-                </div>
+          <Reorder.Group axis="y" values={items} onReorder={handleReorder} className="grid gap-4">
+            <AnimatePresence>
+              {items.map((item) => (
+                <Reorder.Item
+                  key={item.id}
+                  value={item}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex justify-between bg-slate-900/30 border border-white/5 p-4 rounded-lg items-center group cursor-grab active:cursor-grabbing"
+                >
+                  <div className="flex items-center gap-4 overflow-hidden pointer-events-none">
+                     <div className="text-slate-500 hover:text-white pointer-events-auto">
+                        <GripVertical size={20} />
+                     </div>
+                     <div className="h-12 w-12 shrink-0 bg-slate-800 rounded overflow-hidden border border-white/10 relative">
+                         {activeTab === 'projects' 
+                            ? (item.imageUrls?.[0] ? <img src={item.imageUrls[0]} alt="prev" className="h-full w-full object-cover" /> : <div className="h-full w-full bg-slate-800" />)
+                            : (item.image ? <img src={item.image} alt="prev" className="h-full w-full object-cover" /> : <div className="h-full w-full bg-slate-800" />)
+                         }
+                     </div>
+                     <div className="min-w-0">
+                        <h4 className="font-bold text-white truncate">{item.title || item.projectName}</h4>
+                        <p className="text-xs text-slate-400 truncate max-w-md">{item.desc || item.description}</p>
+                     </div>
+                  </div>
 
-                <div className="flex gap-2 shrink-0 ml-4">
-                  <button onClick={() => startEdit(item)} className="p-2 text-[#2F9A58] hover:bg-[#2F9A58]/10 rounded transition-colors"><Edit2 size={18} /></button>
-                  <button onClick={() => handleDelete(item)} className="p-2 text-[#2F9A58]/80 hover:bg-[#2F9A58]/10 rounded transition-colors"><Trash2 size={18} /></button>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+                  <div className="flex gap-2 shrink-0 ml-4 pointer-events-auto">
+                    <button onPointerDown={(e) => e.stopPropagation()} onClick={() => startEdit(item)} className="p-2 text-[#2F9A58] hover:bg-[#2F9A58]/10 rounded transition-colors"><Edit2 size={18} /></button>
+                    <button onPointerDown={(e) => e.stopPropagation()} onClick={() => handleDelete(item)} className="p-2 text-[#2F9A58]/80 hover:bg-[#2F9A58]/10 rounded transition-colors"><Trash2 size={18} /></button>
+                  </div>
+                </Reorder.Item>
+              ))}
+            </AnimatePresence>
+          </Reorder.Group>
           
           {items.length === 0 && !loading && (
              <div className="text-center py-10 text-slate-500 italic border border-dashed border-white/10 rounded-lg">
