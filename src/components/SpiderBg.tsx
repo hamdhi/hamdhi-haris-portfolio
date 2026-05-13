@@ -25,14 +25,14 @@ export default function SpiderBg() {
             onClick: { enable: true, mode: "repulse" } 
           },
           modes: { 
-            grab: { distance: 250, links: { opacity: 0.6, color: "#80EBA9" } },
+            grab: { distance: 250, links: { opacity: 0.6, color: "#38BDF8" } },
             repulse: { distance: 250, duration: 0.4 }
           },
         },
         particles: {
-          color: { value: ["#2F9A58", "#80EBA9", "#AAEEC4"] }, 
+          color: { value: ["#0EA5E9", "#38BDF8", "#7DD3FC"] }, 
           links: { 
-            color: "#2F9A58", 
+            color: "#0EA5E9", 
             distance: 150, 
             enable: true, 
             opacity: 0.25, 

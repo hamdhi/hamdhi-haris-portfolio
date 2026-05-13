@@ -16,9 +16,9 @@ export default function SystemTelemetry(props: { GITHUB_USERNAME: string }) {
         className="mb-12"
       >
         <div className="flex items-center gap-3 mb-2">
-          <Activity className="text-[#2F9A58] shrink-0" size={24} />
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold uppercase tracking-tighter text-white break-words">
-            System_<span className="text-[#2F9A58]">Telemetry</span>
+          <Activity className="text-[#0EA5E9] shrink-0" size={24} />
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold uppercase tracking-tighter text-slate-900 dark:text-white break-words">
+            System_<span className="text-[#0EA5E9]">Telemetry</span>
           </h2>
         </div>
         <p className="text-slate-400 font-mono text-xs sm:text-sm lowercase break-words">
@@ -33,22 +33,22 @@ export default function SystemTelemetry(props: { GITHUB_USERNAME: string }) {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
           viewport={{ once: true, margin: "-100px" }}
-          className="lg:col-span-2 relative bg-[#05120a]/80 border border-[#2F9A58]/20 p-6 rounded-xl backdrop-blur-sm overflow-hidden group"
+          className="lg:col-span-2 relative bg-white/80 dark:bg-[#0F172A]/80 border border-slate-200 dark:border-[#0EA5E9]/20 p-6 rounded-xl backdrop-blur-sm overflow-hidden group shadow-sm"
         >
           {/* Decorative scanline effect */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(47,154,88,0.05)_1px,transparent_1px)] bg-[length:100%_4px] pointer-events-none opacity-20" />
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.05)_1px,transparent_1px)] bg-[length:100%_4px] pointer-events-none opacity-20" />
           
-          <div className="flex items-center justify-between mb-6 border-b border-[#2F9A58]/20 pb-4 relative z-10">
+          <div className="flex items-center justify-between mb-6 border-b border-[#0EA5E9]/20 pb-4 relative z-10">
             <div className="flex items-center gap-2">
-              <GitBranch size={18} className="text-[#2F9A58]" />
+              <GitBranch size={18} className="text-[#0EA5E9]" />
               <h3 className="font-mono text-sm text-slate-300 uppercase tracking-widest">Commit_Matrix</h3>
             </div>
             <div className="flex items-center gap-2">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2F9A58] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2F9A58]"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0EA5E9] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#0EA5E9]"></span>
               </span>
-              <span className="text-[10px] font-mono text-[#2F9A58] uppercase">Live</span>
+              <span className="text-[10px] font-mono text-[#0EA5E9] uppercase">Live</span>
             </div>
           </div>
 
@@ -68,29 +68,29 @@ export default function SystemTelemetry(props: { GITHUB_USERNAME: string }) {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true, margin: "-100px" }}
-          className="relative bg-[#05120a]/80 border border-[#2F9A58]/20 p-6 rounded-xl backdrop-blur-sm overflow-hidden"
+          className="relative bg-white/80 dark:bg-[#0F172A]/80 border border-slate-200 dark:border-[#0EA5E9]/20 p-6 rounded-xl backdrop-blur-sm overflow-hidden shadow-sm"
         >
           {/* Decorative scanline effect */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(47,154,88,0.05)_1px,transparent_1px)] bg-[length:100%_4px] pointer-events-none opacity-20" />
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.05)_1px,transparent_1px)] bg-[length:100%_4px] pointer-events-none opacity-20" />
 
-          <div className="flex items-center gap-2 mb-6 border-b border-[#2F9A58]/20 pb-4 relative z-10">
-            <Code2 size={18} className="text-[#2F9A58]" />
+          <div className="flex items-center gap-2 mb-6 border-b border-[#0EA5E9]/20 pb-4 relative z-10">
+            <Code2 size={18} className="text-[#0EA5E9]" />
             <h3 className="font-mono text-sm text-slate-300 uppercase tracking-widest">Language_Radar</h3>
           </div>
 
           <div className="w-full flex justify-center items-center min-h-[160px] md:h-[180px] relative z-10">
             <img 
-              src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${GITHUB_USERNAME}&layout=compact&theme=transparent&hide_border=true&title_color=2F9A58&text_color=94a3b8&icon_color=2F9A58`}
+              src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${GITHUB_USERNAME}&layout=compact&theme=transparent&hide_border=true&title_color=0EA5E9&text_color=94a3b8&icon_color=0EA5E9`}
               alt="Top Languages"
               className="w-full max-w-[320px] h-auto object-contain scale-100 md:scale-[1.15]"
             />
           </div>
 
-          <div className="mt-4 pt-4 border-t border-[#2F9A58]/10 relative z-10">
+          <div className="mt-4 pt-4 border-t border-[#0EA5E9]/10 relative z-10">
             <p className="font-mono text-[9px] sm:text-[10px] text-slate-500 flex items-center gap-2">
-              <Terminal size={10} className="text-[#2F9A58] shrink-0" />
+              <Terminal size={10} className="text-[#0EA5E9] shrink-0" />
               <span>status: tracking metrics</span>
-              <span className="animate-pulse text-[#2F9A58]">_</span>
+              <span className="animate-pulse text-[#0EA5E9]">_</span>
             </p>
           </div>
         </motion.div>

@@ -83,14 +83,14 @@ export default function ProjectCard({
         onMouseMove={handleMouseMove}
         onMouseLeave={() => { xPct.set(0); yPct.set(0); }}
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className="group relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl transition-all hover:border-[#2F9A58]/50 flex flex-col min-h-[350px] bg-slate-900/50"
+        className="group relative overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10 shadow-2xl transition-all hover:border-[#0EA5E9]/50 flex flex-col min-h-[350px] bg-white dark:bg-slate-900/50"
       >
         {/* Mouse Tracking Spotlight */}
         <motion.div
           className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition duration-300 group-hover:opacity-100 z-10"
           style={{
             background: useMotionTemplate`
-              radial-gradient(600px circle at ${mouseX}px ${mouseY}px, rgba(47, 154, 88, 0.15), transparent 80%)
+              radial-gradient(600px circle at ${mouseX}px ${mouseY}px, rgba(14, 165, 233, 0.15), transparent 80%)
             `,
           }}
         />
@@ -109,7 +109,7 @@ export default function ProjectCard({
           
           {/* Multi-image indicator */}
           {imageUrls.length > 1 && (
-            <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-[9px] text-[#2F9A58] font-mono border border-[#2F9A58]/30 z-20">
+            <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-[9px] text-[#0EA5E9] font-mono border border-[#0EA5E9]/30 z-20">
               {imageUrls.length}_SAMPLES
             </div>
           )}
@@ -118,7 +118,7 @@ export default function ProjectCard({
         {/* Content Layer */}
         <div className="relative z-10 flex h-full flex-col p-4 md:p-6 pointer-events-none">
           <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-4 pointer-events-auto">
-            <h3 className="text-3xl font-bold text-white group-hover:text-[#2F9A58] transition-colors leading-tight max-w-[65%]">
+            <h3 className="text-3xl font-bold text-slate-900 dark:text-white group-hover:text-[#0EA5E9] transition-colors leading-tight max-w-[65%]">
               {projectName}
             </h3>
             
@@ -128,7 +128,7 @@ export default function ProjectCard({
                   href={githubUrl} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="flex items-center gap-2 text-[10px] font-mono text-slate-300 hover:text-white bg-white/5 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 transition pointer-events-auto"
+                  className="flex items-center gap-2 text-[10px] font-mono text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-white/5 backdrop-blur-md px-3 py-1.5 rounded-full border border-slate-200 dark:border-white/10 transition pointer-events-auto"
                 >
                   <Github size={14} /> GITHUB
                 </a>
@@ -138,7 +138,7 @@ export default function ProjectCard({
                   href={liveUrl} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="flex items-center gap-2 text-[10px] font-mono text-[#2F9A58] hover:text-[#38b769] bg-[#2F9A58]/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-[#2F9A58]/20 transition pointer-events-auto"
+                  className="flex items-center gap-2 text-[10px] font-mono text-[#0EA5E9] hover:text-[#38BDF8] bg-[#0EA5E9]/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-[#0EA5E9]/20 transition pointer-events-auto"
                 >
                   <ExternalLink size={14} /> LIVE
                 </a>
@@ -150,17 +150,17 @@ export default function ProjectCard({
             {description}
           </p>
 
-          <div className="mb-6 p-4 bg-white/5 backdrop-blur-sm border-l-2 border-[#2F9A58] rounded-r-lg">
+          <div className="mb-6 p-4 bg-slate-50 dark:bg-white/5 backdrop-blur-sm border-l-2 border-[#0EA5E9] rounded-r-lg">
             <div className="flex items-center gap-2 mb-2">
-              <Lightbulb size={14} className="text-[#2F9A58]" />
-              <span className="font-mono text-[10px] text-[#80EBA9] uppercase tracking-widest">Lessons_Learned</span>
+              <Lightbulb size={14} className="text-[#0EA5E9]" />
+              <span className="font-mono text-[10px] text-[#38BDF8] uppercase tracking-widest">Lessons_Learned</span>
             </div>
-            <p className="text-xs text-slate-300 leading-relaxed font-medium">{learned}</p>
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">{learned}</p>
           </div>
 
           <div className="mt-auto flex flex-wrap gap-2">
             {technologies.map((tech) => (
-              <span key={tech} className="font-mono text-[13px] text-slate-90 bg-black/40 backdrop-blur-md px-2 py-1 rounded border border-white/5 uppercase">
+              <span key={tech} className="font-mono text-[13px] text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-black/40 backdrop-blur-md px-2 py-1 rounded border border-slate-200 dark:border-white/5 uppercase">
                 #{tech}
               </span>
             ))}
@@ -180,8 +180,8 @@ export default function ProjectCard({
           
           {imageUrls.length > 1 && (
             <>
-              <button onClick={prevImage} className="absolute left-4 z-[110] p-4 text-[#F80000] hover:text-[#2F9A58]"><ChevronLeft size={48} /></button>
-              <button onClick={nextImage} className="absolute right-4 z-[110] p-4 text-[#F80000] hover:text-[#2F9A58]"><ChevronRight size={48} /></button>
+              <button onClick={prevImage} className="absolute left-4 z-[110] p-4 text-[#F80000] hover:text-[#0EA5E9]"><ChevronLeft size={48} /></button>
+              <button onClick={nextImage} className="absolute right-4 z-[110] p-4 text-[#F80000] hover:text-[#0EA5E9]"><ChevronRight size={48} /></button>
             </>
           )}
 
@@ -194,11 +194,11 @@ export default function ProjectCard({
             />
             <div className="mt-6 flex flex-col items-center gap-2">
               <p className="text-white font-mono text-sm uppercase">
-                {projectName} <span className="text-[#2F9A58]">[{currentImageIdx + 1}/{imageUrls.length}]</span>
+                {projectName} <span className="text-[#0EA5E9]">[{currentImageIdx + 1}/{imageUrls.length}]</span>
               </p>
               <div className="flex gap-2">
                 {imageUrls.map((_, idx) => (
-                  <div key={idx} className={`h-1 w-8 rounded-full transition-all ${idx === currentImageIdx ? 'bg-[#2F9A58]' : 'bg-white/20'}`} />
+                  <div key={idx} className={`h-1 w-8 rounded-full transition-all ${idx === currentImageIdx ? 'bg-[#0EA5E9]' : 'bg-white/20'}`} />
                 ))}
               </div>
             </div>

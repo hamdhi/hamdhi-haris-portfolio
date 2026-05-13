@@ -66,9 +66,9 @@ export default function StatsOverview() {
 
   // Swapped colors from red variations to emerald/green variations
   const cards = [
-    { label: 'Project_Vault', val: stats.projects, icon: FolderGit2, color: 'text-[#2F9A58]', bg: 'bg-[#2F9A58]/10' },
-    { label: 'Client_Comms', val: stats.messages, icon: MessageSquare, color: 'text-emerald-400', bg: 'bg-emerald-400/10' },
-    { label: 'System_Views', val: stats.views, icon: Eye, color: 'text-[#2F9A58]', bg: 'bg-[#2F9A58]/10' }
+    { label: 'Project_Vault', val: stats.projects, icon: FolderGit2, color: 'text-[#0EA5E9]', bg: 'bg-[#0EA5E9]/10' },
+    { label: 'Client_Comms', val: stats.messages, icon: MessageSquare, color: 'text-sky-400', bg: 'bg-sky-400/10' },
+    { label: 'System_Views', val: stats.views, icon: Eye, color: 'text-[#0EA5E9]', bg: 'bg-[#0EA5E9]/10' }
   ];
 
   return (
@@ -80,7 +80,7 @@ export default function StatsOverview() {
           href="https://vercel.com/dashboard" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="flex items-center justify-center w-full sm:w-auto gap-2 text-xs font-bold font-mono text-[#2F9A58] bg-[#2F9A58]/10 hover:bg-[#2F9A58]/20 border border-[#2F9A58]/20 px-4 py-2.5 rounded-lg transition-all shadow-sm"
+          className="flex items-center justify-center w-full sm:w-auto gap-2 text-xs font-bold font-mono text-[#0EA5E9] bg-[#0EA5E9]/10 hover:bg-[#0EA5E9]/20 border border-[#0EA5E9]/20 px-4 py-2.5 rounded-lg transition-all shadow-sm"
         >
           <BarChart2 size={16} /> ADVANCED_ANALYTICS <ExternalLink size={14} />
         </a>
@@ -88,12 +88,12 @@ export default function StatsOverview() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {cards.map((card, idx) => (
-          <div key={idx} className="bg-[#0F2A20] border border-white/5 p-5 rounded-2xl group hover:border-[#2F9A58]/20 transition-all">
+          <div key={idx} className="bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-white/5 p-5 rounded-2xl group hover:border-[#0EA5E9]/20 transition-all shadow-sm">
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-1">{card.label}</p>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-bold text-white tracking-tighter">
+                  <span className="text-3xl font-bold text-slate-900 dark:text-white tracking-tighter">
                     {loading ? '---' : card.val}
                   </span>
                   <TrendingUp size={12} className="text-slate-600" />
@@ -105,9 +105,9 @@ export default function StatsOverview() {
             </div>
             
             <div className="mt-4 flex items-center gap-2">
-              <div className="h-1 flex-1 bg-white/5 rounded-full overflow-hidden">
+              <div className="h-1 flex-1 bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
                 <div 
-                  className={`h-full ${card.color.startsWith('text-[#') ? 'bg-[#2F9A58]' : 'bg-emerald-400'} opacity-40 transition-all duration-1000`} 
+                  className={`h-full ${card.color.startsWith('text-[#') ? 'bg-[#0EA5E9]' : 'bg-sky-400'} opacity-40 transition-all duration-1000`} 
                   style={{ width: loading ? '0%' : '100%' }}
                 />
               </div>

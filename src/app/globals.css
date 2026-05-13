@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* Add this line to enable manual dark mode toggling */
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --background: #ffffff;
