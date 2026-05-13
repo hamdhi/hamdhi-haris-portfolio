@@ -144,8 +144,8 @@ export default function ProjectCard({
           
           {imageUrls.length > 1 && (
             <>
-              <button onClick={prevImage} className="absolute left-4 z-[110] p-4 text-white/30 hover:text-[#2F9A58]"><ChevronLeft size={48} /></button>
-              <button onClick={nextImage} className="absolute right-4 z-[110] p-4 text-white/30 hover:text-[#2F9A58]"><ChevronRight size={48} /></button>
+              <button onClick={prevImage} className="absolute left-4 z-[110] p-4 text-[#F80000] hover:text-[#2F9A58]"><ChevronLeft size={48} /></button>
+              <button onClick={nextImage} className="absolute right-4 z-[110] p-4 text-[#F80000] hover:text-[#2F9A58]"><ChevronRight size={48} /></button>
             </>
           )}
 

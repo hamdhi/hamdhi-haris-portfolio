@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import ProjectCard from './ProjectCard';
 import { FolderGit2, Loader2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 // Define the shape of a Project (matches your Supabase table)
 interface Project {
@@ -42,6 +43,19 @@ export default function Projects() {
     fetchProjects();
   }, []);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15, delayChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 50, scale: 0.95 },
+    show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 150, damping: 20 } }
+  };
+
   return (
     <section id="projects" className="relative z-10 max-w-7xl mx-auto px-6 py-32">
       {/* Section Header */}
@@ -57,13 +71,20 @@ export default function Projects() {
         </div>
       ) : (
         /* Projects Grid */
-        <div className="grid md:grid-cols-2 gap-12">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid md:grid-cols-2 gap-12"
+        >
           {projects.length > 0 ? (
             projects.map((project) => (
-              <ProjectCard 
-                key={project.id} // Use database ID as key
-                {...project} 
-              />
+              <motion.div key={project.id} variants={itemVariants}>
+                <ProjectCard 
+                  {...project} 
+                />
+              </motion.div>
             ))
           ) : (
             <div className="col-span-full py-20 border border-dashed border-white/10 rounded-3xl flex flex-col items-center justify-center bg-white/[0.02]">
@@ -72,7 +93,7 @@ export default function Projects() {
               </p>
             </div>
           )}
-        </div>
+        </motion.div>
       )}
     </section>
   );
