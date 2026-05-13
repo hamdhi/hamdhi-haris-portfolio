@@ -49,11 +49,12 @@ export default function ExperienceLeadership() {
   }, []);
 
   // 2. The Card Component
-  const RenderCard = ({ item, type }: { item: Item, type: 'exp' | 'lead' }) => (
+  const RenderCard = ({ item, type, index }: { item: Item, type: 'exp' | 'lead', index: number }) => (
     <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50, y: 20 }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.6, type: "spring", bounce: 0.4 }}
       className="group relative grid md:grid-cols-6 gap-0 items-stretch overflow-hidden rounded-xl border border-white/10 bg-slate-900/50 transition-all hover:border-[#2F9A58]/50 shadow-xl"
     >
       {/* Image Section */}
@@ -118,8 +119,8 @@ export default function ExperienceLeadership() {
         </div>
         <div className="grid gap-6"> 
           {experienceData.length > 0 ? (
-            experienceData.map((item) => (
-              <RenderCard key={item.id} item={item} type="exp" />
+            experienceData.map((item, index) => (
+              <RenderCard key={item.id} item={item} type="exp" index={index} />
             ))
           ) : (
             <p className="text-slate-500 italic">No experience added yet.</p>
@@ -135,8 +136,8 @@ export default function ExperienceLeadership() {
         </div>
         <div className="grid gap-6">
           {leadershipData.length > 0 ? (
-            leadershipData.map((item) => (
-              <RenderCard key={item.id} item={item} type="lead" />
+            leadershipData.map((item, index) => (
+              <RenderCard key={item.id} item={item} type="lead" index={index} />
             ))
           ) : (
             <p className="text-slate-500 italic">No leadership added yet.</p>

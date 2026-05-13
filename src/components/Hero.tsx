@@ -1,6 +1,7 @@
 'use client';
 import { Contact, Download } from 'lucide-react';
 import { useEffect, useState, useCallback } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 interface HeroProps {
   cvLink: string;
@@ -44,13 +45,21 @@ export default function Hero({ cvLink }: HeroProps) {
     return () => clearTimeout(timer);
   }, [handleTyping, typingSpeed]);
 
+  const { scrollY } = useScroll();
+  const yText = useTransform(scrollY, [0, 800], [0, 250]);
+  const yImage = useTransform(scrollY, [0, 800], [0, -150]);
+  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
+
   return (
-    <section id='home' className="relative z-10 min-h-screen flex items-center">
+    <section id='home' className="relative z-10 min-h-screen flex items-center pt-10">
       <div className="max-w-7xl mx-auto px-6 py-20 w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
           
           {/* Left Column: Text */}
-          <div className="order-2 md:order-1 relative z-20 text-center md:text-left flex flex-col justify-center">
+          <motion.div 
+            style={{ y: yText, opacity }}
+            className="order-2 md:order-1 relative z-20 text-center md:text-left flex flex-col justify-center"
+          >
             
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
               Hello, I'm <span className="text-[#2F9A58]">Hamdhi Haris</span>
@@ -101,10 +110,14 @@ export default function Hero({ cvLink }: HeroProps) {
                 <Contact size={18} /> CONTACT_ME
               </a>
             </div>
-          </div>
+          </motion.div>
+        
 
           {/* Right Column: Image */}
-          <div className="order-1 md:order-2 flex items-center justify-center relative z-10">
+          <motion.div 
+            style={{ y: yImage, opacity }}
+            className="order-1 md:order-2 flex items-center justify-center relative z-10"
+          >
             <div className="relative p-1 bg-gradient-to-br from-[#2F9A58]/20 to-[#2F9A58]/5 rounded-sm">
               
               <div className="absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-[#2F9A58] animate-pulse z-30" />
@@ -132,7 +145,7 @@ export default function Hero({ cvLink }: HeroProps) {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
