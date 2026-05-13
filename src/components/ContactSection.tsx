@@ -1,5 +1,6 @@
 'use client';
 import ContactForm from './ContactForm';
+import { Mail, Github, Linkedin, MessageCircle, Phone } from 'lucide-react';
 
 interface ContactProps {
   email: string;
@@ -21,13 +22,53 @@ export default function Contact({ email, location }: ContactProps) {
           </p>
           
           {/* Terminal-style metadata */}
-          <div className="space-y-4 mono text-sm text-slate-500">
+          <div className="space-y-4 mono text-sm text-slate-500 mb-10">
             <p>{`> Location: ${location}`}</p>
             <p>{`> Email: ${email}`}</p>
             <p className="flex items-center gap-2">
               {`> Status: `} 
               <span className="text-[#2F9A58] animate-pulse">Ready to Scale</span>
             </p>
+          </div>
+
+          {/* Social Links */}
+          <div className="flex flex-wrap gap-4">
+            <a 
+              href={`mailto:${email}`}
+              className="flex items-center gap-2 px-4 py-2.5 bg-white/5 hover:bg-[#2F9A58]/10 border border-white/10 hover:border-[#2F9A58]/50 rounded-lg text-slate-300 hover:text-[#2F9A58] transition-all font-mono text-xs shadow-sm hover:shadow-[0_0_15px_rgba(47,154,88,0.2)]"
+            >
+              <Mail size={16} /> EMAIL
+            </a>
+            <a 
+              href="https://github.com/hamdhi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2.5 bg-white/5 hover:bg-[#2F9A58]/10 border border-white/10 hover:border-[#2F9A58]/50 rounded-lg text-slate-300 hover:text-[#2F9A58] transition-all font-mono text-xs shadow-sm hover:shadow-[0_0_15px_rgba(47,154,88,0.2)]"
+            >
+              <Github size={16} /> GITHUB
+            </a>
+            <a 
+              href="https://www.linkedin.com/in/hamdhi-haris-68994a1b4/" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2.5 bg-white/5 hover:bg-[#2F9A58]/10 border border-white/10 hover:border-[#2F9A58]/50 rounded-lg text-slate-300 hover:text-[#2F9A58] transition-all font-mono text-xs shadow-sm hover:shadow-[0_0_15px_rgba(47,154,88,0.2)]"
+            >
+              <Linkedin size={16} /> LINKEDIN
+            </a>
+            <a 
+              href="https://wa.me/94702031483" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2.5 bg-white/5 hover:bg-[#2F9A58]/10 border border-white/10 hover:border-[#2F9A58]/50 rounded-lg text-slate-300 hover:text-[#2F9A58] transition-all font-mono text-xs shadow-sm hover:shadow-[0_0_15px_rgba(47,154,88,0.2)]"
+            >
+              <MessageCircle size={16} /> WHATSAPP
+            </a>
+            <a 
+              href="tel:+94702031483"
+              className="flex items-center gap-2 px-4 py-2.5 bg-white/5 hover:bg-[#2F9A58]/10 border border-white/10 hover:border-[#2F9A58]/50 rounded-lg text-slate-300 hover:text-[#2F9A58] transition-all font-mono text-xs shadow-sm hover:shadow-[0_0_15px_rgba(47,154,88,0.2)]"
+            >
+              <Phone size={16} /> PHONE
+            </a>
           </div>
         </div>
 
@@ -38,6 +79,9 @@ export default function Contact({ email, location }: ContactProps) {
           <ContactForm />
         </div>
       </div>
+
+
+      
     </section>
   );
 }

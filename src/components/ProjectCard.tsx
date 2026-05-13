@@ -69,7 +69,7 @@ export default function ProjectCard({
             alt={projectName} 
             className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105" 
           />
-          <div className="absolute inset-0 bg-slate-950/85 transition-opacity duration-500 group-hover:bg-slate-950/90" />
+          <div className="absolute inset-0 bg-black opacity-80 transition-opacity duration-500 hover:opacity-90" />
           
           {/* Multi-image indicator */}
           {imageUrls.length > 1 && (
@@ -144,8 +144,8 @@ export default function ProjectCard({
           
           {imageUrls.length > 1 && (
             <>
-              <button onClick={prevImage} className="absolute left-4 z-[110] p-4 text-white/30 hover:text-[#2F9A58]"><ChevronLeft size={48} /></button>
-              <button onClick={nextImage} className="absolute right-4 z-[110] p-4 text-white/30 hover:text-[#2F9A58]"><ChevronRight size={48} /></button>
+              <button onClick={prevImage} className="absolute left-4 z-[110] p-4 text-[#F80000] hover:text-[#2F9A58]"><ChevronLeft size={48} /></button>
+              <button onClick={nextImage} className="absolute right-4 z-[110] p-4 text-[#F80000] hover:text-[#2F9A58]"><ChevronRight size={48} /></button>
             </>
           )}
 
