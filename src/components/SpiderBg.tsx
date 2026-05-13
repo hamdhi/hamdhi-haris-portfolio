@@ -20,23 +20,34 @@ export default function SpiderBg() {
       options={{
         fpsLimit: 120,
         interactivity: {
-          events: { onHover: { enable: true, mode: "grab" } },
-          modes: { grab: { distance: 200, links: { opacity: 0.5 } } },
+          events: { 
+            onHover: { enable: true, mode: "grab" },
+            onClick: { enable: true, mode: "repulse" } 
+          },
+          modes: { 
+            grab: { distance: 250, links: { opacity: 0.6, color: "#80EBA9" } },
+            repulse: { distance: 250, duration: 0.4 }
+          },
         },
         particles: {
-          // Updated to your brand green and a darker forest green variant
-          color: { value: ["#AAEEC4", "#AAEEC4"] }, 
+          color: { value: ["#2F9A58", "#80EBA9", "#AAEEC4"] }, 
           links: { 
-            color: "#AAEEC4", 
+            color: "#2F9A58", 
             distance: 150, 
             enable: true, 
-            opacity: 0.2, 
+            opacity: 0.25, 
             width: 1 
           },
-          move: { enable: true, speed: 1.5 },
-          number: { density: { enable: true }, value: 80 },
-          opacity: { value: 0.3 },
-          size: { value: { min: 1, max: 3 } },
+          move: { enable: true, speed: 1.2, outModes: { default: "bounce" } },
+          number: { density: { enable: true }, value: 90 },
+          opacity: { 
+            value: { min: 0.1, max: 0.5 },
+            animation: { enable: true, speed: 1, sync: false }
+          },
+          size: { 
+            value: { min: 1, max: 3 },
+            animation: { enable: true, speed: 2, sync: false }
+          },
         },
       }}
     />
