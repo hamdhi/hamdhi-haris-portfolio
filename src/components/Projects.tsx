@@ -58,10 +58,28 @@ export default function Projects() {
 
   return (
     <section id="projects" className="relative z-10 max-w-7xl mx-auto px-6 py-32">
+      {/* Vault Background Pattern */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.02] flex items-center justify-center">
+        <div className="w-full h-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+      </div>
+
       {/* Section Header */}
-      <div className="flex items-center gap-4 mb-20">
-        <FolderGit2 className="text-[#2F9A58]" />
-        <h2 className="text-4xl font-bold uppercase tracking-tighter text-white">Project_Vault</h2>
+      <div className="flex flex-col mb-16 border-b border-white/5 pb-8 relative z-10">
+        <div className="flex items-center gap-4">
+          <div className="p-3 bg-[#2F9A58]/10 border border-[#2F9A58]/20 rounded-xl relative overflow-hidden group shadow-[0_0_15px_rgba(47,154,88,0.1)]">
+            <div className="absolute inset-0 bg-[#2F9A58]/20 -translate-y-full group-hover:animate-[shimmer_2s_infinite]" />
+            <FolderGit2 className="text-[#2F9A58]" size={28} />
+          </div>
+          <div>
+            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white drop-shadow-[0_0_15px_rgba(47,154,88,0.2)]">
+              Project_<span className="text-[#2F9A58]">Vault</span>
+            </h2>
+            <p className="font-mono text-xs text-slate-500 mt-2 flex items-center gap-2 tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 bg-[#2F9A58] rounded-full animate-ping" />
+              Accessing_Live_Archives
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Loading State */}

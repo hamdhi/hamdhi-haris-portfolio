@@ -49,7 +49,8 @@ export default function AboutMe() {
           {/* Stats Sidebar */}
           <div className="flex flex-col gap-4 justify-center">
             {stats.map((stat, i) => (
-              <div 
+              <motion.div 
+                whileHover={{ scale: 1.02, x: 5 }}
                 key={i} 
                 className="group p-5 rounded-xl border border-white/5 bg-white/[0.01] hover:border-[#2F9A58]/30 hover:bg-white/[0.03] transition-all duration-300"
               >
@@ -60,7 +61,7 @@ export default function AboutMe() {
                   <span className="text-[10px] text-[#93F8BA] uppercase font-mono tracking-widest opacity-100">{stat.label}</span>
                 </div>
                 <div className="text-white font-semibold tracking-tight">{stat.value}</div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

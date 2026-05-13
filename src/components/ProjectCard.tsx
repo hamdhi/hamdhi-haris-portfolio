@@ -1,7 +1,8 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, MouseEvent } from 'react';
 import { createPortal } from 'react-dom';
 import { Github, ExternalLink, Lightbulb, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion, useMotionValue, useMotionTemplate, useSpring, useTransform } from 'framer-motion';
 
 interface ProjectProps {
   projectName: string;
@@ -55,9 +56,44 @@ export default function ProjectCard({
 
   const displayImage = imageUrls.length > 0 ? imageUrls[0] : '/api/placeholder/400/320';
 
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // 3D Tilt Setup
+  const xPct = useMotionValue(0);
+  const yPct = useMotionValue(0);
+  const xSpring = useSpring(xPct, { stiffness: 300, damping: 30 });
+  const ySpring = useSpring(yPct, { stiffness: 300, damping: 30 });
+  const rotateX = useTransform(ySpring, [-0.5, 0.5], ["5deg", "-5deg"]);
+  const rotateY = useTransform(xSpring, [-0.5, 0.5], ["-5deg", "5deg"]);
+
+  function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
+    const { left, top, width, height } = currentTarget.getBoundingClientRect();
+    const x = clientX - left;
+    const y = clientY - top;
+    mouseX.set(x);
+    mouseY.set(y);
+    xPct.set(x / width - 0.5);
+    yPct.set(y / height - 0.5);
+  }
+
   return (
     <>
-      <div className="group relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl transition-all hover:border-[#2F9A58]/50 flex flex-col min-h-[350px] bg-slate-900/50">
+      <motion.div 
+        onMouseMove={handleMouseMove}
+        onMouseLeave={() => { xPct.set(0); yPct.set(0); }}
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        className="group relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl transition-all hover:border-[#2F9A58]/50 flex flex-col min-h-[350px] bg-slate-900/50"
+      >
+        {/* Mouse Tracking Spotlight */}
+        <motion.div
+          className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition duration-300 group-hover:opacity-100 z-10"
+          style={{
+            background: useMotionTemplate`
+              radial-gradient(600px circle at ${mouseX}px ${mouseY}px, rgba(47, 154, 88, 0.15), transparent 80%)
+            `,
+          }}
+        />
         
         {/* Background Image Layer */}
         <div 
@@ -130,7 +166,7 @@ export default function ProjectCard({
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* --- GALLERY MODAL --- */}
       {isPreviewOpen && imageUrls.length > 0 && mounted && createPortal(
