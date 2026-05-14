@@ -13,7 +13,7 @@ export default function AboutMe() {
     <section id="about" className="relative z-10 max-w-7xl mx-auto px-6 py-24">
       {/* Header */}
       <div className="flex items-center gap-4 mb-12">
-        <User className="text-[#0EA5E9]" />
+        <User className="text-accent" />
         <h2 className="text-4xl font-bold uppercase tracking-tighter text-slate-900 dark:text-white">System_Identity</h2>
       </div>
 
@@ -29,19 +29,19 @@ export default function AboutMe() {
           {/* Bio Text */}
           <div className="lg:col-span-2 space-y-6">
             <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-4 italic">
-              Hello, I'm <span className="text-[#0EA5E9]">Hamdhi Haris</span>
+              Hello, I'm <span className="text-accent">Hamdhi Haris</span>
             </h3>
             <div className="space-y-4 text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
               <p>
                 I am a <span className="text-slate-900 dark:text-white font-semibold">Software Engineering Student</span> focused on building robust backend architectures. My core expertise lies in 
-                <span className="text-[#0EA5E9] font-mono"> Java</span> and 
-                <span className="text-[#0EA5E9] font-mono"> Spring Boot</span>, optimizing system performance through clean design patterns.
+                <span className="text-accent font-mono"> Java</span> and 
+                <span className="text-accent font-mono"> Spring Boot</span>, optimizing system performance through clean design patterns.
               </p>
               <p>
                 Currently, I am building full-stack applications with <span className="text-slate-900 dark:text-white">Next.js</span> while mastering <span className="text-slate-900 dark:text-white">Data Structures and Algorithms</span>. 
               </p>
               <p>
-                Outside of code, I am deeply interested in <span className="text-[#0EA5E9]/80 italic">superhero universes</span> and competitive <span className="text-[#0EA5E9]/80 italic">video games</span>.
+                Outside of code, I am deeply interested in <span className="text-accent/80 italic">superhero universes</span> and competitive <span className="text-accent/80 italic">video games</span>.
               </p>
             </div>
           </div>
@@ -52,13 +52,13 @@ export default function AboutMe() {
               <motion.div 
                 whileHover={{ scale: 1.02, x: 5 }}
                 key={i} 
-                className="group p-5 rounded-xl border border-slate-200 dark:border-white/5 bg-white dark:bg-white/[0.01] hover:border-[#0EA5E9]/30 hover:bg-slate-50 dark:hover:bg-white/[0.03] transition-all duration-300 shadow-sm"
+                className="group p-5 rounded-xl border border-slate-200 dark:border-white/5 bg-white dark:bg-white/[0.01] hover:border-accent/30 hover:bg-slate-50 dark:hover:bg-white/[0.03] transition-all duration-300 shadow-sm"
               >
-                <div className="flex items-center gap-3 text-[#0EA5E9] mb-2">
-                  <div className="p-2 rounded-lg bg-[#0EA5E9]/10 border border-[#0EA5E9]/20">
+                <div className="flex items-center gap-3 text-accent mb-2">
+                  <div className="p-2 rounded-lg bg-accent/10 border border-accent/20">
                     {stat.icon}
                   </div>
-                  <span className="text-[10px] text-[#38BDF8] uppercase font-mono tracking-widest opacity-100">{stat.label}</span>
+                  <span className="text-[10px] text-accent-light uppercase font-mono tracking-widest opacity-100">{stat.label}</span>
                 </div>
                 <div className="text-slate-900 dark:text-white font-semibold tracking-tight">{stat.value}</div>
               </motion.div>
@@ -70,24 +70,24 @@ export default function AboutMe() {
         <motion.div 
           initial={{ scale: 0.95, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
-          className="relative mt-8 py-6 px-4 rounded-xl border-2 border-dashed border-[#0EA5E9]/30 bg-[#0EA5E9]/5 overflow-hidden group"
+          className="relative mt-8 py-6 px-4 rounded-xl border-2 border-dashed border-accent/30 bg-accent/5 overflow-hidden group"
         >
           {/* Scanning Animation Effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#0EA5E9]/10 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite] transition-transform" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/10 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite] transition-transform" />
           
           <div className="relative z-10 flex flex-col items-center justify-center gap-2 text-center">
             <div className="flex items-center gap-3 mb-1">
               <span className="relative flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0EA5E9] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#0EA5E9]"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-accent"></span>
               </span>
-              <span className="text-xs font-mono text-[#0EA5E9] uppercase tracking-[0.3em] font-black">
+              <span className="text-xs font-mono text-accent uppercase tracking-[0.3em] font-black">
                 System_Status
               </span>
             </div>
             
-            <h4 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white uppercase tracking-tighter drop-shadow-[0_0_15px_rgba(14,165,233,0.5)]">
-              Open to <span className="text-[#0EA5E9]">Collaborations</span> & Internships
+            <h4 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white uppercase tracking-tighter drop-shadow-[0_0_15px_hsla(var(--accent-hue),89%,48%,0.5)]">
+              Open to <span className="text-accent">Collaborations</span> & Internships
             </h4>
             
             <p className="text-slate-400 font-mono text-[10px] mt-2 uppercase tracking-widest opacity-60">

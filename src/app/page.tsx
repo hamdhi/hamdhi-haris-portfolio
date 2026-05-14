@@ -60,10 +60,10 @@ export default function Home() {
   const cvLink = getCvUrl();
 
   return (
-    <main className="relative min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-white selection:bg-[#0EA5E9]/30 overflow-x-hidden transition-colors duration-300"> 
+    <main className="relative min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-white selection:bg-accent/30 overflow-x-hidden transition-colors duration-300"> 
       {/* Scroll Progress Bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#0EA5E9]/40 via-[#0EA5E9] to-[#38BDF8] origin-left z-[100] shadow-[0_0_20px_#0EA5E9]"
+        className="fixed top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-accent/40 via-accent to-accent-light origin-left z-[100] shadow-[0_0_20px_var(--accent)]"
         style={{ scaleX }}
       />
 

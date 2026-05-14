@@ -55,7 +55,7 @@ export default function ExperienceLeadership() {
       whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, type: "spring", bounce: 0.4 }}
-      className="group relative grid md:grid-cols-6 gap-0 items-stretch overflow-hidden rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/50 transition-all hover:border-[#0EA5E9]/50 shadow-xl"
+      className="group relative grid md:grid-cols-6 gap-0 items-stretch overflow-hidden rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/50 transition-all hover:border-accent/50 shadow-xl"
     >
       {/* Image Section */}
       <div className="md:col-span-2 relative min-h-[160px] md:min-h-full overflow-hidden border-b md:border-b-0 md:border-r border-white/5">
@@ -71,14 +71,14 @@ export default function ExperienceLeadership() {
       <div className="md:col-span-4 flex flex-col p-5 md:p-6 bg-white/50 dark:bg-slate-900/20 backdrop-blur-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
           <div className="flex items-center gap-3">
-            <div className="p-1.5 rounded-lg bg-[#0EA5E9]/10 border border-[#0EA5E9]/20 shrink-0">
-              {type === 'exp' ? <Briefcase size={16} className="text-[#0EA5E9]" /> : <Trophy size={16} className="text-[#0EA5E9]/80" />}
+            <div className="p-1.5 rounded-lg bg-accent/10 border border-accent/20 shrink-0">
+              {type === 'exp' ? <Briefcase size={16} className="text-accent" /> : <Trophy size={16} className="text-accent/80" />}
             </div>
-            <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-[#0EA5E9] transition-colors leading-tight">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-accent transition-colors leading-tight">
               {item.title}
             </h3>
           </div>
-          <span className="font-mono text-[9px] text-[#0EA5E9] bg-[#0EA5E9]/5 px-2 py-1 rounded border border-[#0EA5E9]/10 uppercase self-start sm:self-center shrink-0">
+          <span className="font-mono text-[9px] text-accent bg-accent/5 px-2 py-1 rounded border border-accent/10 uppercase self-start sm:self-center shrink-0">
             {item.date}
           </span>
         </div>
@@ -102,7 +102,7 @@ export default function ExperienceLeadership() {
 
   if (loading) {
     return (
-      <div className="py-20 flex justify-center text-[#0EA5E9]">
+      <div className="py-20 flex justify-center text-accent">
         <Loader2 className="animate-spin" size={32} />
       </div>
     );
@@ -114,7 +114,7 @@ export default function ExperienceLeadership() {
       {/* EXPERIENCE SECTION */}
       <div>
         <div className="flex items-center gap-4 mb-10">
-          <Briefcase size={20} className="text-[#0EA5E9]" />
+          <Briefcase size={20} className="text-accent" />
           <h2 className="text-3xl font-bold uppercase tracking-tighter text-slate-900 dark:text-white">Work_Experience</h2>
         </div>
         <div className="grid gap-6"> 
@@ -131,7 +131,7 @@ export default function ExperienceLeadership() {
       {/* LEADERSHIP SECTION */}
       <div id="experience">
         <div className="flex items-center gap-4 mb-10">
-          <Trophy size={20} className="text-[#0EA5E9]/80" />
+          <Trophy size={20} className="text-accent/80" />
           <h2 className="text-3xl font-bold uppercase tracking-tighter text-slate-900 dark:text-white">Leadership_Log</h2>
         </div>
         <div className="grid gap-6">

@@ -29,11 +29,11 @@ export default function TechCard({ name, icon, tags, proficiency, isMain }: Tech
       onMouseMove={handleMouseMove}
       onMouseLeave={() => { x.set(0); y.set(0); }}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      className={`relative h-52 md:h-64 w-full rounded-2xl border ${isMain ? 'border-[#0EA5E9]/50 shadow-[0_0_20px_rgba(14,165,233,0.1)]' : 'border-slate-200 dark:border-white/10'} bg-white dark:bg-white/5 p-6 backdrop-blur-md cursor-pointer transition-colors hover:border-[#0EA5E9] shadow-sm`}
+      className={`relative h-52 md:h-64 w-full rounded-2xl border ${isMain ? 'border-accent/50 shadow-[0_0_20px_hsla(var(--accent-hue),89%,48%,0.1)]' : 'border-slate-200 dark:border-white/10'} bg-white dark:bg-white/5 p-6 backdrop-blur-md cursor-pointer transition-colors hover:border-accent shadow-sm`}
     >
       {/* Main Tech Badge */}
       {isMain && (
-        <div className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-[#0EA5E9] text-[11px] font-bold text-black uppercase tracking-tighter z-20">
+        <div className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-accent text-[11px] font-bold text-black uppercase tracking-tighter z-20">
           Core
         </div>
       )}
@@ -49,7 +49,7 @@ export default function TechCard({ name, icon, tags, proficiency, isMain }: Tech
             initial={{ width: 0 }}
             animate={{ width: `${proficiency}%` }}
             transition={{ duration: 1, delay: 0.5 }}
-            className={`h-full ${isMain ? 'bg-[#0EA5E9] shadow-[0_0_10px_#0EA5E9]' : 'bg-slate-400'}`}
+            className={`h-full ${isMain ? 'bg-accent shadow-[0_0_10px_var(--accent)]' : 'bg-slate-400'}`}
           />
         </div>
       </div>

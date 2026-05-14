@@ -62,10 +62,10 @@ export default function Hero({ cvLink }: HeroProps) {
           >
             
             <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2">
-              Hello, I'm <span className="text-[#0EA5E9]">Hamdhi Haris</span>
+              Hello, I'm <span className="text-accent">Hamdhi Haris</span>
             </h2>
 
-            <p className="mono text-[#0EA5E9] mb-6 tracking-widest text-sm md:text-base">
+            <p className="mono text-accent mb-6 tracking-widest text-sm md:text-base">
               // BSC (Hons) in Software Engineering(Ug)
             </p>
             
@@ -81,13 +81,13 @@ export default function Hero({ cvLink }: HeroProps) {
                   animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
                   transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
                   className="
-                  bg-gradient-to-r from-[#0EA5E9] via-[#38BDF8] to-[#0EA5E9] bg-[length:200%_auto] bg-clip-text text-transparent 
+                  bg-gradient-to-r from-accent via-accent-light to-accent bg-[length:200%_auto] bg-clip-text text-transparent 
                   text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold
                   text-center md:text-left
                   leading-tight
                 ">
                   {text}
-                  <span className="ml-1 animate-pulse text-[#0EA5E9]">|</span>
+                  <span className="ml-1 animate-pulse text-accent">|</span>
                 </motion.span>
               </div>
             </div>
@@ -101,14 +101,14 @@ export default function Hero({ cvLink }: HeroProps) {
               <a 
                 href={cvLink} 
                 download 
-                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-[#0EA5E9] to-[#0284C7] px-6 py-4 font-bold text-white rounded-sm hover:scale-105 transition shadow-[0_0_20px_rgba(14,165,233,0.3)] whitespace-nowrap"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-accent to-accent-dark px-6 py-4 font-bold text-white rounded-sm hover:scale-105 transition shadow-[0_0_20px_hsla(var(--accent-hue),89%,48%,0.3)] whitespace-nowrap"
               >
                 <Download size={18} /> DOWNLOAD_CV
               </a>
 
               <a 
                 href="#contact" 
-                className="w-full sm:w-auto flex items-center justify-center gap-2 border border-[#0EA5E9]/50 hover:bg-[#0EA5E9]/10 px-6 py-4 font-bold text-[#0EA5E9] rounded-sm hover:scale-105 transition whitespace-nowrap"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 border border-accent/50 hover:bg-accent/10 px-6 py-4 font-bold text-accent rounded-sm hover:scale-105 transition whitespace-nowrap"
               >
                 <Contact size={18} /> CONTACT_ME
               </a>
@@ -124,17 +124,17 @@ export default function Hero({ cvLink }: HeroProps) {
             <motion.div 
               animate={{ y: [-10, 10, -10] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="relative p-1 bg-gradient-to-br from-[#0EA5E9]/20 to-[#0EA5E9]/5 rounded-sm"
+              className="relative p-1 bg-gradient-to-br from-accent/20 to-accent/5 rounded-sm"
             >
               
-              <div className="absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-[#0EA5E9] animate-pulse z-30" />
-              <div className="absolute -top-2 -right-2 w-8 h-8 border-t-2 border-r-2 border-[#0EA5E9] animate-pulse z-30" />
-              <div className="absolute -bottom-2 -left-2 w-8 h-8 border-b-2 border-l-2 border-[#0EA5E9] animate-pulse z-30" />
-              <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-2 border-r-2 border-[#0EA5E9] animate-pulse z-30" />
+              <div className="absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-accent animate-pulse z-30" />
+              <div className="absolute -top-2 -right-2 w-8 h-8 border-t-2 border-r-2 border-accent animate-pulse z-30" />
+              <div className="absolute -bottom-2 -left-2 w-8 h-8 border-b-2 border-l-2 border-accent animate-pulse z-30" />
+              <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-2 border-r-2 border-accent animate-pulse z-30" />
 
               <div className="relative w-64 h-64 md:w-80 lg:w-96 md:h-80 lg:h-96 overflow-hidden bg-slate-200 dark:bg-slate-900 shadow-2xl">
                 {/* Updated Scan line shadow color to match green */}
-                <div className="absolute top-0 w-full h-0.5 bg-[#0EA5E9] shadow-[0_0_15px_#0EA5E9] animate-[scan_4s_linear_infinite] z-20" />
+                <div className="absolute top-0 w-full h-0.5 bg-accent shadow-[0_0_15px_var(--accent)] animate-[scan_4s_linear_infinite] z-20" />
 
                 <img
                   src="/portfolio-img.jpeg"
@@ -144,10 +144,10 @@ export default function Hero({ cvLink }: HeroProps) {
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none z-10" />
 
-                <div className="absolute bottom-4 left-4 mono text-[10px] bg-black/80 p-2 backdrop-blur-md border border-[#0EA5E9]/50 z-20">
+                <div className="absolute bottom-4 left-4 mono text-[10px] bg-black/80 p-2 backdrop-blur-md border border-accent/50 z-20">
                   <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-[#0EA5E9] rounded-full animate-ping" />
-                    <p className="text-[#0EA5E9] font-bold uppercase tracking-widest">Target_Locked: Dev</p>
+                    <span className="w-1.5 h-1.5 bg-accent rounded-full animate-ping" />
+                    <p className="text-accent font-bold uppercase tracking-widest">Target_Locked: Dev</p>
                   </div>
                 </div>
               </div>

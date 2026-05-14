@@ -22,7 +22,7 @@ export default function TechStack() {
   return (
     <section id="stack" className="relative z-10 max-w-7xl mx-auto px-6 py-32">
       <h2 className="text-4xl font-bold mb-16 text-center text-slate-900 dark:text-white">
-        Tech <span className="text-[#0EA5E9]">Arsenal</span>
+        Tech <span className="text-accent">Arsenal</span>
       </h2>
       
       <motion.div 

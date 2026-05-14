@@ -109,8 +109,8 @@ export default function Navbar() {
           onClick={(e) => handleScroll(e, '/#home')}
           className="flex items-center gap-2 font-bold text-xl tracking-tighter cursor-pointer"
         >
-          <Terminal className="text-[#0EA5E9]" size={20} />
-          <span className="bg-gradient-to-r from-[#0EA5E9] to-[#0EA5E9] bg-clip-text text-transparent">
+          <Terminal className="text-accent" size={20} />
+          <span className="bg-gradient-to-r from-accent to-accent bg-clip-text text-transparent">
             HamdhiHaris
           </span>
         </Link>
@@ -130,7 +130,7 @@ export default function Navbar() {
                 prefetch={false} 
               >
                 <span className={`relative z-10 transition-colors duration-200 ${
-              isActive ? 'text-[#0EA5E9] dark:text-white' : 'text-slate-500 group-hover:text-[#0EA5E9]'
+              isActive ? 'text-accent dark:text-white' : 'text-slate-500 group-hover:text-accent'
                 }`}>
                   {link.name}
                 </span>
@@ -139,10 +139,10 @@ export default function Navbar() {
                   <div className="absolute inset-0 flex flex-col justify-end">
                     <motion.div
                       layoutId="activeTab"
-                      className="h-[2px] bg-[#0EA5E9] shadow-[0_0_10px_#0EA5E9]"
+                      className="h-[2px] bg-accent shadow-[0_0_10px_var(--accent)]"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
-                    <div className="absolute inset-0 bg-[#0EA5E9]/10" />
+                    <div className="absolute inset-0 bg-accent/10" />
                   </div>
                 )}
               </Link>
@@ -152,11 +152,11 @@ export default function Navbar() {
 
         <div className="flex items-center gap-4">
           {mounted && (
-            <button onClick={toggleTheme} className="text-slate-500 hover:text-[#0EA5E9] transition-colors">
+            <button onClick={toggleTheme} className="text-slate-500 hover:text-accent transition-colors">
               {isDark ? <Sun size={20} /> : <Moon size={20} />}
             </button>
           )}
-          <button className="md:hidden text-[#0EA5E9]" onClick={() => setIsOpen(!isOpen)}>
+          <button className="md:hidden text-accent" onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
@@ -181,11 +181,11 @@ export default function Navbar() {
                     href={link.href}
                     onClick={(e) => handleScroll(e, link.href)}
                     className={`px-10 py-4 border-l-2 flex justify-between items-center ${
-                  isActive ? 'bg-[#0EA5E9]/10 text-[#0EA5E9] dark:text-white border-[#0EA5E9]' : 'text-slate-500 dark:text-slate-400 border-transparent'
+                  isActive ? 'bg-accent/10 text-accent dark:text-white border-accent' : 'text-slate-500 dark:text-slate-400 border-transparent'
                     }`}
                   >
                     <span>{link.name}</span>
-                    {isActive && <span className="text-[#0EA5E9]">READY_</span>}
+                    {isActive && <span className="text-accent">READY_</span>}
                   </Link>
                 );
               })}

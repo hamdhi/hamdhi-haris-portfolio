@@ -66,16 +66,16 @@ export default function Projects() {
       {/* Section Header */}
       <div className="flex flex-col mb-16 border-b border-white/5 pb-8 relative z-10">
         <div className="flex items-center gap-4">
-          <div className="p-3 bg-[#0EA5E9]/10 border border-[#0EA5E9]/20 rounded-xl relative overflow-hidden group shadow-[0_0_15px_rgba(14,165,233,0.1)]">
-            <div className="absolute inset-0 bg-[#0EA5E9]/20 -translate-y-full group-hover:animate-[shimmer_2s_infinite]" />
-            <FolderGit2 className="text-[#0EA5E9]" size={28} />
+          <div className="p-3 bg-accent/10 border border-accent/20 rounded-xl relative overflow-hidden group shadow-[0_0_15px_hsla(var(--accent-hue),89%,48%,0.1)]">
+            <div className="absolute inset-0 bg-accent/20 -translate-y-full group-hover:animate-[shimmer_2s_infinite]" />
+            <FolderGit2 className="text-accent" size={28} />
           </div>
           <div>
-            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-slate-900 dark:text-white drop-shadow-[0_0_15px_rgba(14,165,233,0.2)]">
-              Project_<span className="text-[#0EA5E9]">Vault</span>
+            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-slate-900 dark:text-white drop-shadow-[0_0_15px_hsla(var(--accent-hue),89%,48%,0.2)]">
+              Project_<span className="text-accent">Vault</span>
             </h2>
             <p className="font-mono text-xs text-slate-500 mt-2 flex items-center gap-2 tracking-widest uppercase">
-              <span className="w-1.5 h-1.5 bg-[#0EA5E9] rounded-full animate-ping" />
+              <span className="w-1.5 h-1.5 bg-accent rounded-full animate-ping" />
               Accessing_Live_Archives
             </p>
           </div>
@@ -85,7 +85,7 @@ export default function Projects() {
       {/* Loading State */}
       {loading ? (
         <div className="flex justify-center items-center py-20">
-          <Loader2 className="animate-spin text-[#0EA5E9]" size={40} />
+          <Loader2 className="animate-spin text-accent" size={40} />
         </div>
       ) : (
         /* Projects Grid */
