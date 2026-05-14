@@ -44,12 +44,12 @@ export default function MaintenanceToggle() {
     setUpdating(false);
   };
 
-  // Changed Loader to brand color #2F9A58
-  if (loading) return <Loader2 className="animate-spin text-[#2F9A58]" size={20} />;
+  // Changed Loader to accent color
+  if (loading) return <Loader2 className="animate-spin text-accent" size={20} />;
 
   return (
     <div className="flex items-center justify-between gap-4 p-3 md:p-4 rounded-xl border border-white/10 bg-slate-900/50 w-full sm:w-auto shadow-inner">
-      <div className={`p-2 rounded-lg ${isActive ? "bg-[#2F9A58]/20 text-[#2F9A58]" : "bg-slate-800 text-slate-500"}`}>
+      <div className={`p-2 rounded-lg ${isActive ? "bg-accent/20 text-accent" : "bg-slate-800 text-slate-500"}`}>
         {isActive ? <ShieldAlert size={18} /> : <ShieldCheck size={18} />}
       </div>
 
@@ -66,7 +66,7 @@ export default function MaintenanceToggle() {
         onClick={handleToggle}
         disabled={updating}
         className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
-          isActive ? "bg-[#2F9A58]" : "bg-slate-700"
+          isActive ? "bg-accent" : "bg-slate-700"
         }`}
       >
         <span
@@ -76,7 +76,7 @@ export default function MaintenanceToggle() {
         />
         {updating && (
           <div className="absolute -right-6">
-            <Loader2 className="animate-spin text-[#2F9A58]" size={12} />
+            <Loader2 className="animate-spin text-accent" size={12} />
           </div>
         )}
       </button>

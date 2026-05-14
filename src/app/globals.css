@@ -1,8 +1,15 @@
 @import "tailwindcss";
+/* Add this line to enable manual dark mode toggling */
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
+  --accent-hue: 199;
+  --accent: hsl(var(--accent-hue), 89%, 48%);
+  --accent-light: hsl(var(--accent-hue), 95%, 60%);
+  --accent-dark: hsl(var(--accent-hue), 98%, 39%);
 }
 
 html {
@@ -19,6 +26,10 @@ section {
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-dark: var(--accent-dark);
 }
 
 @media (prefers-color-scheme: dark) {

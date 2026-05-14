@@ -6,6 +6,7 @@ import MessageLogs from '@/components/MessageLogs';
 import StatsOverview from '@/components/StatsOverview';
 import ExperienceAdmin from '@/components/ExperienceAdmin';
 import MaintenanceToggle from '@/components/MaintenanceToggle';
+import ThemeAccentSlider from '@/components/ThemeAccentSlider';
 
 export default function AdminDashboard() {
     const router = useRouter();
@@ -20,14 +21,14 @@ export default function AdminDashboard() {
     };
 
     return (
-        /* Updated background to deep greenish-black theme */
-        <main className="min-h-screen bg-[#020C06] text-white p-4 md:p-8 font-sans">
+        /* Updated background to generic dark theme */
+        <main className="min-h-screen bg-slate-950 text-white p-4 md:p-8 font-sans">
             <div className="max-w-5xl mx-auto space-y-12">
                 
                 {/* 1. Header & Logout */}
                 <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-b border-white/10 pb-6">
                     <div className="flex items-center gap-3 w-full md:w-auto">
-                        <LayoutDashboard className="text-[#2F9A58]" size={28} /> 
+                        <LayoutDashboard className="text-accent" size={28} /> 
                         <h1 className="text-2xl md:text-3xl font-bold uppercase tracking-tighter">Admin_Panel</h1>
                     </div>
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center w-full md:w-auto gap-4 md:gap-6">
@@ -49,6 +50,10 @@ export default function AdminDashboard() {
 
                 {/* 4. Messages */}
                 <MessageLogs />
+
+                {/*Accent Color Slider */}
+                <ThemeAccentSlider />
+
 
             </div>
         </main>

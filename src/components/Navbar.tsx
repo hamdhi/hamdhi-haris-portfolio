@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Terminal } from 'lucide-react';
+import { Menu, X, Terminal, Sun, Moon } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
@@ -10,6 +10,31 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const isManualScrolling = useRef(false); // Ref to prevent observer jump during manual scroll
+
+  // Theme state
+  const [isDark, setIsDark] = useState(true);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    setIsDark(document.documentElement.classList.contains('dark'));
+  }, []);
+
+  const toggleTheme = () => {
+    setIsDark((prevIsDark) => {
+      const newTheme = !prevIsDark;
+      const root = document.documentElement;
+      
+      if (newTheme) {
+        root.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        root.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      }
+      return newTheme;
+    });
+  };
 
   const navLinks = useMemo(() => [
     { name: 'Identity', href: '/#home' },
@@ -76,7 +101,7 @@ export default function Navbar() {
   }, [pathname]);
 
   return (
-    <nav className="fixed w-full z-50 border-b border-white/10 bg-[#020a05]/80 backdrop-blur-xl">
+    <nav className="fixed w-full z-50 border-b border-slate-200 dark:border-white/10 bg-white/80 dark:bg-[#0F172A]/80 backdrop-blur-xl transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         
         <Link 
@@ -84,8 +109,8 @@ export default function Navbar() {
           onClick={(e) => handleScroll(e, '/#home')}
           className="flex items-center gap-2 font-bold text-xl tracking-tighter cursor-pointer"
         >
-          <Terminal className="text-[#2F9A58]" size={20} />
-          <span className="bg-gradient-to-r from-[#2F9A58] to-[#2F9A58] bg-clip-text text-transparent">
+          <Terminal className="text-accent" size={20} />
+          <span className="bg-gradient-to-r from-accent to-accent bg-clip-text text-transparent">
             HamdhiHaris
           </span>
         </Link>
@@ -105,7 +130,7 @@ export default function Navbar() {
                 prefetch={false} 
               >
                 <span className={`relative z-10 transition-colors duration-200 ${
-                  isActive ? 'text-white' : 'text-slate-500 group-hover:text-[#2F9A58]'
+              isActive ? 'text-accent dark:text-white' : 'text-slate-500 group-hover:text-accent'
                 }`}>
                   {link.name}
                 </span>
@@ -114,10 +139,10 @@ export default function Navbar() {
                   <div className="absolute inset-0 flex flex-col justify-end">
                     <motion.div
                       layoutId="activeTab"
-                      className="h-[2px] bg-[#2F9A58] shadow-[0_0_10px_#2F9A58]"
+                      className="h-[2px] bg-accent shadow-[0_0_10px_var(--accent)]"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
-                    <div className="absolute inset-0 bg-[#2F9A58]/10" />
+                    <div className="absolute inset-0 bg-accent/10" />
                   </div>
                 )}
               </Link>
@@ -125,9 +150,16 @@ export default function Navbar() {
           })}
         </div>
 
-        <button className="md:hidden text-[#2F9A58]" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="flex items-center gap-4">
+          {mounted && (
+            <button onClick={toggleTheme} className="text-slate-500 hover:text-accent transition-colors">
+              {isDark ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+          )}
+          <button className="md:hidden text-accent" onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -136,7 +168,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="md:hidden bg-[#020a05] border-b border-white/10"
+            className="md:hidden bg-slate-50 dark:bg-[#0F172A] border-b border-slate-200 dark:border-white/10 transition-colors duration-300"
           >
             <div className="flex flex-col items-stretch py-8 font-mono text-sm">
               {navLinks.map((link) => {
@@ -149,11 +181,11 @@ export default function Navbar() {
                     href={link.href}
                     onClick={(e) => handleScroll(e, link.href)}
                     className={`px-10 py-4 border-l-2 flex justify-between items-center ${
-                      isActive ? 'bg-[#2F9A58]/10 text-white border-[#2F9A58]' : 'text-slate-400 border-transparent'
+                  isActive ? 'bg-accent/10 text-accent dark:text-white border-accent' : 'text-slate-500 dark:text-slate-400 border-transparent'
                     }`}
                   >
                     <span>{link.name}</span>
-                    {isActive && <span className="text-[#2F9A58]">READY_</span>}
+                    {isActive && <span className="text-accent">READY_</span>}
                   </Link>
                 );
               })}
