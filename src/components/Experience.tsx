@@ -55,7 +55,7 @@ export default function ExperienceLeadership() {
       whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, type: "spring", bounce: 0.4 }}
-      className="group relative grid md:grid-cols-6 gap-0 items-stretch overflow-hidden rounded-xl border border-white/10 bg-slate-900/50 transition-all hover:border-[#2F9A58]/50 shadow-xl"
+      className="group relative grid md:grid-cols-6 gap-0 items-stretch overflow-hidden rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/50 transition-all hover:border-accent/50 shadow-xl"
     >
       {/* Image Section */}
       <div className="md:col-span-2 relative min-h-[160px] md:min-h-full overflow-hidden border-b md:border-b-0 md:border-r border-white/5">
@@ -68,17 +68,17 @@ export default function ExperienceLeadership() {
       </div>
 
       {/* Content Section */}
-      <div className="md:col-span-4 flex flex-col p-5 md:p-6 bg-slate-900/20 backdrop-blur-sm">
+      <div className="md:col-span-4 flex flex-col p-5 md:p-6 bg-white/50 dark:bg-slate-900/20 backdrop-blur-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
           <div className="flex items-center gap-3">
-            <div className="p-1.5 rounded-lg bg-[#2F9A58]/10 border border-[#2F9A58]/20 shrink-0">
-              {type === 'exp' ? <Briefcase size={16} className="text-[#2F9A58]" /> : <Trophy size={16} className="text-[#2F9A58]/80" />}
+            <div className="p-1.5 rounded-lg bg-accent/10 border border-accent/20 shrink-0">
+              {type === 'exp' ? <Briefcase size={16} className="text-accent" /> : <Trophy size={16} className="text-accent/80" />}
             </div>
-            <h3 className="text-xl font-bold text-white group-hover:text-[#2F9A58] transition-colors leading-tight">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-accent transition-colors leading-tight">
               {item.title}
             </h3>
           </div>
-          <span className="font-mono text-[9px] text-[#2F9A58] bg-[#2F9A58]/5 px-2 py-1 rounded border border-[#2F9A58]/10 uppercase self-start sm:self-center shrink-0">
+          <span className="font-mono text-[9px] text-accent bg-accent/5 px-2 py-1 rounded border border-accent/10 uppercase self-start sm:self-center shrink-0">
             {item.date}
           </span>
         </div>
@@ -91,7 +91,7 @@ export default function ExperienceLeadership() {
 
         <div className="mt-auto flex flex-wrap gap-2 pt-3 border-t border-white/5">
           {item.tags?.map((tag: string) => (
-            <span key={tag} className="font-mono text-[8px] text-slate-500 bg-black/40 px-2 py-0.5 rounded border border-white/5 uppercase">
+            <span key={tag} className="font-mono text-[8px] text-slate-600 dark:text-slate-500 bg-slate-100 dark:bg-black/40 px-2 py-0.5 rounded border border-slate-200 dark:border-white/5 uppercase">
               #{tag}
             </span>
           ))}
@@ -102,7 +102,7 @@ export default function ExperienceLeadership() {
 
   if (loading) {
     return (
-      <div className="py-20 flex justify-center text-[#2F9A58]">
+      <div className="py-20 flex justify-center text-accent">
         <Loader2 className="animate-spin" size={32} />
       </div>
     );
@@ -114,8 +114,8 @@ export default function ExperienceLeadership() {
       {/* EXPERIENCE SECTION */}
       <div>
         <div className="flex items-center gap-4 mb-10">
-          <Briefcase size={20} className="text-[#2F9A58]" />
-          <h2 className="text-3xl font-bold uppercase tracking-tighter text-white">Work_Experience</h2>
+          <Briefcase size={20} className="text-accent" />
+          <h2 className="text-3xl font-bold uppercase tracking-tighter text-slate-900 dark:text-white">Work_Experience</h2>
         </div>
         <div className="grid gap-6"> 
           {experienceData.length > 0 ? (
@@ -131,8 +131,8 @@ export default function ExperienceLeadership() {
       {/* LEADERSHIP SECTION */}
       <div id="experience">
         <div className="flex items-center gap-4 mb-10">
-          <Trophy size={20} className="text-[#2F9A58]/80" />
-          <h2 className="text-3xl font-bold uppercase tracking-tighter text-white">Leadership_Log</h2>
+          <Trophy size={20} className="text-accent/80" />
+          <h2 className="text-3xl font-bold uppercase tracking-tighter text-slate-900 dark:text-white">Leadership_Log</h2>
         </div>
         <div className="grid gap-6">
           {leadershipData.length > 0 ? (

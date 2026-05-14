@@ -22,16 +22,17 @@ const EVENTS = [
 
 export default function GalleryPage() {
   return (
-    /* Updated background to match the deep green-black theme */
-    <main className="relative min-h-screen bg-[#020a05] text-white">
-      <SpiderBg />
+    /* Updated background to match the dynamic global theme */
+    <main className="relative min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-white transition-colors duration-300">
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <SpiderBg />
+      </div>
       <Navbar />
       
       <section className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20">
         <div className="mb-16">
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 uppercase tracking-tighter">
-            {/* Updated accent color to #2F9A58 */}
-            Event_<span className="text-[#2F9A58]">Archive</span>
+          <h1 className="text-5xl md:text-7xl font-bold mb-4 uppercase tracking-tighter text-slate-900 dark:text-white">
+            Event_<span className="text-accent">Archive</span>
           </h1>
           <p className="text-slate-400 mono text-sm lowercase max-w-xl">
             {`> Documentation of my participation in tech meetups, workshops, and competitive programming events.`}
