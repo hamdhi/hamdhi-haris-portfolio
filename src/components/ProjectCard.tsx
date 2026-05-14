@@ -118,7 +118,7 @@ export default function ProjectCard({
         {/* Content Layer */}
         <div className="relative z-10 flex h-full flex-col p-4 md:p-6 pointer-events-none">
           <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-4 pointer-events-auto">
-            <h3 className="text-3xl font-bold text-slate-900 dark:text-white group-hover:text-accent transition-colors leading-tight max-w-[65%]">
+            <h3 className="text-3xl font-bold text-white dark:text-white group-hover:text-accent transition-colors leading-tight max-w-[65%]">
               {projectName}
             </h3>
             
@@ -128,7 +128,7 @@ export default function ProjectCard({
                   href={githubUrl} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="flex items-center gap-2 text-[10px] font-mono text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-white/5 backdrop-blur-md px-3 py-1.5 rounded-full border border-slate-200 dark:border-white/10 transition pointer-events-auto"
+                  className="flex items-center gap-2 text-[10px] font-mono text-slate-300  dark:text-slate-300 hover:text-slate-500 dark:hover:text-white bg-white/5 dark:bg-white/5 backdrop-blur-md px-3 py-1.5 rounded-full border border-slate-200 dark:border-white/10 transition pointer-events-auto"
                 >
                   <Github size={14} /> GITHUB
                 </a>
@@ -150,17 +150,17 @@ export default function ProjectCard({
             {description}
           </p>
 
-          <div className="mb-6 p-4 bg-slate-50 dark:bg-white/5 backdrop-blur-sm border-l-2 border-accent rounded-r-lg">
+          <div className="mb-6 p-4 bg-white/5 dark:bg-white/5 backdrop-blur-sm border-l-2 border-accent rounded-r-lg">
             <div className="flex items-center gap-2 mb-2">
               <Lightbulb size={14} className="text-accent" />
               <span className="font-mono text-[10px] text-accent-light uppercase tracking-widest">Lessons_Learned</span>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">{learned}</p>
+            <p className="text-xs text-slate-300 dark:text-slate-300 leading-relaxed font-medium">{learned}</p>
           </div>
 
           <div className="mt-auto flex flex-wrap gap-2">
             {technologies.map((tech) => (
-              <span key={tech} className="font-mono text-[13px] text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-black/40 backdrop-blur-md px-2 py-1 rounded border border-slate-200 dark:border-white/5 uppercase">
+              <span key={tech} className="font-mono text-[13px] text-slate-300 dark:text-slate-300 bg-black/40 dark:bg-black/40 backdrop-blur-md px-2 py-1 rounded border border-slate-200 dark:border-white/5 uppercase">
                 #{tech}
               </span>
             ))}
