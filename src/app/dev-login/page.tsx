@@ -17,20 +17,20 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-slate-900 border border-accent/20 p-8 rounded-2xl shadow-2xl">
-        <h1 className="text-2xl font-bold text-white mb-6 text-center">
+    <main className="flex min-h-screen items-center justify-center bg-[var(--background)] p-4">
+      <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-[var(--surface)] p-8 shadow-2xl dark:border-white/10">
+        <h1 className="mb-6 text-center text-2xl font-bold text-slate-900 dark:text-white">
           Dev <span className="text-accent">Access</span>
         </h1>
         <form onSubmit={handleLogin} className="space-y-4">
           <input 
             type="email" placeholder="Email" 
-            className="w-full bg-slate-800 border border-slate-700 p-3 rounded-lg text-white focus:outline-none focus:border-accent transition-colors"
+            className="w-full rounded-lg border border-slate-300 bg-[var(--background)] p-3 text-slate-900 transition-colors placeholder:text-slate-400 focus:border-accent focus:outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-white"
             onChange={(e) => setEmail(e.target.value)}
           />
           <input 
             type="password" placeholder="Password" 
-            className="w-full bg-slate-800 border border-slate-700 p-3 rounded-lg text-white focus:outline-none focus:border-accent transition-colors"
+            className="w-full rounded-lg border border-slate-300 bg-[var(--background)] p-3 text-slate-900 transition-colors placeholder:text-slate-400 focus:border-accent focus:outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-white"
             onChange={(e) => setPassword(e.target.value)}
           />
           <button className="w-full bg-accent hover:brightness-110 text-white font-bold py-3 rounded-lg shadow-lg shadow-accent/20 transition-all active:scale-[0.98]">

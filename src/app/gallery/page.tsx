@@ -1,6 +1,5 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import SpiderBg from '@/components/SpiderBg';
 import EventCard from '@/components/EventCard';
 
 const EVENTS = [
@@ -22,21 +21,18 @@ const EVENTS = [
 
 export default function GalleryPage() {
   return (
-    /* Updated background to match the dynamic global theme */
-    <main className="relative min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-white transition-colors duration-300">
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <SpiderBg />
-      </div>
+    <main className="relative min-h-screen bg-[var(--background)] text-slate-900 dark:text-white transition-colors duration-300">
       <Navbar />
       
-      <section className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20">
-        <div className="mb-16">
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 uppercase tracking-tighter text-slate-900 dark:text-white">
-            Event_<span className="text-accent">Archive</span>
-          </h1>
-          <p className="text-slate-400 mono text-sm lowercase max-w-xl">
-            {`> Documentation of my participation in tech meetups, workshops, and competitive programming events.`}
-          </p>
+      <section className="relative z-10 mx-auto max-w-7xl px-6 pb-20 pt-32 md:px-10">
+        <div className="mb-10 flex items-end justify-between border-b border-slate-200 pb-5 dark:border-white/10">
+          <div>
+            <p className="mb-4 font-mono text-xs uppercase tracking-[0.25em] text-accent">Field notes / 06</p>
+            <h1 className="text-5xl font-semibold tracking-tight text-slate-900 dark:text-white md:text-7xl">
+              Moments from <span className="text-accent">the work.</span>
+            </h1>
+          </div>
+          <p className="hidden max-w-xs text-right text-sm leading-5 text-slate-500 md:block">Meetups, workshops, and rooms where ideas became practical.</p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
