@@ -25,7 +25,7 @@ const duplicatedRow2 = [...row2, ...row2, ...row2, ...row2];
 
 export default function TechStack() {
   return (
-    <section id="stack" className="relative z-10 max-w-7xl mx-auto px-6 py-32 overflow-hidden">
+    <section id="stack" className="relative z-10 mx-auto max-w-7xl overflow-hidden px-6 py-14 md:px-10 md:py-16">
       <style>{`
         @keyframes scroll {
           0% { transform: translateX(0); }
@@ -49,17 +49,15 @@ export default function TechStack() {
           animation-play-state: paused;
         }
       `}</style>
-      <h2 className="text-4xl font-bold mb-16 text-center text-slate-900 dark:text-white">
-        Tech <span className="text-accent">Arsenal</span>
-      </h2>
+      <div className="mb-8 flex items-baseline justify-between border-b border-slate-200 pb-5 dark:border-white/10">
+        <h2 className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-white">
+          Tools I use <span className="text-accent">often.</span>
+        </h2>
+        <span className="font-mono text-[10px] uppercase tracking-widest text-slate-500">Stack / 02</span>
+      </div>
       
       <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] flex flex-col gap-4 md:gap-8 py-4">
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="animate-scroll gap-4 md:gap-8"
-        >
+        <motion.div className="animate-scroll gap-4 md:gap-8">
           {duplicatedRow1.map((tech, index) => (
             <div key={index} className="w-36 md:w-48 shrink-0">
               <TechCard {...tech} />
@@ -67,12 +65,7 @@ export default function TechStack() {
           ))}
         </motion.div>
 
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="animate-scroll-reverse gap-4 md:gap-8"
-        >
+        <motion.div className="animate-scroll-reverse gap-4 md:gap-8">
           {duplicatedRow2.map((tech, index) => (
             <div key={index} className="w-36 md:w-48 shrink-0">
               <TechCard {...tech} />

@@ -1,7 +1,7 @@
 'use client';
-import { Contact, Download } from 'lucide-react';
+import { ArrowDownRight, Contact, Download } from 'lucide-react';
 import { useEffect, useState, useCallback } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface HeroProps {
   cvLink: string;
@@ -45,115 +45,65 @@ export default function Hero({ cvLink }: HeroProps) {
     return () => clearTimeout(timer);
   }, [handleTyping, typingSpeed]);
 
-  const { scrollY } = useScroll();
-  const yText = useTransform(scrollY, [0, 800], [0, 250]);
-  const yImage = useTransform(scrollY, [0, 800], [0, -150]);
-  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
-
   return (
-    <section id='home' className="relative z-10 min-h-screen flex items-center pt-10">
-      <div className="max-w-7xl mx-auto px-6 py-20 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
-          
-          {/* Left Column: Text */}
-          <motion.div 
-            style={{ y: yText, opacity }}
-            className="order-2 md:order-1 relative z-20 text-center md:text-left flex flex-col justify-center"
-          >
-            
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2">
-              Hello, I'm <span className="text-accent">Hamdhi Haris</span>
-            </h2>
+    <section id="home" className="relative z-10 flex min-h-[calc(100vh-72px)] items-center overflow-hidden pt-20">
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-16 px-6 pb-20 md:px-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-20">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, ease: 'easeOut' }}
+          className="relative z-10 order-2 lg:order-1"
+        >
+          <p className="mb-8 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.28em] text-accent">
+            <span className="h-px w-10 bg-accent" />
+            Software engineering / Sri Lanka
+          </p>
 
-            <p className="mono text-accent mb-6 tracking-widest text-sm md:text-base">
-              // BSC (Hons) in Software Engineering(Ug)
+          <h1 className="max-w-4xl text-5xl font-semibold leading-[0.95] tracking-[-0.06em] text-slate-900 dark:text-white sm:text-7xl lg:text-[7.4rem]">
+            Building <span className="text-accent">systems</span>
+            <br />
+            that feel simple.
+          </h1>
+
+          <div className="mt-10 flex max-w-xl flex-col gap-8 sm:flex-row sm:items-end">
+            <p className="text-base leading-7 text-slate-600 dark:text-slate-300">
+              I&apos;m Hamdhi Haris, a software engineer focused on Java, Spring Boot, and thoughtful digital products.
             </p>
-            
-            <div className="mb-4">
-              <div className="flex justify-center md:justify-start">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-                  Engineering
-                </h1>
-              </div>
-              
-              <div className="min-h-[60px] sm:min-h-[70px] md:min-h-[80px] lg:min-h-[100px] flex justify-center md:justify-start">
-                <motion.span 
-                  animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-                  className="
-                  bg-gradient-to-r from-accent via-accent-light to-accent bg-[length:200%_auto] bg-clip-text text-transparent 
-                  text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold
-                  text-center md:text-left
-                  leading-tight
-                ">
-                  {text}
-                  <span className="ml-1 animate-pulse text-accent">|</span>
-                </motion.span>
-              </div>
-            </div>
+            <a href="#about" className="group flex shrink-0 items-center gap-2 font-mono text-xs uppercase tracking-widest text-accent">
+              Explore
+              <ArrowDownRight size={18} className="transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1" />
+            </a>
+          </div>
 
-            <p className="text-slate-400 text-base md:text-lg max-w-lg mb-8 md:mb-12 mx-auto md:mx-0">
-              Software Engineer specializing in Java and Spring Boot.
-              Focused on writing clean, maintainable code and engineering reliable digital systems.
+          <div className="mt-12 flex flex-wrap gap-3">
+            <a href={cvLink} download className="inline-flex items-center gap-2 bg-accent px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent-dark">
+              <Download size={16} /> Download CV
+            </a>
+            <a href="#contact" className="inline-flex items-center gap-2 border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-accent hover:text-accent dark:border-slate-600 dark:text-slate-200">
+              <Contact size={16} /> Start a conversation
+            </a>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.75, delay: 0.15, ease: 'easeOut' }}
+          className="relative order-1 mx-auto w-full max-w-[28rem] lg:order-2 lg:mr-6"
+        >
+          <div className="absolute -left-8 top-10 hidden h-28 w-28 border-l border-t border-accent/60 sm:block" />
+          <div className="relative aspect-square overflow-hidden bg-slate-200 shadow-2xl shadow-slate-950/20 dark:bg-slate-900">
+            <img src="/portfolio-img.jpeg" alt="Hamdhi Haris" className="h-full w-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
+            <p className="absolute bottom-5 left-5 font-mono text-[10px] uppercase tracking-[0.25em] text-white/80">
+              Hamdhi Haris / 2026
             </p>
-
-            <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 items-center">
-              <a 
-                href={cvLink} 
-                download 
-                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-accent to-accent-dark px-6 py-4 font-bold text-white rounded-sm hover:scale-105 transition shadow-[0_0_20px_hsla(var(--accent-hue),89%,48%,0.3)] whitespace-nowrap"
-              >
-                <Download size={18} /> DOWNLOAD_CV
-              </a>
-
-              <a 
-                href="#contact" 
-                className="w-full sm:w-auto flex items-center justify-center gap-2 border border-accent/50 hover:bg-accent/10 px-6 py-4 font-bold text-accent rounded-sm hover:scale-105 transition whitespace-nowrap"
-              >
-                <Contact size={18} /> CONTACT_ME
-              </a>
-            </div>
-          </motion.div>
-        
-
-          {/* Right Column: Image */}
-          <motion.div 
-            style={{ y: yImage, opacity }}
-            className="order-1 md:order-2 flex items-center justify-center relative z-10"
-          >
-            <motion.div 
-              animate={{ y: [-10, 10, -10] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="relative p-1 bg-gradient-to-br from-accent/20 to-accent/5 rounded-sm"
-            >
-              
-              <div className="absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-accent animate-pulse z-30" />
-              <div className="absolute -top-2 -right-2 w-8 h-8 border-t-2 border-r-2 border-accent animate-pulse z-30" />
-              <div className="absolute -bottom-2 -left-2 w-8 h-8 border-b-2 border-l-2 border-accent animate-pulse z-30" />
-              <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-2 border-r-2 border-accent animate-pulse z-30" />
-
-              <div className="relative w-64 h-64 md:w-80 lg:w-96 md:h-80 lg:h-96 overflow-hidden bg-slate-200 dark:bg-slate-900 shadow-2xl">
-                {/* Updated Scan line shadow color to match green */}
-                <div className="absolute top-0 w-full h-0.5 bg-accent shadow-[0_0_15px_var(--accent)] animate-[scan_4s_linear_infinite] z-20" />
-
-                <img
-                  src="/portfolio-img.jpeg"
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                />
-
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none z-10" />
-
-                <div className="absolute bottom-4 left-4 mono text-[10px] bg-black/80 p-2 backdrop-blur-md border border-accent/50 z-20">
-                  <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-accent rounded-full animate-ping" />
-                    <p className="text-accent font-bold uppercase tracking-widest">Target_Locked: Dev</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
+          </div>
+          <div className="absolute -bottom-8 -right-4 border border-accent/40 bg-[var(--background)] px-5 py-4 shadow-lg sm:-right-10">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-slate-500">Currently exploring</p>
+            <p className="mt-1 text-sm font-semibold text-slate-900 dark:text-white">{text}<span className="text-accent">_</span></p>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

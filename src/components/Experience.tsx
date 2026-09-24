@@ -109,13 +109,13 @@ export default function ExperienceLeadership() {
   }
 
   return (
-    <section id="experience" className="relative z-10 max-w-7xl mx-auto px-6 py-20 space-y-24">
+    <section id="experience" className="relative z-10 mx-auto max-w-7xl space-y-14 px-6 py-14 md:px-10 md:py-16">
       
       {/* EXPERIENCE SECTION */}
       <div>
-        <div className="flex items-center gap-4 mb-10">
+        <div className="mb-6 flex items-center gap-4">
           <Briefcase size={20} className="text-accent" />
-          <h2 className="text-3xl font-bold uppercase tracking-tighter text-slate-900 dark:text-white">Work_Experience</h2>
+          <h2 className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-white">Experience <span className="text-accent">/ 04</span></h2>
         </div>
         <div className="grid gap-6"> 
           {experienceData.length > 0 ? (
@@ -129,10 +129,10 @@ export default function ExperienceLeadership() {
       </div>
 
       {/* LEADERSHIP SECTION */}
-      <div id="experience">
-        <div className="flex items-center gap-4 mb-10">
+      <div>
+        <div className="mb-6 flex items-center gap-4">
           <Trophy size={20} className="text-accent/80" />
-          <h2 className="text-3xl font-bold uppercase tracking-tighter text-slate-900 dark:text-white">Leadership_Log</h2>
+          <h2 className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-white">Leadership <span className="text-accent">/ 05</span></h2>
         </div>
         <div className="grid gap-6">
           {leadershipData.length > 0 ? (

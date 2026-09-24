@@ -7,28 +7,11 @@ import Contact from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import TechStack from '@/components/TechStack';
 import Projects from '@/components/Projects';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import ExperienceLeadership from '@/components/Experience';
 import AboutMe from '@/components/AboutMe';
 import SystemTelemetry from '@/components/SystemTelemetry';
 import ScrollToTop from '@/components/ScrollToTop';
-import { motion, useInView } from 'framer-motion';
-
-function RevealWrapper({ children }: { children: React.ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 24 }}
-      animate={isInView ? { opacity: 1, y: 0 } : undefined}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
-    >
-      {children}
-    </motion.div>
-  );
-}
 
 export default function Home() {
   useEffect(() => {
@@ -60,39 +43,21 @@ export default function Home() {
       <div className="fixed top-0 left-0 right-0 h-1 bg-accent z-[100] shadow-[0_0_16px_var(--accent)]" />
 
       {/* Spider Background */}
-      <div className="fixed inset-0 z-0 pointer-events-none opacity-40">
+      <div className="fixed inset-0 z-0 pointer-events-none opacity-20">
         <SpiderBg />
       </div>
 
       {/* Navigation Bar */}
       <Navbar />
 
-      <div className="relative z-10 flex flex-col gap-10 md:gap-20 pb-10">
+      <div className="relative z-10 pb-8">
         <Hero cvLink={cvLink} />
-        
-        <RevealWrapper>
-          <AboutMe />
-        </RevealWrapper>
-
-        <RevealWrapper>
-          <TechStack />
-        </RevealWrapper>
-       
-        <RevealWrapper>
-          <Projects />
-        </RevealWrapper>
-
-        <RevealWrapper>
-          <ExperienceLeadership />
-        </RevealWrapper>
-
-        <RevealWrapper>
-          <SystemTelemetry GITHUB_USERNAME="hamdhi" />
-        </RevealWrapper>
-
-        <RevealWrapper>
-          <Contact email="hamdhiharis@gmail.com" location="Sri Lanka" />
-        </RevealWrapper>
+        <AboutMe />
+        <TechStack />
+        <Projects />
+        <ExperienceLeadership />
+        <SystemTelemetry GITHUB_USERNAME="hamdhi" />
+        <Contact email="hamdhiharis@gmail.com" location="Sri Lanka" />
       </div>
 
       {/* Footer Section */}
