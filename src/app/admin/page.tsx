@@ -2,6 +2,7 @@
 import { LogOut, LayoutDashboard } from 'lucide-react';
 import { createBrowserClient } from '@supabase/ssr';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import MessageLogs from '@/components/MessageLogs';
 import StatsOverview from '@/components/StatsOverview';
 import ExperienceAdmin from '@/components/ExperienceAdmin';
@@ -13,6 +14,10 @@ export default function AdminDashboard() {
         process.env.NEXT_PUBLIC_SUPABASE_URL!, 
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     );
+
+    useEffect(() => {
+        document.documentElement.classList.remove('dark');
+    }, []);
 
     const handleLogout = async () => {
         await supabase.auth.signOut();
