@@ -51,7 +51,7 @@ export default function ContactForm() {
         whileInView="show"
         viewport={{ once: true }}
         onSubmit={handleSubmit} 
-        className="bg-white dark:bg-[#0F172A] p-8 rounded-2xl space-y-6 shadow-xl"
+        className="space-y-6 rounded-2xl bg-[var(--surface)] p-6 shadow-xl md:p-8"
       >
         <motion.div variants={itemVariants}>
           <label className="block text-[10px] font-bold text-accent uppercase mb-2 tracking-widest">Full_Name</label>

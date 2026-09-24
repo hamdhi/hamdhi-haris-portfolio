@@ -12,12 +12,16 @@ export default function Navbar() {
   const isManualScrolling = useRef(false); // Ref to prevent observer jump during manual scroll
 
   // Theme state
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    setIsDark(document.documentElement.classList.contains('dark'));
+    const frame = requestAnimationFrame(() => {
+      setMounted(true);
+      setIsDark(document.documentElement.classList.contains('dark'));
+    });
+
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   const toggleTheme = () => {
@@ -101,7 +105,7 @@ export default function Navbar() {
   }, [pathname]);
 
   return (
-    <nav className="fixed w-full z-50 border-b border-slate-200 dark:border-white/10 bg-white/80 dark:bg-[#0F172A]/80 backdrop-blur-xl transition-colors duration-300">
+    <nav className="fixed z-50 w-full border-b border-slate-200 bg-[var(--surface)]/90 backdrop-blur-xl transition-colors duration-300 dark:border-white/10">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         
         <Link 
@@ -136,13 +140,12 @@ export default function Navbar() {
                 </span>
 
                 {isActive && (
-                  <div className="absolute inset-0 flex flex-col justify-end">
+                    <div className="absolute inset-x-4 bottom-0 flex flex-col justify-end">
                     <motion.div
                       layoutId="activeTab"
-                      className="h-[2px] bg-accent shadow-[0_0_10px_var(--accent)]"
+                        className="h-[2px] bg-accent"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
-                    <div className="absolute inset-0 bg-accent/10" />
                   </div>
                 )}
               </Link>
@@ -152,11 +155,11 @@ export default function Navbar() {
 
         <div className="flex items-center gap-4">
           {mounted && (
-            <button onClick={toggleTheme} className="text-slate-500 hover:text-accent transition-colors">
+            <button onClick={toggleTheme} aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'} className="flex h-11 w-11 items-center justify-center text-slate-500 transition-colors hover:text-accent">
               {isDark ? <Sun size={20} /> : <Moon size={20} />}
             </button>
           )}
-          <button className="md:hidden text-accent" onClick={() => setIsOpen(!isOpen)}>
+          <button className="flex h-11 w-11 items-center justify-center text-accent md:hidden" onClick={() => setIsOpen(!isOpen)} aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'} aria-expanded={isOpen}>
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
@@ -168,7 +171,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="md:hidden bg-slate-50 dark:bg-[#0F172A] border-b border-slate-200 dark:border-white/10 transition-colors duration-300"
+            className="border-b border-slate-200 bg-[var(--surface)] md:hidden dark:border-white/10"
           >
             <div className="flex flex-col items-stretch py-8 font-mono text-sm">
               {navLinks.map((link) => {

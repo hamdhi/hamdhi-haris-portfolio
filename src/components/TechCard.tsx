@@ -1,5 +1,5 @@
 'use client';
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface TechProps {
   name: string;
@@ -10,26 +10,11 @@ interface TechProps {
 }
 
 export default function TechCard({ name, icon, tags, proficiency, isMain }: TechProps) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["17.5deg", "-17.5deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-17.5deg", "17.5deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    x.set((e.clientX - rect.left) / rect.width - 0.5);
-    y.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-
   return (
     <motion.div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => { x.set(0); y.set(0); }}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      className={`relative h-44 md:h-52 w-full rounded-2xl border ${isMain ? 'border-accent/50 shadow-[0_0_20px_hsla(var(--accent-hue),89%,48%,0.1)]' : 'border-slate-200 dark:border-white/10'} bg-white dark:bg-white/5 p-4 md:p-5 backdrop-blur-md cursor-pointer transition-colors hover:border-accent shadow-sm`}
+      whileHover={{ y: -3 }}
+      transition={{ duration: 0.2 }}
+      className={`relative h-28 w-full rounded-xl border ${isMain ? 'border-accent/50 shadow-[0_0_20px_hsla(var(--accent-hue),89%,48%,0.1)]' : 'border-slate-200 dark:border-white/10'} bg-white/75 dark:bg-white/5 p-3 backdrop-blur-md shadow-sm transition-colors hover:border-accent md:h-32 md:p-4`}
     >
       {/* Main Tech Badge */}
       {isMain && (
@@ -38,13 +23,15 @@ export default function TechCard({ name, icon, tags, proficiency, isMain }: Tech
         </div>
       )}
 
-      <div style={{ transform: "translateZ(75px)", transformStyle: "preserve-3d" }} className="flex flex-col items-center justify-center h-full">
-        <img src={icon} alt={name} className="w-10 h-10 md:w-14 md:h-14 mb-3" />
-        <h4 className="text-base md:text-lg font-bold text-slate-900 dark:text-white">{name}</h4>
-        <p className="text-[8px] md:text-[9px] mono text-slate-500 mt-1 uppercase tracking-widest text-center">{tags}</p>
+      <div className="flex h-full items-center gap-3">
+        <img src={icon} alt={name} className={`h-10 w-10 shrink-0 object-contain md:h-12 md:w-12 ${name === 'Next.js' ? 'dark:invert' : ''}`} />
+        <div className="min-w-0 flex-1">
+          <h4 className="truncate text-sm font-bold text-slate-900 dark:text-white md:text-base">{name}</h4>
+          <p className="mt-1 truncate font-mono text-[8px] uppercase tracking-wider text-slate-500 md:text-[9px]">{tags}</p>
+        </div>
         
         {/* Proficiency Bar */}
-        <div className="w-full mt-4 md:mt-5 bg-slate-200 dark:bg-white/10 h-1 rounded-full overflow-hidden">
+        <div className="absolute bottom-3 left-3 right-3 h-1 overflow-hidden rounded-full bg-slate-200 dark:bg-white/10 md:bottom-4 md:left-4 md:right-4">
           <motion.div 
             initial={{ width: 0 }}
             animate={{ width: `${proficiency}%` }}

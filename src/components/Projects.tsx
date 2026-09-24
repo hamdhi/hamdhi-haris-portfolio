@@ -57,29 +57,20 @@ export default function Projects() {
   };
 
   return (
-    <section id="projects" className="relative z-10 max-w-7xl mx-auto px-6 py-32">
-      {/* Vault Background Pattern */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.02] flex items-center justify-center">
-        <div className="w-full h-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
-      </div>
+    <section id="projects" className="relative z-10 mx-auto max-w-7xl px-6 py-16 md:px-10 md:py-20">
 
       {/* Section Header */}
-      <div className="flex flex-col mb-16 border-b border-white/5 pb-8 relative z-10">
-        <div className="flex items-center gap-4">
-          <div className="p-3 bg-accent/10 border border-accent/20 rounded-xl relative overflow-hidden group shadow-[0_0_15px_hsla(var(--accent-hue),89%,48%,0.1)]">
-            <div className="absolute inset-0 bg-accent/20 -translate-y-full group-hover:animate-[shimmer_2s_infinite]" />
-            <FolderGit2 className="text-accent" size={28} />
+      <div className="relative z-10 mb-10 flex items-end justify-between border-b border-slate-200 pb-5 dark:border-white/10">
+        <div>
+          <div className="mb-3 flex items-center gap-3">
+            <FolderGit2 className="text-accent" size={18} />
+            <span className="font-mono text-xs uppercase tracking-[0.25em] text-accent">Selected work / 03</span>
           </div>
-          <div>
-            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-slate-900 dark:text-white drop-shadow-[0_0_15px_hsla(var(--accent-hue),89%,48%,0.2)]">
-              Project_<span className="text-accent">Vault</span>
-            </h2>
-            <p className="font-mono text-xs text-slate-500 mt-2 flex items-center gap-2 tracking-widest uppercase">
-              <span className="w-1.5 h-1.5 bg-accent rounded-full animate-ping" />
-              Accessing_Live_Archives
-            </p>
-          </div>
+          <h2 className="text-4xl font-semibold tracking-tight text-slate-900 dark:text-white md:text-5xl">
+            Things I&apos;ve built.
+          </h2>
         </div>
+        <span className="hidden max-w-[12rem] text-right text-sm leading-5 text-slate-500 md:block">A few experiments in systems, interfaces, and useful software.</span>
       </div>
 
       {/* Loading State */}
@@ -94,7 +85,7 @@ export default function Projects() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid md:grid-cols-2 gap-12"
+          className="grid gap-8 md:grid-cols-2"
         >
           {projects.length > 0 ? (
             projects.map((project) => (
