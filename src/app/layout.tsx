@@ -30,7 +30,11 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                if (localStorage.theme === 'dark') {
+                var forceLight = ['/admin', '/maintenance', '/dev-login'].some(function (route) {
+                  return window.location.pathname === route || window.location.pathname.startsWith(route + '/');
+                });
+
+                if (localStorage.theme === 'dark' && !forceLight) {
                   document.documentElement.classList.add('dark')
                 } else {
                   document.documentElement.classList.remove('dark')
