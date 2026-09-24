@@ -14,7 +14,7 @@ export default function SpiderBg() {
 
     const updateHue = () => {
       const savedHue = localStorage.getItem('accentHue');
-      if (savedHue) {
+      if (savedHue && Number.isFinite(Number(savedHue))) {
         setHue(Number(savedHue));
       } else {
         setHue(199); // default sky blue

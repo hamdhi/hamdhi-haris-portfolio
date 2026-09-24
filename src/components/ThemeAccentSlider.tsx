@@ -12,14 +12,30 @@ const PRESETS = [
   { name: 'Crimson Red', hue: 350 },
 ];
 
+const DEFAULT_HUE = 199;
+
 export default function ThemeAccentSlider() {
-  const [hue, setHue] = useState<number>(199); // Default to Sky Blue
+  const [hue, setHue] = useState<number>(DEFAULT_HUE);
   const [saving, setSaving] = useState<boolean>(false);
 
   const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   );
+
+  const updateHue = (newHue: number) => {
+    const normalizedHue = Math.max(0, Math.min(360, newHue));
+    setHue(normalizedHue);
+    localStorage.setItem('accentHue', normalizedHue.toString());
+    let styleEl = document.getElementById('dynamic-theme-accent');
+    if (!styleEl) {
+      styleEl = document.createElement('style');
+      styleEl.id = 'dynamic-theme-accent';
+      document.head.appendChild(styleEl);
+    }
+    styleEl.innerHTML = `:root { --accent-hue: ${normalizedHue}; --color-accent: hsl(${normalizedHue}, 89%, 48%); --color-accent-light: hsl(${normalizedHue}, 89%, 60%); --color-accent-dark: hsl(${normalizedHue}, 89%, 30%); }`;
+    window.dispatchEvent(new Event('theme-change'));
+  };
 
   useEffect(() => {
     // Fetch active global hue from Supabase on mount
@@ -30,24 +46,11 @@ export default function ThemeAccentSlider() {
         .eq('key', 'accent_hue')
         .single();
       if (data?.value) {
-        setHue(Number(data.value));
+        updateHue(Number(data.value));
       }
     };
     fetchGlobalHue();
   }, []);
-
-  const updateHue = (newHue: number) => {
-    setHue(newHue);
-    
-    let styleEl = document.getElementById('dynamic-theme-accent');
-    if (!styleEl) {
-      styleEl = document.createElement('style');
-      styleEl.id = 'dynamic-theme-accent';
-      document.head.appendChild(styleEl);
-    }
-    styleEl.innerHTML = `:root { --accent-hue: ${newHue}; --color-accent: hsl(${newHue}, 89%, 48%); --color-accent-light: hsl(${newHue}, 89%, 60%); --color-accent-dark: hsl(${newHue}, 89%, 30%); }`;
-    window.dispatchEvent(new Event('theme-change')); // Keep telemetry synced while dragging
-  };
 
   const handleHueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updateHue(Number(e.target.value));
@@ -63,11 +66,11 @@ export default function ThemeAccentSlider() {
   };
 
   const resetToDefault = async () => {
-    updateHue(270);
+    updateHue(DEFAULT_HUE);
     setSaving(true);
     await supabase
       .from('app_config')
-      .update({ value: '270' })
+      .update({ value: DEFAULT_HUE.toString() })
       .eq('key', 'accent_hue');
     setSaving(false);
   };

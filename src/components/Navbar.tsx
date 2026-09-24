@@ -16,8 +16,12 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    setIsDark(document.documentElement.classList.contains('dark'));
+    const frame = requestAnimationFrame(() => {
+      setMounted(true);
+      setIsDark(document.documentElement.classList.contains('dark'));
+    });
+
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   const toggleTheme = () => {
