@@ -6,7 +6,6 @@ import MessageLogs from '@/components/MessageLogs';
 import StatsOverview from '@/components/StatsOverview';
 import ExperienceAdmin from '@/components/ExperienceAdmin';
 import MaintenanceToggle from '@/components/MaintenanceToggle';
-import ThemeAccentSlider from '@/components/ThemeAccentSlider';
 
 export default function AdminDashboard() {
     const router = useRouter();
@@ -50,10 +49,6 @@ export default function AdminDashboard() {
 
                 {/* 4. Messages */}
                 <MessageLogs />
-
-                {/*Accent Color Slider */}
-                <ThemeAccentSlider />
-
 
             </div>
         </main>

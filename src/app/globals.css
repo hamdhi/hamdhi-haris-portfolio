@@ -2,25 +2,25 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #f4f7fb;
-  --foreground: #122033;
-  --surface: #ffffff;
-  --surface-muted: #eaf0f7;
-  --border: #d7e0ea;
-  --muted: #52657a;
-  --accent-hue: 199;
-  --accent: hsl(var(--accent-hue), 89%, 48%);
-  --accent-light: hsl(var(--accent-hue), 95%, 60%);
-  --accent-dark: hsl(var(--accent-hue), 98%, 39%);
+  --background: #f6f1e8;
+  --foreground: #1d2421;
+  --surface: #fbf8f1;
+  --surface-muted: #e9e0d3;
+  --border: #d8cdbd;
+  --muted: #68716b;
+  --accent-hue: 16;
+  --accent: #d8643a;
+  --accent-light: #ef9560;
+  --accent-dark: #a94229;
 }
 
 .dark {
-  --background: #07111f;
-  --foreground: #e8f0f8;
-  --surface: #0d1b2a;
-  --surface-muted: #122538;
-  --border: #22384d;
-  --muted: #9aadc0;
+  --background: #211f1c;
+  --foreground: #f4eee4;
+  --surface: #2a2723;
+  --surface-muted: #38322b;
+  --border: #4b433a;
+  --muted: #b9afa2;
 }
 
 html {

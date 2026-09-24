@@ -38,7 +38,7 @@ export default function Home() {
   const cvLink = getCvUrl();
 
   return (
-    <main className="relative min-h-screen bg-slate-50 dark:bg-[#07111f] text-slate-900 dark:text-white selection:bg-accent/30 overflow-x-hidden transition-colors duration-300"> 
+    <main className="relative min-h-screen bg-[var(--background)] text-slate-900 dark:text-white selection:bg-accent/30 overflow-x-hidden transition-colors duration-300"> 
       {/* Scroll Progress Bar */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-accent z-[100] shadow-[0_0_16px_var(--accent)]" />
 

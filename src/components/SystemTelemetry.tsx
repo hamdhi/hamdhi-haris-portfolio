@@ -1,35 +1,12 @@
 "use client";
 import { motion } from "framer-motion";
 import { Activity, Terminal, Code2, GitBranch } from "lucide-react";
-import { useState, useEffect } from "react";
 
 export default function SystemTelemetry(props: { GITHUB_USERNAME: string }) {
   // Change this to your exact GitHub username if it's different!
   const GITHUB_USERNAME = props.GITHUB_USERNAME;
 
-  const [accentHex, setAccentHex] = useState<string>("0EA5E9"); // Default sky blue hex
-
-  useEffect(() => {
-    const updateHex = () => {
-      const savedHue = localStorage.getItem('accentHue');
-      const h = savedHue ? Number(savedHue) : 199;
-      const s = 89;
-      const l = 48;
-      const lRatio = l / 100;
-      const a = s * Math.min(lRatio, 1 - lRatio) / 100;
-      const f = (n: number) => {
-        const k = (n + h / 30) % 12;
-        const color = lRatio - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-        return Math.round(255 * color).toString(16).padStart(2, '0');
-      };
-      setAccentHex(`${f(0)}${f(8)}${f(4)}`);
-    };
-    
-    updateHex(); // Run on mount
-    window.addEventListener('theme-change', updateHex); // Listen for live global updates
-    
-    return () => window.removeEventListener('theme-change', updateHex);
-  }, []);
+  const accentHex = 'D8643A';
 
   return (
     <section id="telemetry" className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-20 lg:py-32">

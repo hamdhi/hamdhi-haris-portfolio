@@ -5,33 +5,18 @@ import { loadSlim } from "@tsparticles/slim";
 
 export default function SpiderBg() {
   const [init, setInit] = useState(false);
-  const [hue, setHue] = useState<number>(199);
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
       await loadSlim(engine);
     }).then(() => setInit(true));
-
-    const updateHue = () => {
-      const savedHue = localStorage.getItem('accentHue');
-      if (savedHue && Number.isFinite(Number(savedHue))) {
-        setHue(Number(savedHue));
-      } else {
-        setHue(199); // default sky blue
-      }
-    };
-
-    updateHue(); // Run on mount
-    window.addEventListener('theme-change', updateHue); // Listen for live global updates
-    
-    return () => window.removeEventListener('theme-change', updateHue);
   }, []);
 
   if (!init) return null;
 
-  const colorAccent = `hsl(${hue}, 89%, 48%)`;
-  const colorAccentLight = `hsl(${hue}, 89%, 60%)`;
-  const colorAccentDark = `hsl(${hue}, 89%, 30%)`;
+  const colorAccent = '#d8643a';
+  const colorAccentLight = '#ef9560';
+  const colorAccentDark = '#a94229';
 
   return (
     <Particles
