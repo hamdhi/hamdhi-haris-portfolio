@@ -55,7 +55,7 @@ export default function ExperienceLeadership() {
       whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, type: "spring", bounce: 0.4 }}
-      className="group relative grid md:grid-cols-6 gap-0 items-stretch overflow-hidden rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/50 transition-all hover:border-accent/50 shadow-xl"
+      className="group relative grid items-stretch gap-0 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl transition-all hover:border-accent/50 dark:border-white/10 dark:bg-[var(--surface)] md:grid-cols-6"
     >
       {/* Image Section */}
       <div className="md:col-span-2 relative min-h-[160px] md:min-h-full overflow-hidden border-b md:border-b-0 md:border-r border-white/5">
@@ -68,7 +68,7 @@ export default function ExperienceLeadership() {
       </div>
 
       {/* Content Section */}
-      <div className="md:col-span-4 flex flex-col p-5 md:p-6 bg-white/50 dark:bg-slate-900/20 backdrop-blur-sm">
+      <div className="flex flex-col bg-white/50 p-5 backdrop-blur-sm dark:bg-[var(--surface)]/50 md:col-span-4 md:p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
           <div className="flex items-center gap-3">
             <div className="p-1.5 rounded-lg bg-accent/10 border border-accent/20 shrink-0">

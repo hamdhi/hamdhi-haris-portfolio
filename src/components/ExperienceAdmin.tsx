@@ -348,7 +348,7 @@ export default function ExperienceAdmin() {
     return (
         <div className="flex flex-col items-center justify-center py-20 gap-4 text-accent">
             <Loader2 className="animate-spin" size={48} />
-            <p className="text-white font-mono text-sm uppercase tracking-widest animate-pulse">
+            <p className="font-mono text-sm uppercase tracking-widest text-slate-600 animate-pulse dark:text-slate-300">
                 Verifying Security Credentials...
             </p>
         </div>
@@ -356,16 +356,16 @@ export default function ExperienceAdmin() {
   }
 
   return (
-    <div className="w-full space-y-8 bg-slate-900/40 rounded-2xl p-4 md:p-8 border border-white/10 shadow-xl">
+    <div className="w-full space-y-8 rounded-2xl border border-slate-200 bg-[var(--surface)] p-4 shadow-xl dark:border-white/10 dark:bg-white/5 md:p-8">
       
       {/* TABS */}
-      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between border-b border-white/10 pb-6 gap-5">
-        <h2 className="text-2xl font-bold text-white flex items-center gap-2 tracking-tight">
+      <div className="flex flex-col items-start justify-between gap-5 border-b border-slate-200 pb-6 dark:border-white/10 lg:flex-row lg:items-center">
+        <h2 className="flex items-center gap-2 text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
             Content Manager
             {loading && <Loader2 className="animate-spin text-accent" size={20} />}
         </h2>
         
-        <div className="flex flex-wrap w-full lg:w-auto bg-slate-950 p-1.5 rounded-xl border border-white/10 gap-1 shadow-inner">
+        <div className="flex w-full flex-wrap gap-1 rounded-xl border border-slate-200 bg-slate-100 p-1.5 shadow-inner dark:border-white/10 dark:bg-slate-950 lg:w-auto">
             {['experience', 'leadership', 'projects'].map((tab) => (
               <button
                 key={tab}
@@ -373,7 +373,7 @@ export default function ExperienceAdmin() {
                 className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold capitalize transition-all ${
                     activeTab === tab 
                     ? 'bg-accent text-white shadow-lg shadow-accent/20' 
-                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                    : 'text-slate-500 hover:bg-white/60 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-white'
                 }`}
               >
                  {tab === 'projects' ? <Code size={16}/> : tab === 'experience' ? <Briefcase size={16}/> : <Trophy size={16}/>} 
@@ -384,7 +384,7 @@ export default function ExperienceAdmin() {
       </div>
 
       {/* FORM SECTION */}
-      <motion.div layout className="bg-slate-900/60 p-5 md:p-8 rounded-2xl border border-accent/20 shadow-2xl">
+      <motion.div layout className="rounded-2xl border border-accent/20 bg-[var(--surface-muted)] p-5 shadow-2xl md:p-8">
         <h3 className="text-lg font-semibold text-accent mb-4 flex items-center gap-2">
           {isEditing ? <Edit2 size={18} /> : <Plus size={18} />}
           {isEditing ? `Edit ${activeTab}` : `Add New ${activeTab}`}
@@ -412,7 +412,7 @@ export default function ExperienceAdmin() {
                 <div>
                     <label className="text-xs text-slate-400 font-bold mb-1.5 block uppercase tracking-wider">Project Images (Multi-select supported)</label>
                     <div className="flex mb-3">
-                        <label className={`cursor-pointer flex justify-center items-center gap-2 bg-slate-900 border border-slate-600 hover:border-accent hover:bg-slate-800 px-5 py-3 rounded-lg text-xs font-bold text-white transition-all w-full sm:w-auto shadow-sm ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                        <label className={`flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-slate-300 bg-[var(--surface)] px-5 py-3 text-xs font-bold text-slate-700 shadow-sm transition-all hover:border-accent hover:text-accent dark:border-slate-600 dark:bg-slate-900 dark:text-white sm:w-auto ${uploading ? 'cursor-not-allowed opacity-50' : ''}`}>
                             <UploadCloud size={16} /> {uploading ? "Uploading..." : "Upload Images"}
                             <input 
                                 type="file" 
@@ -443,7 +443,7 @@ export default function ExperienceAdmin() {
                   
                   <div>
                     <div className="flex mb-2 mt-1 md:mt-0">
-                        <label className={`cursor-pointer flex justify-center items-center gap-2 bg-slate-900 border border-slate-600 hover:border-accent hover:bg-slate-800 px-4 py-2.5 rounded-lg text-xs font-bold text-white transition-all w-full sm:w-auto shadow-sm ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                        <label className={`flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-slate-300 bg-[var(--surface)] px-4 py-2.5 text-xs font-bold text-slate-700 shadow-sm transition-all hover:border-accent hover:text-accent dark:border-slate-600 dark:bg-slate-900 dark:text-white sm:w-auto ${uploading ? 'cursor-not-allowed opacity-50' : ''}`}>
                             <UploadCloud size={16} /> {uploading ? "Uploading..." : "Upload Image"}
                             <input type="file" accept="image/*" onChange={handleImageUpload} disabled={uploading} className="hidden" />
                         </label>
@@ -456,7 +456,7 @@ export default function ExperienceAdmin() {
              </>
           )}
 
-          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-white/5 mt-2">
+          <div className="mt-2 flex flex-col gap-3 border-t border-slate-200 pt-4 dark:border-white/5 sm:flex-row">
             <button type="submit" disabled={loading || uploading} className="btn-primary">
               <Save size={18} /> {isEditing ? "Update" : "Save"}
             </button>
@@ -471,8 +471,8 @@ export default function ExperienceAdmin() {
 
       {/* LIST SECTION */}
       <div className="space-y-4">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-white/10 pb-4 gap-4">
-          <h3 className="text-2xl font-bold text-white capitalize tracking-tight">
+        <div className="flex flex-col items-start justify-between gap-4 border-b border-slate-200 pb-4 dark:border-white/10 sm:flex-row sm:items-center">
+          <h3 className="text-2xl font-bold capitalize tracking-tight text-slate-900 dark:text-white">
               {activeTab} List
           </h3>
           {orderChanged && (
@@ -497,20 +497,20 @@ export default function ExperienceAdmin() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="flex flex-col sm:flex-row justify-between bg-slate-900/50 hover:bg-slate-800/50 border border-white/10 p-4 md:p-5 rounded-2xl sm:items-center group cursor-grab active:cursor-grabbing gap-4 sm:gap-6 shadow-sm hover:shadow-md transition-all overflow-hidden"
+                  className="group flex cursor-grab flex-col justify-between gap-4 overflow-hidden rounded-2xl border border-slate-200 bg-[var(--surface)] p-4 shadow-sm transition-all hover:border-accent/30 hover:shadow-md active:cursor-grabbing dark:border-white/10 sm:flex-row sm:items-center sm:gap-6 md:p-5"
                 >
                   <div className="flex items-center gap-3 md:gap-5 flex-1 min-w-0 pointer-events-none">
                      <div className="text-slate-500 hover:text-accent transition-colors pointer-events-auto shrink-0">
                         <GripVertical size={20} />
                      </div>
-                     <div className="h-12 w-12 md:h-16 md:w-16 shrink-0 bg-slate-900 rounded-xl overflow-hidden border border-white/10 relative shadow-inner">
+                     <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-100 shadow-inner dark:border-white/10 dark:bg-slate-900 md:h-16 md:w-16">
                          {activeTab === 'projects' 
                             ? (item.imageUrls?.[0] ? <img src={item.imageUrls[0]} alt="prev" className="h-full w-full object-cover" /> : <div className="h-full w-full bg-slate-800" />)
                             : (item.image ? <img src={item.image} alt="prev" className="h-full w-full object-cover" /> : <div className="h-full w-full bg-slate-800" />)
                          }
                      </div>
                      <div className="min-w-0 flex-1">
-                        <h4 className="font-bold text-white truncate text-base md:text-lg mb-0.5">{item.title || item.projectName}</h4>
+                        <h4 className="mb-0.5 truncate text-base font-bold text-slate-900 dark:text-white md:text-lg">{item.title || item.projectName}</h4>
                         <p className="text-xs md:text-sm text-slate-400 truncate">{item.desc || item.description}</p>
                      </div>
                   </div>
@@ -533,9 +533,9 @@ export default function ExperienceAdmin() {
       </div>
       
       <style jsx>{`
-        .input-style { @apply w-full bg-slate-900 border-2 border-slate-700/60 rounded-xl p-3.5 text-sm focus:border-accent focus:ring-4 focus:ring-accent/20 outline-none transition-all text-white placeholder:text-slate-500 shadow-inner hover:border-slate-500/80; }
+        .input-style { @apply w-full rounded-xl border-2 border-slate-300 bg-[var(--surface)] p-3.5 text-sm text-slate-900 outline-none shadow-inner transition-all placeholder:text-slate-400 hover:border-slate-400 focus:border-accent focus:ring-4 focus:ring-accent/20 dark:border-slate-700/60 dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-500 dark:hover:border-slate-500/80; }
         .btn-primary { @apply flex items-center justify-center flex-1 sm:flex-none gap-2 bg-accent hover:brightness-110 text-white font-bold px-8 py-3.5 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl hover:-translate-y-0.5; }
-        .btn-secondary { @apply flex items-center justify-center flex-1 sm:flex-none gap-2 bg-slate-900 border border-slate-600 hover:border-slate-400 hover:bg-slate-800 text-white px-8 py-3.5 rounded-xl transition-all; }
+        .btn-secondary { @apply flex items-center justify-center flex-1 gap-2 rounded-xl border border-slate-300 bg-[var(--surface)] px-8 py-3.5 text-slate-700 transition-all hover:border-accent hover:text-accent dark:border-slate-600 dark:bg-slate-900 dark:text-white sm:flex-none; }
         .list-container::-webkit-scrollbar { width: 6px; }
         .list-container::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 8px; }
         .list-container::-webkit-scrollbar-thumb { background: hsla(var(--accent-hue), 89%, 48%, 0.3); border-radius: 8px; }

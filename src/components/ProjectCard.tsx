@@ -60,7 +60,7 @@ export default function ProjectCard({
   return (
     <>
       <motion.div 
-        className="group relative overflow-hidden border border-slate-200 dark:border-white/10 shadow-xl transition-colors hover:border-accent/50 flex flex-col min-h-[350px] bg-white dark:bg-slate-900/50"
+        className="group relative flex min-h-[350px] flex-col overflow-hidden border border-slate-200 bg-white shadow-xl transition-colors hover:border-accent/50 dark:border-white/10 dark:bg-[var(--surface)]"
       >
         {/* Background Image Layer */}
         <div 
@@ -138,7 +138,7 @@ export default function ProjectCard({
       {/* --- GALLERY MODAL --- */}
       {isPreviewOpen && imageUrls.length > 0 && mounted && createPortal(
         <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/98 p-4 animate-in fade-in duration-300"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[var(--background)]/98 p-4 animate-in fade-in duration-300"
           onClick={() => setIsPreviewOpen(false)}
         >
           <button className="absolute top-6 right-6 z-[110] text-white/50 hover:text-white">

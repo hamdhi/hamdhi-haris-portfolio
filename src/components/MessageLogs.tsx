@@ -88,9 +88,9 @@ export default function MessageLogs() {
   }
 
   return (
-    <section className="mt-20 space-y-6">
+    <section className="mt-12 space-y-6">
       {/* Section Header with Live Indicator */}
-      <div className="flex items-center justify-between border-b border-white/10 pb-4">
+      <div className="flex items-center justify-between border-b border-slate-200 pb-4 dark:border-white/10">
         <div className="flex items-center gap-3">
           <MessageSquare className="text-accent" size={20} />
           <h2 className="text-sm font-mono text-slate-400 uppercase tracking-[0.3em]">Communication_Logs</h2>
@@ -111,7 +111,7 @@ export default function MessageLogs() {
           messages.map((msg) => (
             <div 
               key={msg.id} 
-              className="group relative bg-slate-900/50 border border-white/5 p-5 rounded-2xl hover:border-accent/30 transition-all animate-in fade-in slide-in-from-top-4 duration-500"
+              className="group relative rounded-2xl border border-slate-200 bg-[var(--surface)] p-5 shadow-sm transition-all hover:border-accent/30 animate-in fade-in slide-in-from-top-4 duration-500 dark:border-white/10"
             >
               {/* Delete Button - Appears on Hover */}
               <button 
@@ -132,14 +132,14 @@ export default function MessageLogs() {
                     <User size={18} />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-white tracking-tight">{msg.name}</h4>
+                    <h4 className="text-sm font-bold tracking-tight text-slate-900 dark:text-white">{msg.name}</h4>
                     <div className="flex items-center gap-2 text-[10px] text-slate-500 font-mono">
                       <Mail size={10} /> {msg.email}
                     </div>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-2 text-white-600 font-mono text-[9px] bg-black/20 px-3 py-1 rounded-full self-start border border-white/5">
+                <div className="flex items-center gap-2 self-start rounded-full border border-slate-200 bg-slate-100 px-3 py-1 font-mono text-[9px] text-slate-500 dark:border-white/5 dark:bg-black/20">
                   <Clock size={10} />
                   {new Date(msg.created_at).toLocaleString([], {
                     dateStyle: 'medium',
@@ -148,7 +148,7 @@ export default function MessageLogs() {
                 </div>
               </div>
 
-              <div className="relative p-4 bg-accent/10 rounded-xl border border-white/10 text-sm text-white-300 leading-relaxed italic">
+              <div className="relative rounded-xl border border-accent/20 bg-accent/10 p-4 text-sm leading-relaxed text-slate-700 italic dark:text-slate-300">
                 <span className="text-accent/20 font-serif text-3xl absolute -top-1 -left-1 select-none">"</span>
                 {msg.message}
               </div>

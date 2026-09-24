@@ -35,7 +35,7 @@ export default function SystemTelemetry(props: { GITHUB_USERNAME: string }) {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
           viewport={{ once: true, margin: "-100px" }}
-          className="lg:col-span-2 relative bg-white/80 dark:bg-[#0F172A]/80 border border-slate-200 dark:border-accent/20 p-6 rounded-xl backdrop-blur-sm overflow-hidden group shadow-sm"
+          className="relative overflow-hidden rounded-xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur-sm group dark:border-accent/20 dark:bg-[var(--surface)]/80 lg:col-span-2"
         >
           {/* Decorative scanline effect */}
           <div className="absolute inset-0 bg-[linear-gradient(hsla(var(--accent-hue),89%,48%,0.05)_1px,transparent_1px)] bg-[length:100%_4px] pointer-events-none opacity-20" />
@@ -70,7 +70,7 @@ export default function SystemTelemetry(props: { GITHUB_USERNAME: string }) {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true, margin: "-100px" }}
-          className="relative bg-white/80 dark:bg-[#0F172A]/80 border border-slate-200 dark:border-accent/20 p-6 rounded-xl backdrop-blur-sm overflow-hidden shadow-sm"
+          className="relative overflow-hidden rounded-xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-accent/20 dark:bg-[var(--surface)]/80"
         >
           {/* Decorative scanline effect */}
           <div className="absolute inset-0 bg-[linear-gradient(hsla(var(--accent-hue),89%,48%,0.05)_1px,transparent_1px)] bg-[length:100%_4px] pointer-events-none opacity-20" />
