@@ -6,7 +6,6 @@ import MessageLogs from '@/components/MessageLogs';
 import StatsOverview from '@/components/StatsOverview';
 import ExperienceAdmin from '@/components/ExperienceAdmin';
 import MaintenanceToggle from '@/components/MaintenanceToggle';
-import ThemeAccentSlider from '@/components/ThemeAccentSlider';
 
 export default function AdminDashboard() {
     const router = useRouter();
@@ -21,21 +20,20 @@ export default function AdminDashboard() {
     };
 
     return (
-        /* Updated background to generic dark theme */
-        <main className="min-h-screen bg-slate-950 text-white p-4 md:p-8 font-sans">
-            <div className="max-w-5xl mx-auto space-y-12">
+        <main className="min-h-screen bg-[var(--background)] p-4 font-sans text-slate-900 dark:text-white md:p-8">
+            <div className="mx-auto max-w-6xl space-y-8">
                 
                 {/* 1. Header & Logout */}
-                <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-b border-white/10 pb-6">
+                <header className="flex flex-col items-start justify-between gap-6 border-b border-slate-200 pb-6 dark:border-white/10 md:flex-row md:items-center">
                     <div className="flex items-center gap-3 w-full md:w-auto">
                         <LayoutDashboard className="text-accent" size={28} /> 
                         <h1 className="text-2xl md:text-3xl font-bold uppercase tracking-tighter">Admin_Panel</h1>
                     </div>
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center w-full md:w-auto gap-4 md:gap-6">
                         <MaintenanceToggle/>
-                        <button 
+                        <button
                             onClick={handleLogout} 
-                            className="justify-center text-xs font-bold font-mono text-slate-300 hover:text-white flex items-center gap-2 transition-all bg-white/5 border border-white/10 hover:bg-red-500/20 hover:border-red-500/50 px-5 py-3 rounded-lg shadow-sm"
+                            className="flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-[var(--surface)] px-5 py-3 font-mono text-xs font-bold text-slate-600 shadow-sm transition-all hover:border-red-400 hover:bg-red-50 hover:text-red-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-red-500/20 dark:hover:text-white"
                         >
                             <LogOut size={16} /> LOGOUT
                         </button>
@@ -50,10 +48,6 @@ export default function AdminDashboard() {
 
                 {/* 4. Messages */}
                 <MessageLogs />
-
-                {/*Accent Color Slider */}
-                <ThemeAccentSlider />
-
 
             </div>
         </main>

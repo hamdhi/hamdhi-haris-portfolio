@@ -48,13 +48,13 @@ export default function MaintenanceToggle() {
   if (loading) return <Loader2 className="animate-spin text-accent" size={20} />;
 
   return (
-    <div className="flex items-center justify-between gap-4 p-3 md:p-4 rounded-xl border border-white/10 bg-slate-900/50 w-full sm:w-auto shadow-inner">
-      <div className={`p-2 rounded-lg ${isActive ? "bg-accent/20 text-accent" : "bg-slate-800 text-slate-500"}`}>
+    <div className="flex w-full items-center justify-between gap-4 rounded-xl border border-slate-200 bg-[var(--surface)] p-3 shadow-sm dark:border-white/10 dark:bg-white/5 md:p-4 sm:w-auto">
+      <div className={`rounded-lg p-2 ${isActive ? "bg-accent/20 text-accent" : "bg-slate-200 text-slate-500 dark:bg-slate-800"}`}>
         {isActive ? <ShieldAlert size={18} /> : <ShieldCheck size={18} />}
       </div>
 
       <div className="flex-1 pr-4">
-        <h3 className="text-xs md:text-sm font-bold text-white uppercase tracking-tight truncate">
+        <h3 className="truncate text-xs font-bold uppercase tracking-tight text-slate-900 dark:text-white md:text-sm">
           Maintenance_Mode
         </h3>
         <p className="text-[10px] text-slate-500 font-mono">
@@ -65,8 +65,9 @@ export default function MaintenanceToggle() {
       <button
         onClick={handleToggle}
         disabled={updating}
+        aria-label="Toggle maintenance mode"
         className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
-          isActive ? "bg-accent" : "bg-slate-700"
+          isActive ? "bg-accent" : "bg-slate-300 dark:bg-slate-700"
         }`}
       >
         <span

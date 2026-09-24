@@ -88,12 +88,12 @@ export default function StatsOverview() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {cards.map((card, idx) => (
-          <div key={idx} className="bg-[#0F172A] dark:bg-[#0F172A] border border-slate-200 dark:border-white/5 p-5 rounded-2xl group hover:border-accent/20 transition-all shadow-sm">
+          <div key={idx} className="group rounded-2xl border border-slate-200 bg-[var(--surface)] p-5 shadow-sm transition-all hover:border-accent/20 dark:border-white/5">
             <div className="flex justify-between items-start">
               <div >
                 <p className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-1">{card.label}</p>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-bold text-white-900 dark:text-white tracking-tighter">
+                  <span className="text-3xl font-bold tracking-tighter text-slate-900 dark:text-white">
                     {loading ? '---' : card.val}
                   </span>
                   <TrendingUp size={12} className="text-slate-600" />

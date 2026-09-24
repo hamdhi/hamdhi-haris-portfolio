@@ -1,35 +1,12 @@
 "use client";
 import { motion } from "framer-motion";
 import { Activity, Terminal, Code2, GitBranch } from "lucide-react";
-import { useState, useEffect } from "react";
 
 export default function SystemTelemetry(props: { GITHUB_USERNAME: string }) {
   // Change this to your exact GitHub username if it's different!
   const GITHUB_USERNAME = props.GITHUB_USERNAME;
 
-  const [accentHex, setAccentHex] = useState<string>("0EA5E9"); // Default sky blue hex
-
-  useEffect(() => {
-    const updateHex = () => {
-      const savedHue = localStorage.getItem('accentHue');
-      const h = savedHue ? Number(savedHue) : 199;
-      const s = 89;
-      const l = 48;
-      const lRatio = l / 100;
-      const a = s * Math.min(lRatio, 1 - lRatio) / 100;
-      const f = (n: number) => {
-        const k = (n + h / 30) % 12;
-        const color = lRatio - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-        return Math.round(255 * color).toString(16).padStart(2, '0');
-      };
-      setAccentHex(`${f(0)}${f(8)}${f(4)}`);
-    };
-    
-    updateHex(); // Run on mount
-    window.addEventListener('theme-change', updateHex); // Listen for live global updates
-    
-    return () => window.removeEventListener('theme-change', updateHex);
-  }, []);
+  const accentHex = 'D8643A';
 
   return (
     <section id="telemetry" className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-20 lg:py-32">
@@ -58,7 +35,7 @@ export default function SystemTelemetry(props: { GITHUB_USERNAME: string }) {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
           viewport={{ once: true, margin: "-100px" }}
-          className="lg:col-span-2 relative bg-white/80 dark:bg-[#0F172A]/80 border border-slate-200 dark:border-accent/20 p-6 rounded-xl backdrop-blur-sm overflow-hidden group shadow-sm"
+          className="relative overflow-hidden rounded-xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur-sm group dark:border-accent/20 dark:bg-[var(--surface)]/80 lg:col-span-2"
         >
           {/* Decorative scanline effect */}
           <div className="absolute inset-0 bg-[linear-gradient(hsla(var(--accent-hue),89%,48%,0.05)_1px,transparent_1px)] bg-[length:100%_4px] pointer-events-none opacity-20" />
@@ -93,7 +70,7 @@ export default function SystemTelemetry(props: { GITHUB_USERNAME: string }) {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true, margin: "-100px" }}
-          className="relative bg-white/80 dark:bg-[#0F172A]/80 border border-slate-200 dark:border-accent/20 p-6 rounded-xl backdrop-blur-sm overflow-hidden shadow-sm"
+          className="relative overflow-hidden rounded-xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-accent/20 dark:bg-[var(--surface)]/80"
         >
           {/* Decorative scanline effect */}
           <div className="absolute inset-0 bg-[linear-gradient(hsla(var(--accent-hue),89%,48%,0.05)_1px,transparent_1px)] bg-[length:100%_4px] pointer-events-none opacity-20" />

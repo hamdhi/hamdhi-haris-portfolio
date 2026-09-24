@@ -9,15 +9,14 @@ interface ContactProps {
 
 export default function Contact({ email, location }: ContactProps) {
   return (
-    <section id="contact" className="relative z-10 max-w-7xl mx-auto px-6 py-32 border-t border-slate-200 dark:border-white/5">
+    <section id="contact" className="relative z-10 mx-auto max-w-7xl border-t border-slate-200 px-6 py-20 dark:border-white/10 md:px-10 md:py-24">
       <div className="grid md:grid-cols-2 gap-20 items-center">
         {/* Left Side: Info */}
         <div>
           <h2 className="text-5xl font-bold mb-6 text-slate-900 dark:text-white">
-            Let's <span className="text-accent">Initialize</span> <br /> a Connection.
+            Let&apos;s <span className="text-accent">Initialize</span> <br /> a Connection.
           </h2>
           <p className="text-slate-400 mb-10 leading-relaxed text-lg italic">
-            Currently available for intern software engineering opportunities. 
             Open to discussing Java, Next.js, and backend architecture projects.
           </p>
           

@@ -10,18 +10,21 @@ export default function AboutMe() {
   ];
 
   return (
-    <section id="about" className="relative z-10 max-w-7xl mx-auto px-6 py-24">
+    <section id="about" className="relative z-10 mx-auto max-w-7xl px-6 py-16 md:px-10 md:py-20">
       {/* Header */}
-      <div className="flex items-center gap-4 mb-12">
-        <User className="text-accent" />
-        <h2 className="text-4xl font-bold uppercase tracking-tighter text-slate-900 dark:text-white">System_Identity</h2>
+      <div className="mb-8 flex items-end justify-between gap-5 border-b border-slate-200 pb-5 dark:border-white/10">
+        <div className="flex items-center gap-3">
+          <User className="text-accent" size={18} />
+          <h2 className="font-mono text-xs uppercase tracking-[0.25em] text-accent">About / 01</h2>
+        </div>
+        <span className="hidden font-mono text-[10px] uppercase tracking-widest text-slate-500 sm:block">The person behind the work</span>
       </div>
 
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="relative overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-transparent backdrop-blur-[2px] p-8 md:p-12 shadow-2xl"
+        className="relative overflow-hidden border-y border-slate-200 py-10 dark:border-white/10 md:py-14"
       >
         <Terminal className="absolute -right-8 -top-8 text-slate-900/[0.03] dark:text-white/[0.03] w-64 h-64 -rotate-12 pointer-events-none" />
 
@@ -29,7 +32,7 @@ export default function AboutMe() {
           {/* Bio Text */}
           <div className="lg:col-span-2 space-y-6">
             <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-4 italic">
-              Hello, I'm <span className="text-accent">Hamdhi Haris</span>
+                Hello, I&apos;m <span className="text-accent">Hamdhi Haris</span>
             </h3>
             <div className="space-y-4 text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
               <p>
@@ -87,7 +90,7 @@ export default function AboutMe() {
             </div>
             
             <h4 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white uppercase tracking-tighter drop-shadow-[0_0_15px_hsla(var(--accent-hue),89%,48%,0.5)]">
-              Open to <span className="text-accent">Collaborations</span> & Internships
+              Open to <span className="text-accent">Collaborations</span> & thoughtful work
             </h4>
             
             <p className="text-slate-400 font-mono text-[10px] mt-2 uppercase tracking-widest opacity-60">
