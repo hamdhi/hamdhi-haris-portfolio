@@ -10,8 +10,7 @@ export default function Footer({ name, version }: FooterProps) {
 
   return (
     <footer className="relative z-10 py-10 text-center border-t border-accent/10">
-      {/* Subtle green glow line at the very top of the footer */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent" />
+      <div className="absolute left-1/2 top-0 h-px w-1/2 -translate-x-1/2 bg-gradient-to-r from-transparent via-accent/50 to-transparent" />
 
       <div className="flex flex-col gap-2">
         <p className="mono text-[10px] text-accent/80 tracking-widest uppercase">
