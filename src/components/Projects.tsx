@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ProjectCard from './ProjectCard';
-import { FolderGit2, Loader2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, FolderGit2, Loader2 } from 'lucide-react';
 import { motion, Variants } from 'framer-motion';
 
 // Define the shape of a Project (matches your Supabase table)
@@ -21,6 +21,8 @@ interface Project {
 export default function Projects() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentProject, setCurrentProject] = useState(0);
+  const projectsViewportRef = useRef<HTMLDivElement>(null);
 
   // Fetch data from the API on mount
   useEffect(() => {
@@ -42,6 +44,25 @@ export default function Projects() {
 
     fetchProjects();
   }, []);
+
+  const updateCurrentProject = () => {
+    const viewport = projectsViewportRef.current;
+    if (!viewport || !viewport.children.length) return;
+
+    const firstCard = viewport.children[0] as HTMLElement;
+    const cardWidth = firstCard.offsetWidth + 32;
+    setCurrentProject(Math.min(projects.length - 1, Math.round(viewport.scrollLeft / cardWidth)));
+  };
+
+  const moveToProject = (direction: -1 | 1) => {
+    const viewport = projectsViewportRef.current;
+    if (!viewport) return;
+
+    const nextProject = Math.max(0, Math.min(projects.length - 1, currentProject + direction));
+    const card = viewport.children[nextProject] as HTMLElement;
+    card?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+    setCurrentProject(nextProject);
+  };
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -78,32 +99,61 @@ export default function Projects() {
         <div className="flex justify-center items-center py-20">
           <Loader2 className="animate-spin text-accent" size={40} />
         </div>
-      ) : (
-        /* Projects Grid */
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-50px" }}
-          className="grid gap-8 md:grid-cols-2"
-        >
-          {projects.length > 0 ? (
-            projects.map((project) => (
-              <motion.div key={project.id} variants={itemVariants}>
-                <ProjectCard 
-                  {...project} 
-                />
-              </motion.div>
-            ))
-          ) : (
-            <div className="col-span-full py-20 border border-dashed border-slate-300 dark:border-white/10 rounded-3xl flex flex-col items-center justify-center bg-slate-50 dark:bg-white/[0.02]">
-              <p className="text-slate-500 font-mono text-sm uppercase tracking-widest italic">
-                No_Active_Projects_Found
-              </p>
+      ) : projects.length > 0 ? (
+          <>
+            <div className="mb-5 flex items-center justify-between gap-4">
+              <span className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
+                Project {String(currentProject + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+              </span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  aria-label="Previous project"
+                  onClick={() => moveToProject(-1)}
+                  disabled={currentProject === 0}
+                  className="flex h-10 w-10 items-center justify-center border border-slate-200 text-slate-500 transition hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-30 dark:border-white/10"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Next project"
+                  onClick={() => moveToProject(1)}
+                  disabled={currentProject === projects.length - 1}
+                  className="flex h-10 w-10 items-center justify-center border border-slate-200 text-slate-500 transition hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-30 dark:border-white/10"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
             </div>
-          )}
-        </motion.div>
-      )}
+
+            <motion.div
+              ref={projectsViewportRef}
+              onScroll={updateCurrentProject}
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-50px" }}
+              className="flex snap-x snap-mandatory gap-8 overflow-x-auto overscroll-x-contain pb-4 pr-8"
+            >
+              {projects.map((project) => (
+                <motion.div
+                  key={project.id}
+                  variants={itemVariants}
+                  className="min-w-0 shrink-0 basis-[calc(100%_-_4rem)] snap-start md:basis-[calc((100%_-_4rem)/2)]"
+                >
+                  <ProjectCard {...project} />
+                </motion.div>
+              ))}
+            </motion.div>
+          </>
+        ) : (
+          <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-slate-50 py-20 dark:border-white/10 dark:bg-white/[0.02]">
+            <p className="font-mono text-sm uppercase tracking-widest italic text-slate-500">
+              No_Active_Projects_Found
+            </p>
+          </div>
+        )}
     </section>
   );
 }
