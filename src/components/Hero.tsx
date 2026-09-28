@@ -1,5 +1,5 @@
 'use client';
-import { ArrowDownRight, Contact, Download } from 'lucide-react';
+import { ArrowDownRight, Contact, Download, Github, Linkedin } from 'lucide-react';
 import { useEffect, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
@@ -82,6 +82,14 @@ export default function Hero({ cvLink }: HeroProps) {
             <a href="#contact" className="inline-flex items-center gap-2 border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-accent hover:text-accent dark:border-slate-600 dark:text-slate-200">
               <Contact size={16} /> Start a conversation
             </a>
+            <div className="flex gap-3">
+              <a href="https://github.com/hamdhi" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-4 py-3 border border-slate-300 text-slate-700 transition hover:border-accent hover:text-accent dark:border-slate-600 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800" aria-label="GitHub">
+                <Github size={18} />
+              </a>
+              <a href="https://www.linkedin.com/in/hamdhi-haris-68994a1b4/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-4 py-3 border border-slate-300 text-slate-700 transition hover:border-accent hover:text-accent dark:border-slate-600 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800" aria-label="LinkedIn">
+                <Linkedin size={18} />
+              </a>
+            </div>
           </div>
         </motion.div>
 

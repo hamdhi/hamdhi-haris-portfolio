@@ -1,25 +1,41 @@
+'use client';
+import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import EventCard from '@/components/EventCard';
 
-const EVENTS = [
-  {
-    title: "NSBM Hackathon 2025",
-    date: "MARCH 2025",
-    location: "NSBM Green University",
-    images: ["/events/hack-1.jpg", "/events/hack-2.jpg", "/events/hack-3.jpg", "/events/hack-4.jpg"],
-    knowledge: "Deepened my understanding of real-time collaboration using WebSockets and learned how to pitch technical solutions to a non-technical jury."
-  },
-  {
-    title: "Java Dev Meetup",
-    date: "JAN 2026",
-    location: "Colombo, Sri Lanka",
-    images: ["/events/meetup-1.jpg", "/events/meetup-2.jpg"],
-    knowledge: "Gained insights into Java 21 Virtual Threads and how they optimize high-concurrency Spring Boot applications."
-  }
-];
+interface GalleryEvent {
+  id: number;
+  title: string;
+  date: string;
+  location: string;
+  images: string[];
+  knowledge: string;
+  sort_order?: number;
+}
 
 export default function GalleryPage() {
+  const [events, setEvents] = useState<GalleryEvent[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchGallery = async () => {
+      try {
+        const res = await fetch('/api/admin/gallery');
+        if (res.ok) {
+          const data = await res.json();
+          setEvents(Array.isArray(data) ? data.sort((a: any, b: any) => (a.sort_order || 0) - (b.sort_order || 0)) : []);
+        }
+      } catch (error) {
+        console.error("Failed to fetch gallery items", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGallery();
+  }, []);
+
   return (
     <main className="relative min-h-screen bg-[var(--background)] text-slate-900 dark:text-white transition-colors duration-300">
       <Navbar />
@@ -35,11 +51,17 @@ export default function GalleryPage() {
           <p className="hidden max-w-xs text-right text-sm leading-5 text-slate-500 md:block">Meetups, workshops, and rooms where ideas became practical.</p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {EVENTS.map((event, idx) => (
-            <EventCard key={idx} {...event} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex justify-center py-20">
+            <div className="h-10 w-10 animate-spin rounded-full border-4 border-accent border-t-transparent"></div>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {events.map((event) => (
+              <EventCard key={event.id || event.title} {...event} />
+            ))}
+          </div>
+        )}
       </section>
 
       <Footer name="Hamdhi Haris" version="1.0.02" />
