@@ -4,7 +4,7 @@ import { User, Code2, Gamepad2, GraduationCap, Terminal } from "lucide-react";
 
 export default function AboutMe() {
   const stats = [
-    { label: "Main_Stack", value: "Java / Spring Boot", icon: <Code2 size={16} /> },
+    { label: "Main_Stack", value: "Java / Spring Boot / Python / FastAPI", icon: <Code2 size={16} /> },
     { label: "Status", value: "Undergraduate Student", icon: <GraduationCap size={16} /> },
     { label: "Side_Interests", value: "Gaming & DC/Marvel", icon: <Gamepad2 size={16} /> },
   ];
@@ -37,11 +37,13 @@ export default function AboutMe() {
             <div className="space-y-4 text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
               <p>
                 I am a <span className="text-slate-900 dark:text-white font-semibold">Software Engineering Student</span> focused on building robust backend architectures. My core expertise lies in 
-                <span className="text-accent font-mono"> Java</span> and 
-                <span className="text-accent font-mono"> Spring Boot</span>, optimizing system performance through clean design patterns.
+                <span className="text-accent font-mono"> Java</span>, 
+                <span className="text-accent font-mono"> Spring Boot</span>,
+                <span className="text-accent font-mono"> Python</span>, and
+                <span className="text-accent font-mono"> FastAPI</span>, optimizing system performance through clean design patterns.
               </p>
               <p>
-                Currently, I am building full-stack applications with <span className="text-slate-900 dark:text-white">Next.js</span> while mastering <span className="text-slate-900 dark:text-white">Data Structures and Algorithms</span>. 
+                Currently, I am building full-stack applications with <span className="text-slate-900 dark:text-white">Next.js</span>, mastering <span className="text-slate-900 dark:text-white">Data Structures and Algorithms</span>, and secretly charting a course into the realm of <span className="text-accent/80 italic font-bold">DevOps</span>—automating my way through the cloud, one pipeline at a time.
               </p>
               <p>
                 Outside of code, I am deeply interested in <span className="text-accent/80 italic">superhero universes</span> and competitive <span className="text-accent/80 italic">video games</span>.
