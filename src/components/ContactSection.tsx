@@ -17,7 +17,7 @@ export default function Contact({ email, location }: ContactProps) {
             Let&apos;s <span className="text-accent">Initialize</span> <br /> a Connection.
           </h2>
           <p className="text-slate-400 mb-10 leading-relaxed text-lg italic">
-            Open to discussing Java, Next.js, and backend architecture projects.
+            Open to discussing Java, Python, FastAPI, Next.js, and backend architecture projects.
           </p>
           
           {/* Terminal-style metadata */}

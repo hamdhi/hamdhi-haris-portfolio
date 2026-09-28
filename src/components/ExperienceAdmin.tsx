@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Trash2, Edit2, Plus, Save, X, Loader2, Briefcase, Trophy, Code, UploadCloud, GripVertical } from "lucide-react";
+import { Trash2, Edit2, Plus, Save, X, Loader2, Briefcase, Trophy, Code, UploadCloud, GripVertical, Layers, Image as ImageIcon } from "lucide-react";
 import { motion, AnimatePresence, Reorder } from "framer-motion";
 import { supabase } from "@/lib/supabase"; 
 
@@ -24,6 +24,8 @@ interface ExpItem extends BaseItem {
 // --- INITIAL STATES ---
 const initialExpState = { title: "", org: "", date: "", desc: "", image: "", tags: [] };
 const initialProjectState = { projectName: "", description: "", learned: "", technologies: [], imageUrls: [], githubUrl: "", liveUrl: "" };
+const initialTechState = { name: "", icon: "", tags: "", proficiency: 50, isMain: false };
+const initialGalleryState = { title: "", location: "", date: "", images: [], knowledge: "" };
 
 export default function ExperienceAdmin() {
   const router = useRouter();
@@ -33,7 +35,7 @@ export default function ExperienceAdmin() {
   const [authChecking, setAuthChecking] = useState(true);
 
   // --- DATA STATES ---
-  const [activeTab, setActiveTab] = useState<'experience' | 'leadership' | 'projects'>('experience');
+  const [activeTab, setActiveTab] = useState<'experience' | 'leadership' | 'projects' | 'techstack' | 'gallery'>('experience');
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -120,13 +122,13 @@ export default function ExperienceAdmin() {
         const filePath = `${activeTab}/${folder}/${fileName}`; 
 
         const { error: uploadError } = await supabase.storage
-          .from('portfolio-images')
+          .from(activeTab === 'gallery' ? 'gallery' : 'portfolio-images')
           .upload(filePath, file);
 
         if (uploadError) throw uploadError;
 
         const { data } = supabase.storage
-          .from('portfolio-images')
+          .from(activeTab === 'gallery' ? 'gallery' : 'portfolio-images')
           .getPublicUrl(filePath);
 
         return data.publicUrl;
@@ -135,12 +137,13 @@ export default function ExperienceAdmin() {
       const uploadedUrls = await Promise.all(uploadPromises);
       newUrls.push(...uploadedUrls);
 
-      if (activeTab === 'projects') {
+      if (activeTab === 'projects' || activeTab === 'gallery') {
         // Overwrite existing images instead of appending them
         const combinedImages = [...newUrls];
         
         setImageInput(combinedImages.join(', '));
-        setFormData({ ...formData, imageUrls: combinedImages });
+        if (activeTab === 'projects') setFormData({ ...formData, imageUrls: combinedImages });
+        else setFormData({ ...formData, images: combinedImages });
       } else {
         const firstUrl = newUrls[0];
         setFormData({ ...formData, image: firstUrl });
@@ -168,6 +171,10 @@ export default function ExperienceAdmin() {
     if (activeTab === 'projects') {
       payload.technologies = tagInput.split(',').map(t => t.trim()).filter(t => t);
       payload.imageUrls = imageInput.split(',').map(t => t.trim()).filter(t => t);
+    } else if (activeTab === 'gallery') {
+      payload.images = imageInput.split(',').map(t => t.trim()).filter(t => t);
+    } else if (activeTab === 'techstack') {
+      payload.proficiency = parseInt(payload.proficiency) || 0;
     } else {
       payload.tags = tagInput.split(',').map(t => t.trim()).filter(t => t);
       payload.image = formData.image; 
@@ -191,11 +198,11 @@ export default function ExperienceAdmin() {
       try {
         if (uploadFolder && uploadFolder.startsWith('proj_')) {
           const folderPath = `${activeTab}/${uploadFolder}`;
-          const { data: existingFiles } = await supabase.storage.from('portfolio-images').list(folderPath);
+          const { data: existingFiles } = await supabase.storage.from(activeTab === 'gallery' ? 'gallery' : 'portfolio-images').list(folderPath);
 
           if (existingFiles && existingFiles.length > 0) {
             // Get clean filenames that we actually want to keep
-            const finalUrls = activeTab === 'projects' ? (payload.imageUrls || []) : (payload.image ? [payload.image] : []);
+            const finalUrls = activeTab === 'projects' ? (payload.imageUrls || []) : activeTab === 'gallery' ? (payload.images || []) : (payload.image ? [payload.image] : []);
             const keptFilenames = finalUrls.map((url: string) => url.split('?')[0].split('/').pop());
 
             // Any file in the folder that isn't in our keep list gets purged
@@ -203,7 +210,7 @@ export default function ExperienceAdmin() {
               .filter(file => !keptFilenames.includes(file.name) && file.name !== '.emptyFolderPlaceholder')
               .map(file => `${folderPath}/${file.name}`);
 
-            if (filesToDelete.length > 0) await supabase.storage.from('portfolio-images').remove(filesToDelete);
+            if (filesToDelete.length > 0) await supabase.storage.from(activeTab === 'gallery' ? 'gallery' : 'portfolio-images').remove(filesToDelete);
           }
         }
       } catch (err) {
@@ -271,7 +278,7 @@ export default function ExperienceAdmin() {
 
       // --- COMPLETE FOLDER DELETION ---
       let folderName = null;
-      const img = activeTab === 'projects' ? item.imageUrls?.[0] : item.image;
+      const img = activeTab === 'projects' ? item.imageUrls?.[0] : activeTab === 'gallery' ? item.images?.[0] : item.image;
       if (img) {
          const match = img.match(new RegExp(`/${activeTab}/(proj_[^/]+)`));
          if (match) folderName = match[1];
@@ -280,27 +287,29 @@ export default function ExperienceAdmin() {
       if (folderName && folderName.startsWith('proj_')) {
         // If organized in a folder, delete absolutely everything inside it
         const folderPath = `${activeTab}/${folderName}`;
-        const { data: files } = await supabase.storage.from('portfolio-images').list(folderPath);
+        const { data: files } = await supabase.storage.from(activeTab === 'gallery' ? 'gallery' : 'portfolio-images').list(folderPath);
         if (files && files.length > 0) {
            const pathsToDelete = files.map(f => `${folderPath}/${f.name}`);
-           await supabase.storage.from('portfolio-images').remove(pathsToDelete);
+           await supabase.storage.from(activeTab === 'gallery' ? 'gallery' : 'portfolio-images').remove(pathsToDelete);
         }
       } else {
         // Fallback for older items without folders
         const extractPath = (url: string) => {
           try {
-            const parts = url.split('/portfolio-images/');
+            const parts = url.split(`/${activeTab === 'gallery' ? 'gallery' : 'portfolio-images'}/`);
             return parts.length > 1 ? parts[1] : null;
           } catch { return null; }
         };
         const imagesToDelete: string[] = [];
         if (activeTab === 'projects') {
           if (Array.isArray(item.imageUrls)) item.imageUrls.forEach((url: string) => { const p = extractPath(url); if(p) imagesToDelete.push(p); });
+        } else if (activeTab === 'gallery') {
+          if (Array.isArray(item.images)) item.images.forEach((url: string) => { const p = extractPath(url); if(p) imagesToDelete.push(p); });
         } else if (item.image) {
           const path = extractPath(item.image);
           if (path) imagesToDelete.push(path);
         }
-        if (imagesToDelete.length > 0) await supabase.storage.from('portfolio-images').remove(imagesToDelete);
+        if (imagesToDelete.length > 0) await supabase.storage.from(activeTab === 'gallery' ? 'gallery' : 'portfolio-images').remove(imagesToDelete);
       }
 
       fetchItems();
@@ -320,7 +329,7 @@ export default function ExperienceAdmin() {
 
     // Try to extract existing folder name, fallback to a new one
     let folder = `proj_${Date.now()}`;
-    const img = activeTab === 'projects' ? item.imageUrls?.[0] : item.image;
+    const img = activeTab === 'projects' ? item.imageUrls?.[0] : activeTab === 'gallery' ? item.images?.[0] : item.image;
     if (img) {
        const match = img.match(new RegExp(`/${activeTab}/(proj_[^/]+)`));
        if (match) folder = match[1];
@@ -330,6 +339,11 @@ export default function ExperienceAdmin() {
     if (activeTab === 'projects') {
       setTagInput(item.technologies?.join(", ") || "");
       setImageInput(item.imageUrls?.join(", ") || "");
+    } else if (activeTab === 'gallery') {
+      setTagInput("");
+      setImageInput(item.images?.join(", ") || "");
+    } else if (activeTab === 'techstack') {
+      setTagInput("");
     } else {
       setTagInput(item.tags?.join(", ") || "");
     }
@@ -338,7 +352,7 @@ export default function ExperienceAdmin() {
   const resetForm = () => {
     setIsEditing(null);
     setOriginalItem(null);
-    setFormData(activeTab === 'projects' ? initialProjectState : initialExpState);
+    setFormData(activeTab === 'projects' ? initialProjectState : activeTab === 'gallery' ? initialGalleryState : activeTab === 'techstack' ? initialTechState : initialExpState);
     setTagInput("");
     setImageInput("");
     setUploadFolder(`proj_${Date.now()}`);
@@ -366,7 +380,7 @@ export default function ExperienceAdmin() {
         </h2>
         
         <div className="flex w-full flex-wrap gap-1 rounded-xl border border-slate-200 bg-slate-100 p-1.5 shadow-inner dark:border-white/10 dark:bg-slate-950 lg:w-auto">
-            {['experience', 'leadership', 'projects'].map((tab) => (
+            {['experience', 'leadership', 'projects', 'techstack', 'gallery'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab as any)}
@@ -376,7 +390,7 @@ export default function ExperienceAdmin() {
                     : 'text-slate-500 hover:bg-white/60 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-white'
                 }`}
               >
-                 {tab === 'projects' ? <Code size={16}/> : tab === 'experience' ? <Briefcase size={16}/> : <Trophy size={16}/>} 
+                 {tab === 'projects' ? <Code size={16}/> : tab === 'experience' ? <Briefcase size={16}/> : tab === 'techstack' ? <Layers size={16}/> : tab === 'gallery' ? <ImageIcon size={16}/> : <Trophy size={16}/>} 
                  {tab}
               </button>
             ))}
@@ -431,6 +445,55 @@ export default function ExperienceAdmin() {
                         className="input-style text-xs font-mono opacity-70" 
                     />
                 </div>
+             </>
+          ) : activeTab === 'gallery' ? (
+             <>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <input name="title" placeholder="Event Title" value={formData.title || ''} onChange={handleChange} required className="input-style border border-slate-600" />
+                  <input name="location" placeholder="Location" value={formData.location || ''} onChange={handleChange} required className="input-style border border-slate-600" />
+                </div>
+                <div className="grid md:grid-cols-1 gap-4">
+                  <input name="date" placeholder="Date (e.g. MARCH 2025)" value={formData.date || ''} onChange={handleChange} className="input-style border border-slate-600" />
+                </div>
+                <textarea name="knowledge" placeholder="Key knowledge/insights gained" value={formData.knowledge || ''} onChange={handleChange} rows={3} className="input-style border border-slate-600" />
+                
+                <div>
+                    <label className="text-xs text-slate-400 font-bold mb-1.5 block uppercase tracking-wider">Gallery Images (Multi-select supported)</label>
+                    <div className="flex mb-3">
+                        <label className={`flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-slate-300 bg-[var(--surface)] px-5 py-3 text-xs font-bold text-slate-700 shadow-sm transition-all hover:border-accent hover:text-accent dark:border-slate-600 dark:bg-slate-900 dark:text-white sm:w-auto ${uploading ? 'cursor-not-allowed opacity-50' : ''}`}>
+                            <UploadCloud size={16} /> {uploading ? "Uploading..." : "Upload Images"}
+                            <input 
+                                type="file" 
+                                accept="image/*" 
+                                multiple 
+                                onChange={handleImageUpload} 
+                                disabled={uploading} 
+                                className="hidden" 
+                            />
+                        </label>
+                    </div>
+                    <input 
+                        value={imageInput} 
+                        onChange={(e) => setImageInput(e.target.value)} 
+                        placeholder="Image URLs (comma separated)" 
+                        className="input-style text-xs font-mono opacity-70" 
+                    />
+                </div>
+             </>
+          ) : activeTab === 'techstack' ? (
+             <>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <input name="name" placeholder="Technology Name" value={formData.name || ''} onChange={handleChange} required className="input-style border border-slate-600" />
+                  <input name="icon" placeholder="Icon URL" value={formData.icon || ''} onChange={handleChange} required className="input-style border border-slate-600" />
+                </div>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <input name="tags" placeholder="Tags (e.g. JDK 21 / OOP)" value={formData.tags || ''} onChange={handleChange} className="input-style border border-slate-600" />
+                  <input name="proficiency" type="number" placeholder="Proficiency (0-100)" value={formData.proficiency || ''} onChange={handleChange} className="input-style border border-slate-600" />
+                </div>
+                <label className="flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-slate-300">
+                  <input type="checkbox" name="isMain" checked={formData.isMain || false} onChange={(e) => setFormData({...formData, isMain: e.target.checked})} className="rounded border-slate-600 bg-[var(--surface)] text-accent focus:ring-accent/20 h-4 w-4" />
+                  Is Main Technology?
+                </label>
              </>
           ) : (
              <>
@@ -506,12 +569,16 @@ export default function ExperienceAdmin() {
                      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-100 shadow-inner dark:border-white/10 dark:bg-slate-900 md:h-16 md:w-16">
                          {activeTab === 'projects' 
                             ? (item.imageUrls?.[0] ? <img src={item.imageUrls[0]} alt="prev" className="h-full w-full object-cover" /> : <div className="h-full w-full bg-slate-800" />)
+                            : activeTab === 'gallery'
+                            ? (item.images?.[0] ? <img src={item.images[0]} alt="prev" className="h-full w-full object-cover" /> : <div className="h-full w-full bg-slate-800" />)
+                            : activeTab === 'techstack'
+                            ? (item.icon ? <img src={item.icon} alt="prev" className="h-full w-full object-contain p-2" /> : <div className="h-full w-full bg-slate-800" />)
                             : (item.image ? <img src={item.image} alt="prev" className="h-full w-full object-cover" /> : <div className="h-full w-full bg-slate-800" />)
                          }
                      </div>
                      <div className="min-w-0 flex-1">
-                        <h4 className="mb-0.5 truncate text-base font-bold text-slate-900 dark:text-white md:text-lg">{item.title || item.projectName}</h4>
-                        <p className="text-xs md:text-sm text-slate-400 truncate">{item.desc || item.description}</p>
+                        <h4 className="mb-0.5 truncate text-base font-bold text-slate-900 dark:text-white md:text-lg">{item.title || item.projectName || item.name}</h4>
+                        <p className="text-xs md:text-sm text-slate-400 truncate">{item.desc || item.description || item.tags || item.knowledge}</p>
                      </div>
                   </div>
 
