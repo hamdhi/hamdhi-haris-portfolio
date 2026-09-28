@@ -13,7 +13,7 @@ export default function Hero({ cvLink }: HeroProps) {
   const [loopNum, setLoopNum] = useState(0);
   const [typingSpeed, setTypingSpeed] = useState(150);
 
-  const textArray = ['Backend Logic', 'Clean Code', 'Scalable Systems'];
+  const textArray = ['Backend Logic', 'Clean Code', 'Scalable Systems', 'DevOps Pipelines'];
   const currentText = textArray[loopNum % textArray.length];
 
   const handleTyping = useCallback(() => {
@@ -67,7 +67,7 @@ export default function Hero({ cvLink }: HeroProps) {
 
           <div className="mt-10 flex max-w-xl flex-col gap-8 sm:flex-row sm:items-end">
             <p className="text-base leading-7 text-slate-600 dark:text-slate-300">
-              I&apos;m Hamdhi Haris, a software engineer focused on Java, Spring Boot, and thoughtful digital products.
+              I&apos;m Hamdhi Haris, a software engineer focused on Java, Spring Boot, Python, FastAPI, and thoughtful digital products.
             </p>
             <a href="#about" className="group flex shrink-0 items-center gap-2 font-mono text-xs uppercase tracking-widest text-accent">
               Explore

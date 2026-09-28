@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Trash2, Edit2, Plus, Save, X, Loader2, Briefcase, Trophy, Code, UploadCloud, GripVertical } from "lucide-react";
+import { Trash2, Edit2, Plus, Save, X, Loader2, Briefcase, Trophy, Code, UploadCloud, GripVertical, Layers } from "lucide-react";
 import { motion, AnimatePresence, Reorder } from "framer-motion";
 import { supabase } from "@/lib/supabase"; 
 
@@ -24,6 +24,7 @@ interface ExpItem extends BaseItem {
 // --- INITIAL STATES ---
 const initialExpState = { title: "", org: "", date: "", desc: "", image: "", tags: [] };
 const initialProjectState = { projectName: "", description: "", learned: "", technologies: [], imageUrls: [], githubUrl: "", liveUrl: "" };
+const initialTechState = { name: "", icon: "", tags: "", proficiency: 50, isMain: false };
 
 export default function ExperienceAdmin() {
   const router = useRouter();
@@ -33,7 +34,7 @@ export default function ExperienceAdmin() {
   const [authChecking, setAuthChecking] = useState(true);
 
   // --- DATA STATES ---
-  const [activeTab, setActiveTab] = useState<'experience' | 'leadership' | 'projects'>('experience');
+  const [activeTab, setActiveTab] = useState<'experience' | 'leadership' | 'projects' | 'techstack'>('experience');
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -168,6 +169,8 @@ export default function ExperienceAdmin() {
     if (activeTab === 'projects') {
       payload.technologies = tagInput.split(',').map(t => t.trim()).filter(t => t);
       payload.imageUrls = imageInput.split(',').map(t => t.trim()).filter(t => t);
+    } else if (activeTab === 'techstack') {
+      payload.proficiency = parseInt(payload.proficiency) || 0;
     } else {
       payload.tags = tagInput.split(',').map(t => t.trim()).filter(t => t);
       payload.image = formData.image; 
@@ -330,6 +333,8 @@ export default function ExperienceAdmin() {
     if (activeTab === 'projects') {
       setTagInput(item.technologies?.join(", ") || "");
       setImageInput(item.imageUrls?.join(", ") || "");
+    } else if (activeTab === 'techstack') {
+      setTagInput("");
     } else {
       setTagInput(item.tags?.join(", ") || "");
     }
@@ -338,7 +343,7 @@ export default function ExperienceAdmin() {
   const resetForm = () => {
     setIsEditing(null);
     setOriginalItem(null);
-    setFormData(activeTab === 'projects' ? initialProjectState : initialExpState);
+    setFormData(activeTab === 'projects' ? initialProjectState : activeTab === 'techstack' ? initialTechState : initialExpState);
     setTagInput("");
     setImageInput("");
     setUploadFolder(`proj_${Date.now()}`);
@@ -366,7 +371,7 @@ export default function ExperienceAdmin() {
         </h2>
         
         <div className="flex w-full flex-wrap gap-1 rounded-xl border border-slate-200 bg-slate-100 p-1.5 shadow-inner dark:border-white/10 dark:bg-slate-950 lg:w-auto">
-            {['experience', 'leadership', 'projects'].map((tab) => (
+            {['experience', 'leadership', 'projects', 'techstack'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab as any)}
@@ -376,7 +381,7 @@ export default function ExperienceAdmin() {
                     : 'text-slate-500 hover:bg-white/60 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-white'
                 }`}
               >
-                 {tab === 'projects' ? <Code size={16}/> : tab === 'experience' ? <Briefcase size={16}/> : <Trophy size={16}/>} 
+                 {tab === 'projects' ? <Code size={16}/> : tab === 'experience' ? <Briefcase size={16}/> : tab === 'techstack' ? <Layers size={16}/> : <Trophy size={16}/>} 
                  {tab}
               </button>
             ))}
@@ -431,6 +436,21 @@ export default function ExperienceAdmin() {
                         className="input-style text-xs font-mono opacity-70" 
                     />
                 </div>
+             </>
+          ) : activeTab === 'techstack' ? (
+             <>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <input name="name" placeholder="Technology Name" value={formData.name || ''} onChange={handleChange} required className="input-style border border-slate-600" />
+                  <input name="icon" placeholder="Icon URL" value={formData.icon || ''} onChange={handleChange} required className="input-style border border-slate-600" />
+                </div>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <input name="tags" placeholder="Tags (e.g. JDK 21 / OOP)" value={formData.tags || ''} onChange={handleChange} className="input-style border border-slate-600" />
+                  <input name="proficiency" type="number" placeholder="Proficiency (0-100)" value={formData.proficiency || ''} onChange={handleChange} className="input-style border border-slate-600" />
+                </div>
+                <label className="flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-slate-300">
+                  <input type="checkbox" name="isMain" checked={formData.isMain || false} onChange={(e) => setFormData({...formData, isMain: e.target.checked})} className="rounded border-slate-600 bg-[var(--surface)] text-accent focus:ring-accent/20 h-4 w-4" />
+                  Is Main Technology?
+                </label>
              </>
           ) : (
              <>
@@ -506,12 +526,14 @@ export default function ExperienceAdmin() {
                      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-100 shadow-inner dark:border-white/10 dark:bg-slate-900 md:h-16 md:w-16">
                          {activeTab === 'projects' 
                             ? (item.imageUrls?.[0] ? <img src={item.imageUrls[0]} alt="prev" className="h-full w-full object-cover" /> : <div className="h-full w-full bg-slate-800" />)
+                            : activeTab === 'techstack'
+                            ? (item.icon ? <img src={item.icon} alt="prev" className="h-full w-full object-contain p-2" /> : <div className="h-full w-full bg-slate-800" />)
                             : (item.image ? <img src={item.image} alt="prev" className="h-full w-full object-cover" /> : <div className="h-full w-full bg-slate-800" />)
                          }
                      </div>
                      <div className="min-w-0 flex-1">
-                        <h4 className="mb-0.5 truncate text-base font-bold text-slate-900 dark:text-white md:text-lg">{item.title || item.projectName}</h4>
-                        <p className="text-xs md:text-sm text-slate-400 truncate">{item.desc || item.description}</p>
+                        <h4 className="mb-0.5 truncate text-base font-bold text-slate-900 dark:text-white md:text-lg">{item.title || item.projectName || item.name}</h4>
+                        <p className="text-xs md:text-sm text-slate-400 truncate">{item.desc || item.description || item.tags}</p>
                      </div>
                   </div>
 
