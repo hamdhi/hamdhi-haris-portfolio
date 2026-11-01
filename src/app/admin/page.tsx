@@ -1,5 +1,5 @@
 "use client";
-import { LogOut, LayoutDashboard, UploadCloud, FileText, HeartPulse, CheckCircle2, Loader2, ExternalLink } from 'lucide-react';
+import { LogOut, LayoutDashboard, UploadCloud, FileText, HeartPulse, CheckCircle2, Loader2, ExternalLink, Copy, Check, ShieldAlert } from 'lucide-react';
 import { createBrowserClient } from '@supabase/ssr';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -7,6 +7,12 @@ import MessageLogs from '@/components/MessageLogs';
 import StatsOverview from '@/components/StatsOverview';
 import ExperienceAdmin from '@/components/ExperienceAdmin';
 import MaintenanceToggle from '@/components/MaintenanceToggle';
+
+const STORAGE_RLS_SQL = `CREATE POLICY "Allow authenticated manage assets"
+ON storage.objects FOR ALL
+TO authenticated
+USING (bucket_id = 'assets')
+WITH CHECK (bucket_id = 'assets');`;
 
 export default function AdminDashboard() {
     const router = useRouter();
@@ -18,6 +24,8 @@ export default function AdminDashboard() {
     const [cvUploading, setCvUploading] = useState(false);
     const [cvStatus, setCvStatus] = useState<string | null>(null);
     const [cvUrl, setCvUrl] = useState<string>('');
+    const [showRlsHelp, setShowRlsHelp] = useState(false);
+    const [copiedSql, setCopiedSql] = useState(false);
 
     const [pinging, setPinging] = useState(false);
     const [pingStatus, setPingStatus] = useState<string | null>(null);
@@ -37,6 +45,12 @@ export default function AdminDashboard() {
         router.push('/'); // Redirect to home or login after sign out
     };
 
+    const copySqlToClipboard = () => {
+        navigator.clipboard.writeText(STORAGE_RLS_SQL);
+        setCopiedSql(true);
+        setTimeout(() => setCopiedSql(false), 2500);
+    };
+
     const handleCvUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -48,38 +62,60 @@ export default function AdminDashboard() {
         }
 
         setCvUploading(true);
-        setCvStatus('Purging old CV files...');
+        setShowRlsHelp(false);
+        setCvStatus('Verifying admin session...');
 
         try {
-            // 1. List all existing files in 'assets' bucket and delete old CVs so storage never fills up
-            const { data: existingFiles, error: listError } = await supabase.storage
+            // Ensure active authenticated session so request isn't sent as 'anon'
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                alert('Your admin session expired. Please log in again.');
+                router.push('/dev-login');
+                return;
+            }
+
+            setCvStatus('Purging old CV files...');
+
+            // 1. Delete existing 'Hamdhi Resume.pdf' (and any other PDFs in 'assets') so storage never fills up
+            const { data: existingFiles } = await supabase.storage
                 .from('assets')
                 .list('', { limit: 100 });
 
-            if (!listError && existingFiles && existingFiles.length > 0) {
-                const filesToRemove = existingFiles
-                    .filter(f => f.name !== '.emptyFolderPlaceholder' && (f.name.toLowerCase().endsWith('.pdf') || f.name === 'Hamdhi Resume.pdf'))
-                    .map(f => f.name);
-
-                if (filesToRemove.length > 0) {
-                    await supabase.storage.from('assets').remove(filesToRemove);
-                }
-            } else {
-                // Fallback direct removal of Hamdhi Resume.pdf
-                await supabase.storage.from('assets').remove(['Hamdhi Resume.pdf']);
+            const filesToRemove = new Set<string>(['Hamdhi Resume.pdf']);
+            if (existingFiles && existingFiles.length > 0) {
+                existingFiles.forEach(f => {
+                    if (f.name !== '.emptyFolderPlaceholder' && f.name.toLowerCase().endsWith('.pdf')) {
+                        filesToRemove.add(f.name);
+                    }
+                });
             }
+
+            await supabase.storage.from('assets').remove(Array.from(filesToRemove));
 
             setCvStatus('Uploading as "Hamdhi Resume.pdf"...');
 
-            // 2. Rename file automatically to 'Hamdhi Resume.pdf' and upload with upsert
+            // 2. Rename file automatically to 'Hamdhi Resume.pdf' and upload
+            // Note: We use upsert: false first since we already deleted the old file (upsert: true requires UPDATE RLS policy in addition to INSERT)
             const renamedFile = new File([file], 'Hamdhi Resume.pdf', { type: 'application/pdf' });
-            const { error: uploadError } = await supabase.storage
+            let { error: uploadError } = await supabase.storage
                 .from('assets')
                 .upload('Hamdhi Resume.pdf', renamedFile, {
                     cacheControl: '0',
-                    upsert: true,
+                    upsert: false,
                     contentType: 'application/pdf',
                 });
+
+            // If file still existed (e.g. DELETE wasn't permitted), fallback to upsert: true
+            if (uploadError) {
+                const retry = await supabase.storage
+                    .from('assets')
+                    .upload('Hamdhi Resume.pdf', renamedFile, {
+                        cacheControl: '0',
+                        upsert: true,
+                        contentType: 'application/pdf',
+                    });
+                uploadError = retry.error;
+            }
 
             if (uploadError) throw uploadError;
 
@@ -89,8 +125,14 @@ export default function AdminDashboard() {
             setTimeout(() => setCvStatus(null), 4000);
         } catch (err: any) {
             console.error('CV Upload Error:', err);
-            alert(`CV upload failed: ${err.message || 'Unknown error'}`);
-            setCvStatus(null);
+            const msg = err?.message || 'Unknown error';
+            if (msg.toLowerCase().includes('row-level security') || msg.toLowerCase().includes('policy')) {
+                setShowRlsHelp(true);
+                setCvStatus('Blocked by Storage RLS Policy (See fix below)');
+            } else {
+                alert(`CV upload failed: ${msg}`);
+                setCvStatus(null);
+            }
         } finally {
             setCvUploading(false);
             e.target.value = '';
@@ -214,6 +256,29 @@ export default function AdminDashboard() {
                                 />
                             </label>
                         </div>
+
+                        {showRlsHelp && (
+                            <div className="mt-2 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3.5 text-xs text-slate-800 dark:text-slate-200 space-y-2">
+                                <div className="flex items-center justify-between gap-2">
+                                    <span className="flex items-center gap-1.5 font-bold text-amber-600 dark:text-amber-400">
+                                        <ShieldAlert size={15} /> One-Time Fix: Enable Storage Policy for &apos;assets&apos;
+                                    </span>
+                                    <button
+                                        onClick={copySqlToClipboard}
+                                        className="flex items-center gap-1 rounded-md bg-amber-500 px-2.5 py-1 font-mono text-[10px] font-bold text-white hover:bg-amber-600 transition-colors"
+                                    >
+                                        {copiedSql ? <Check size={12} /> : <Copy size={12} />}
+                                        {copiedSql ? 'COPIED!' : 'COPY SQL'}
+                                    </button>
+                                </div>
+                                <p className="text-[11px] text-slate-600 dark:text-slate-400">
+                                    Your <code className="font-mono font-bold text-accent">assets</code> bucket was previously only used via the Supabase website, so it doesn&apos;t have an upload/delete policy for your Admin login yet. Run this once in your <strong>Supabase SQL Editor</strong>:
+                                </p>
+                                <pre className="overflow-x-auto rounded-lg bg-slate-900 p-2.5 font-mono text-[10px] text-emerald-400">
+                                    {STORAGE_RLS_SQL}
+                                </pre>
+                            </div>
+                        )}
                     </div>
 
                     {/* Supabase 7-Day Health / Login Booster Card */}
