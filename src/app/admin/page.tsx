@@ -95,23 +95,23 @@ export default function AdminDashboard() {
             setCvStatus('Uploading as "Hamdhi Resume.pdf"...');
 
             // 2. Rename file automatically to 'Hamdhi Resume.pdf' and upload
-            // Note: We use upsert: false first since we already deleted the old file (upsert: true requires UPDATE RLS policy in addition to INSERT)
+            // Note: We use upsert: true so even if the old file still existed, it forcefully overwrites it
             const renamedFile = new File([file], 'Hamdhi Resume.pdf', { type: 'application/pdf' });
             let { error: uploadError } = await supabase.storage
                 .from('assets')
                 .upload('Hamdhi Resume.pdf', renamedFile, {
                     cacheControl: '0',
-                    upsert: false,
+                    upsert: true,
                     contentType: 'application/pdf',
                 });
 
-            // If file still existed (e.g. DELETE wasn't permitted), fallback to upsert: true
+            // Fallback if UPDATE RLS isn't enabled yet and only INSERT/DELETE is enabled
             if (uploadError) {
                 const retry = await supabase.storage
                     .from('assets')
                     .upload('Hamdhi Resume.pdf', renamedFile, {
                         cacheControl: '0',
-                        upsert: true,
+                        upsert: false,
                         contentType: 'application/pdf',
                     });
                 uploadError = retry.error;
@@ -120,7 +120,7 @@ export default function AdminDashboard() {
             if (uploadError) throw uploadError;
 
             const { data } = supabase.storage.from('assets').getPublicUrl('Hamdhi Resume.pdf');
-            setCvUrl(`${data.publicUrl}?t=${Date.now()}`);
+            setCvUrl(`${data.publicUrl}?v=${Date.now()}`);
             setCvStatus('CV Replaced & Live!');
             setTimeout(() => setCvStatus(null), 4000);
         } catch (err: any) {
