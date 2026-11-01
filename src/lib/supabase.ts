@@ -6,8 +6,8 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 // createBrowserClient automatically reads the cookies set by your login page
 export const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey);
 
-// Helper to get the CV download link
+// Helper to get the CV download link (with cache-busting so browsers/CDNs don't serve an old cached PDF)
 export const getCvUrl = () => {
   const { data } = supabase.storage.from('assets').getPublicUrl('Hamdhi Resume.pdf');
-  return data.publicUrl;
+  return `${data.publicUrl}?v=${Date.now()}`;
 };
